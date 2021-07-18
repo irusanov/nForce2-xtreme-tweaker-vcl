@@ -1,0 +1,71 @@
+//---------------------------------------------------------------------------
+
+#ifndef TimingComboBoxH
+#define TimingComboBoxH
+//---------------------------------------------------------------------------
+#include <System.SysUtils.hpp>
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+//---------------------------------------------------------------------------
+class PACKAGE TTimingComboBox : public TComboBox
+{
+private:
+    bool initItems = true;
+	bool tChanged;
+	bool tCustomItems;
+	int tMin = 0;
+	int tMax = 7;
+	int tValue = -1;
+	void __fastcall OptionChange(TObject *Sender);
+protected:
+	virtual void __fastcall CreateWnd();
+public:
+	__fastcall bool getChanged() {
+		return tChanged;
+	}
+
+	__fastcall void setMin(int value) {
+		if (value >= 0) {
+			tMin = value;
+
+            if (!tCustomItems) {
+				Items->Clear();
+
+				for (int i = tMin; i <= tMax; i++) {
+					Items->Add(IntToStr(i));
+				}
+			}
+		}
+	}
+
+	__fastcall void setMax(int value) {
+		if (value > 0 && value > tMin) {
+			tMax = value;
+
+			if (!tCustomItems) {
+				Items->Clear();
+
+				for (int i = tMin; i <= tMax; i++) {
+					Items->Add(IntToStr(i));
+				}
+			}
+		}
+	}
+
+	__fastcall int getValue() {
+		return this->ItemIndex + tMin;
+	}
+
+	__fastcall void setValue(int value);
+
+	__fastcall TTimingComboBox(TComponent* Owner);
+__published:
+	__property bool Changed = {read = getChanged};
+	__property bool CustomItems = {read = tCustomItems, write = tCustomItems};
+	__property int Min = {read = tMin, write = setMin};
+	__property int Max = {read = tMax, write = setMax};
+	__property int Value = {read = getValue, write = setValue};
+};
+//---------------------------------------------------------------------------
+#endif

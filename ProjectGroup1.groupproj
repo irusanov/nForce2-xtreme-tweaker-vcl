@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{2DDB2F4E-82FE-45D5-B2A8-934C6F5DBAEB}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="NForce2Xtreme.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Components\Components.cbproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="NForce2Xtreme">
+        <MSBuild Projects="NForce2Xtreme.cbproj"/>
+    </Target>
+    <Target Name="NForce2Xtreme:Clean">
+        <MSBuild Projects="NForce2Xtreme.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="NForce2Xtreme:Make">
+        <MSBuild Projects="NForce2Xtreme.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="Components">
+        <MSBuild Projects="Components\Components.cbproj"/>
+    </Target>
+    <Target Name="Components:Clean">
+        <MSBuild Projects="Components\Components.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Components:Make">
+        <MSBuild Projects="Components\Components.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="NForce2Xtreme;Components"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="NForce2Xtreme:Clean;Components:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="NForce2Xtreme:Make;Components:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
