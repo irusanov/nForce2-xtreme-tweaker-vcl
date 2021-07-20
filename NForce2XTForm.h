@@ -23,6 +23,7 @@
 
 #include "AboutForm.h"
 #include "TimingComboBox.h"
+#include "TAdvancedEdit.h"
 
 //---------------------------------------------------------------------------
 class TMainForm : public TForm
@@ -136,11 +137,51 @@ __published:	// IDE-managed Components
 	TTimingComboBox *DIMM1SlewRate;
 	TTimingComboBox *DIMM2DrvStrA;
 	TTimingComboBox *DIMM2SlewRate;
+	TLabel *Label43;
+	TTimingComboBox *CPUDisconnect;
+	TGroupBox *GroupBox4;
+	TTimingComboBox *AGPFastWrite;
+	TTimingComboBox *AGPSBA;
+	TTimingComboBox *AGPControllerLatency;
+	TTimingComboBox *AGPBusLatency;
+	TTimingComboBox *PCILatency;
+	TLabel *Label44;
+	TLabel *Label45;
+	TLabel *Label46;
+	TLabel *Label47;
+	TLabel *Label48;
+	TGroupBox *GroupBox5;
+	TTrackBar *TrackBarPll;
+	TPanel *PanelCurrentFsb;
+	TButton *ButtonNextPll;
+	TButton *ButtonPrevPll;
+	TAdvancedEdit *Romsip65;
+	TLabel *Label49;
+	TAdvancedEdit *Romsip66;
+	TLabel *Label50;
+	TAdvancedEdit *Romsip67;
+	TAdvancedEdit *Romsip68;
+	TAdvancedEdit *Romsip69;
+	TLabel *Label51;
+	TLabel *Label52;
+	TLabel *Label53;
+	TAdvancedEdit *Romsip6A;
+	TAdvancedEdit *Romsip6B;
+	TAdvancedEdit *Romsip6C;
+	TAdvancedEdit *Romsip6D;
+	TAdvancedEdit *Romsip6F;
+	TLabel *Label54;
+	TLabel *Label55;
+	TLabel *Label56;
+	TLabel *Label57;
+	TLabel *Label58;
 	void __fastcall TabControl1Change(TObject *Sender);
 	void __fastcall Exit1Click(TObject *Sender);
 	void __fastcall About1Click(TObject *Sender);
 	void __fastcall ButtonRefreshClick(TObject *Sender);
 	void __fastcall ButtonApplyClick(TObject *Sender);
+	void __fastcall TabControl1DrawTab(TCustomTabControl *Control, int TabIndex, const TRect &Rect,
+          bool Active);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TMainForm(TComponent* Owner);

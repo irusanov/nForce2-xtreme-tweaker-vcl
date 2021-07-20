@@ -21,13 +21,13 @@ private:
 	int tValue = -1;
     int tItemValue = -1;
 	void __fastcall OptionChange(TObject *Sender);
+	void __fastcall DropDown(TObject *Sender);
+	void __fastcall CloseUp(TObject *Sender);
+//	void __fastcall DrawItem(TWinControl *Control, int Index, TRect &Rect,
+//		  TOwnerDrawState State);
 protected:
 	virtual void __fastcall CreateWnd();
 public:
-	__fastcall bool getChanged() {
-		return tChanged;
-	}
-
 	__fastcall void setMin(int value) {
 		if (value >= 0) {
 			tMin = value;
@@ -78,7 +78,7 @@ public:
 
 	__fastcall TTimingComboBox(TComponent* Owner);
 __published:
-	__property bool Changed = {read = getChanged};
+	__property bool Changed = {read = tChanged};
 	__property bool CustomItems = {read = tCustomItems, write = tCustomItems};
     __property bool CustomValue = {read = tCustomValue, write = tCustomValue};
 	__property int Min = {read = tMin, write = setMin};

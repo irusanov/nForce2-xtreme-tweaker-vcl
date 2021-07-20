@@ -1,27 +1,26 @@
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 #include <vcl.h>
 #pragma hdrstop
 
 #include "NForce2XTForm.h"
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "TimingComboBox"
+#pragma link "TAdvancedEdit"
 #pragma resource "*.dfm"
 TMainForm *MainForm;
 
 // MANID Register, MSR C001_001Eh
-typedef struct
-{
+typedef struct {
 	unsigned char reticleSite; 	// [9-8]
 	unsigned char majorRev; 	// [7-4]
 	unsigned char minorRev; 	// [3-0]
 } man_id_t;
 
-struct CPUInfo
-{
+struct CPUInfo {
 	unsigned int cpuid;
-    string codeName;
+	string codeName;
 	string cpuName;
 	unsigned char family;
 	unsigned char model;
@@ -30,11 +29,11 @@ struct CPUInfo
 	unsigned char stepping;
 	unsigned char patchLevel;
 	double frequency;
-    double pllValue;
+	double pllValue;
 	double fsb;
 	unsigned int fid;
 	double multi;
-    man_id_t manID;
+	man_id_t manID;
 } cpu_info;
 
 // https://github.com/torvalds/linux/blob/master/drivers/cpufreq/powernow-k7.c#L78
@@ -45,8 +44,7 @@ const int fid_codes[32] = {
 	150, 225, 160, 165, 170, 180, 230, 240,
 };
 
-struct timing_def_t
-{
+struct timing_def_t {
 	UnicodeString name;
 	unsigned int bus;
 	unsigned int device;
@@ -80,7 +78,7 @@ const struct timing_def_t timingDefs[] = {
 
 	{ "AutoPrecharge",   		0,  0,  1, 0x84, 17,  1 },
 	{ "BurstMode",   			0,  0,  1, 0xA0,  3,  1 },
-	{ "DLLEnable",   			0,  0,  1, 0xA4,  0,  1 },
+	//{ "DLLEnable",   			0,  0,  1, 0xA4,  0,  1 },
 	{ "DriveStrengthMode",   	0,  0,  1, 0xA4,  1,  1 },
 	{ "SuperBypass",   			0,  0,  1, 0xFC,  0,  1 },
 	{ "DataScavengedRate",   	0,  0,  1, 0xF8,  2,  1 }
@@ -107,13 +105,41 @@ const struct timing_def_t chipsetTimingDefs[] = {
 	{ "AGPControllerLatency",	0, 30,  0, 0x0C,  8,  8 },
 	{ "AGPBusLatency",			0, 30,  0, 0x18, 24,  8 },
 	{ "PCILatency",				0,  8,  0, 0x18, 24,  8 },
-	{ "DIMM_B0_CFG",			0,  0,  2, 0x40,  0,  1 },
-	{ "DIMM_B1_CFG",			0,  0,  2, 0x44,  0,  1 },
-	{ "DIMM_A0_CFG",			0,  0,  2, 0x48,  0,  1 },
+	//{ "DIMM_B0_CFG",			0,  0,  2, 0x40,  0,  1 },
+	//{ "DIMM_B1_CFG",			0,  0,  2, 0x44,  0,  1 },
+	//{ "DIMM_A0_CFG",			0,  0,  2, 0x48,  0,  1 },
+};
+
+const struct timing_def_t romsipDefs[] = {
+	// name, 					b, d, f, reg, offset, bits
+	{ "Romsip65",				0,  0,  3, 0x64,  8,  8 },
+	{ "Romsip66",				0,  0,  3, 0x64, 16,  8 },
+	{ "Romsip67",				0,  0,  3, 0x64, 24,  8 },
+	{ "Romsip68",				0,  0,  3, 0x68,  0,  8 },
+	{ "Romsip69",				0,  0,  3, 0x68,  8,  8 },
+	{ "Romsip6A",				0,  0,  3, 0x68, 16,  8 },
+	{ "Romsip6B",				0,  0,  3, 0x68, 24,  8 },
+	{ "Romsip6C",				0,  0,  3, 0x6C,  0,  8 },
+	{ "Romsip6D",				0,  0,  3, 0x6C,  8,  8 },
+	//{ "Romsip6E",				0,  0,  3, 0x6C, 16,  8 },
+	{ "Romsip6F",				0,  0,  3, 0x6C, 24,  8 },
 };
 
 Nforce2Pll pll;
 QueryPerformance qpc;
+
+static void __fastcall RefreshCpuSpeed() {
+	DWORD eax = 0, ebx = 0, ecx = 0, edx = 0;
+
+	cpu_info.pllValue = pll.nforce2_fsb_read(0);
+	cpu_info.frequency = qpc.MeasureCPUFrequency();
+
+	Rdmsr(MSR_K7_FID_VID_STATUS, &eax, &edx);
+	unsigned int cfid = GetBits(eax, 0, 6);
+	cpu_info.fid = cfid;
+	cpu_info.multi = fid_codes[cfid] / 10.0;
+	cpu_info.fsb = cpu_info.frequency / cpu_info.multi;
+}
 
 // Read cpu and system info
 static bool __fastcall InitSystemInfo() {
@@ -149,14 +175,7 @@ static bool __fastcall InitSystemInfo() {
 	}
 
 	cpu_info.cpuName = GetCpuName();
-	cpu_info.pllValue = pll.nforce2_fsb_read(0);
-	cpu_info.frequency = qpc.MeasureCPUFrequency();
-
-	Rdmsr(MSR_K7_FID_VID_STATUS, &eax, &edx);
-	unsigned int cfid = GetBits(eax, 0, 6);
-	cpu_info.fid = cfid;
-	cpu_info.multi = fid_codes[cfid] / 10.0;
-	cpu_info.fsb = cpu_info.frequency / cpu_info.multi;
+	RefreshCpuSpeed();
 
 	return true;
 }
@@ -202,31 +221,58 @@ static void __fastcall ReadTimings(const struct timing_def_t* table, int size)
 	for (int i = 0; i < size; i++) {
 		name = table[i].name;
 		def = GetDefByName(table, size, name);
-		combo = reinterpret_cast<TTimingComboBox *>
+		combo = reinterpret_cast<TTimingComboBox*>
 			(Application->FindComponent("MainForm")->FindComponent(name));
 
 		if (combo != NULL && combo != 0 && sizeof(def) > 0) {
-			pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
+			pciAddress = MakePciAddress(def.bus, def.device, def.function,
+				def.reg);
 			regValue = ReadPciReg(pciAddress);
 			value = GetBits(regValue, def.offset, def.bits);
 
 			if (name == "CAS") {
 				combo->Value = GetCASValueIndex(value);
-			} else if (combo->CustomValue) {
-                combo->ItemValue = value;
-			} else {
-                combo->Value = value;
-            }
+			}
+			else if (combo->CustomValue) {
+				combo->ItemValue = value;
+			}
+			else {
+				combo->Value = value;
+			}
 
-			//MessageDlg(def.name, mtConfirmation, mbOKCancel, 0);
+			// MessageDlg(def.name, mtConfirmation, mbOKCancel, 0);
 		}
 	}
 }
 //---------------------------------------------------------------------------
 
+static void __fastcall ReadRomsipValues(const struct timing_def_t* table,
+	int size) {
+    timing_def_t def;
+	unsigned int pciAddress, regValue, value;
+	TAdvancedEdit* box;
+	UnicodeString name;
+
+	for (int i = 0; i < size; i++) {
+		name = table[i].name;
+		def = GetDefByName(table, size, name);
+		box = reinterpret_cast<TAdvancedEdit*>
+			(Application->FindComponent("MainForm")->FindComponent(name));
+
+		if (box != NULL && box != 0 && sizeof(def) > 0) {
+			pciAddress = MakePciAddress(def.bus, def.device, def.function,
+				def.reg);
+			regValue = ReadPciReg(pciAddress);
+			value = GetBits(regValue, def.offset, def.bits);
+
+			box->Text = IntToHex(Byte(value), 2);
+            box->InitialValue = box->Text;
+		}
+	}
+}
+
 static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
-	bool doubled)
-{
+	bool doubled) {
 	timing_def_t def;
 	unsigned int pciAddress, regValue, value;
 	TTimingComboBox* combo;
@@ -234,25 +280,26 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
 
 	for (int i = 0; i < size; i++) {
 		name = table[i].name;
-		combo = reinterpret_cast<TTimingComboBox *>
+		combo = reinterpret_cast<TTimingComboBox*>
 			(Application->FindComponent("MainForm")->FindComponent(name));
 
 		if (combo != NULL && combo != 0 && combo->Changed) {
 			def = GetDefByName(table, size, name);
-			pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
+			pciAddress = MakePciAddress(def.bus, def.device, def.function,
+				def.reg);
 			regValue = ReadPciReg(pciAddress);
 			if (combo->CustomValue) {
-			   value = (unsigned int) combo->ItemValue;
-			} else {
+				value = (unsigned int) combo->ItemValue;
+			}
+			else {
 				value = (unsigned int) combo->Value;
-            }
+			}
 
 			if (doubled) {
 				value = value << 4 | value;
 			}
 
-			if (name != "CAS" && name != "CR")
-			{
+			if (name != "CAS" && name != "CR") {
 				regValue = SetBits(regValue, def.offset, def.bits, value);
 				WritePciReg(pciAddress, regValue);
 			}
@@ -261,42 +308,78 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
 }
 //---------------------------------------------------------------------------
 
-static void __fastcall RefreshTimings()
+static void __fastcall WriteRomsipValues(const struct timing_def_t* table,
+	int size)
 {
+	timing_def_t def;
+	unsigned int pciAddress, regValue, value;
+	TAdvancedEdit* box;
+	UnicodeString name;
+
+	for (int i = 0; i < size; i++) {
+		name = table[i].name;
+		box = reinterpret_cast<TAdvancedEdit*>
+			(Application->FindComponent("MainForm")->FindComponent(name));
+
+		if (box != NULL && box != 0 && box->Changed) {
+			def = GetDefByName(table, size, name);
+			pciAddress = MakePciAddress(def.bus, def.device, def.function,
+				def.reg);
+			regValue = ReadPciReg(pciAddress);
+
+			value = StrToInt("0x" + box->Text);
+
+			regValue = SetBits(regValue, def.offset, def.bits, value);
+			WritePciReg(pciAddress, regValue);
+		}
+	}
+}
+
+
+static void __fastcall RefreshTimings() {
 	ReadTimings(timingDefs, COUNT_OF(timingDefs));
-    ReadTimings(doubledTimingDefs, COUNT_OF(doubledTimingDefs));
+	ReadTimings(doubledTimingDefs, COUNT_OF(doubledTimingDefs));
 	ReadTimings(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs));
+	ReadRomsipValues(romsipDefs, COUNT_OF(romsipDefs));
 }
 //---------------------------------------------------------------------------
 
-__fastcall TMainForm::TMainForm(TComponent* Owner)
-	: TForm(Owner)
-{
-	if (!InitializeOls())
-	{
+__fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
+	if (!InitializeOls()) {
 		MessageDlg("Error initializing OpenLibSys", mtError, mbOKCancel, 0);
 		Application->Terminate();
 	}
 
-	if (GetDllStatus() != 0x0)
-	{
+	if (GetDllStatus() != 0x0) {
 		MessageDlg("Error loading WinRing.dll", mtError, mbOKCancel, 0);
 		DeinitializeOls();
-        Application->Terminate();
+		Application->Terminate();
 	}
 
 	InitSystemInfo();
 	RefreshTimings();
 
-	//UnicodeString name = GetCpuName().c_str();
-	//MessageDlg(name, mtConfirmation, mbOKCancel, 0);
+	// Populate static System data
+	EditCpuName->Caption = cpu_info.cpuName.c_str();
+	EditManRev->Caption = cpu_info.manID.minorRev;
+
+	EditFamily->Caption = cpu_info.family;
+	EditModel->Caption = cpu_info.model;
+	EditStepping->Caption = cpu_info.stepping;
+
+	EditExtFamily->Caption = cpu_info.extFamily;
+	EditExtModel->Caption = cpu_info.extModel;
+	// EditRevision->Caption = cpu_info.coreRevision;
+	// EditRevision->Caption = Format("%d.%d", ARRAYOFCONST((cpu_info.manID.minorRev, cpu_info.manID.minorRev)));
+
+	// UnicodeString name = GetCpuName().c_str();
+	// MessageDlg(name, mtConfirmation, mbOKCancel, 0);
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TMainForm::TabControl1Change(TObject *Sender)
-{
+void __fastcall TMainForm::TabControl1Change(TObject *Sender) {
 	const int NUMBER_OF_TABS = 3;
-	TPanel* TabPanels[NUMBER_OF_TABS] = { PanelDram, PanelChipset, PanelInfo };
+	TPanel* TabPanels[NUMBER_OF_TABS] = {PanelDram, PanelChipset, PanelInfo};
 	int index = TabControl1->TabIndex;
 
 	TPanel *Panel;
@@ -312,63 +395,74 @@ void __fastcall TMainForm::TabControl1Change(TObject *Sender)
 
 	switch (index) {
 	case 2:
-        //InitSystemInfo();
-		EditCpuName->Caption = cpu_info.cpuName.c_str();
-		EditManRev->Caption = cpu_info.manID.minorRev;
+		RefreshCpuSpeed();
 
-		EditFamily->Caption = cpu_info.family;
-		EditModel->Caption = cpu_info.model;
-		EditStepping->Caption = cpu_info.stepping;
-
-		EditExtFamily->Caption = cpu_info.extFamily;
-		EditExtModel->Caption = cpu_info.extModel;
-		//EditRevision->Caption = cpu_info.coreRevision;
-		//EditRevision->Caption = Format("%d.%d", ARRAYOFCONST((cpu_info.manID.minorRev, cpu_info.manID.minorRev)));
-
-		EditCoreMulti->Caption = Format("x %.1f", ARRAYOFCONST(((long double)cpu_info.multi)));
-		EditCoreFrequency->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.frequency)));
-		EditFsbClock->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.fsb)));
-
-		//test = TimingComboBox1->Value;
-
+		EditCoreMulti->Caption =
+			Format("x %.1f", ARRAYOFCONST(((long double)cpu_info.multi)));
+		EditCoreFrequency->Caption =
+			Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.frequency)));
+		EditFsbClock->Caption =
+			Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.fsb)));
 		break;
-	default:
-		;
+	case 1:
+		RefreshCpuSpeed();
+
+		PanelCurrentFsb->Caption =
+			Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.fsb)));
+		break;
+	default: ;
 	}
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TMainForm::Exit1Click(TObject *Sender)
-{
-    DeinitializeOls();
-    Application->Terminate();
+void __fastcall TMainForm::Exit1Click(TObject *Sender) {
+	DeinitializeOls();
+	Application->Terminate();
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TMainForm::About1Click(TObject *Sender)
-{
+void __fastcall TMainForm::About1Click(TObject *Sender) {
 	AboutDialog->ShowModal();
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TMainForm::ButtonRefreshClick(TObject *Sender)
-{
+void __fastcall TMainForm::ButtonRefreshClick(TObject *Sender) {
 	RefreshTimings();
+
+	if (TabControl1->TabIndex != 0) {
+		RefreshCpuSpeed();
+	}
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TMainForm::ButtonApplyClick(TObject *Sender)
-{
-	switch(TabControl1->TabIndex)
-	{
-		case 0:
-			WriteTimings(timingDefs, COUNT_OF(timingDefs), false);
-			WriteTimings(doubledTimingDefs, COUNT_OF(doubledTimingDefs), true);
-            RefreshTimings();
+void __fastcall TMainForm::ButtonApplyClick(TObject *Sender) {
+	switch (TabControl1->TabIndex) {
+	case 0:
+		WriteTimings(timingDefs, COUNT_OF(timingDefs), false);
+		WriteTimings(doubledTimingDefs, COUNT_OF(doubledTimingDefs), true);
+		WriteRomsipValues(romsipDefs, COUNT_OF(romsipDefs));
+		RefreshTimings();
 		break;
-		default:
-        ;
+	case 1:
+		WriteTimings(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs), false);
+		RefreshTimings();
+        break;
+	default: ;
 	}
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::TabControl1DrawTab(TCustomTabControl *Control, int TabIndex,
+		  const TRect &Rect, bool Active)
+{
+	int left = Active ? 9 : 5;
+	int top = Active ? 3 : 2;
+
+	Control->Canvas->Brush->Color = clBtnFace;
+	Control->Canvas->Font->Color = Active ? clNavy : clWindowText;
+	Control->Canvas->FillRect(Rect);
+
+	Control->Canvas->TextOut(Rect.Left + left, Rect.Top + top,
+		(static_cast<TTabControl *>(Control))->Tabs->Strings[TabIndex]);
 }
 //---------------------------------------------------------------------------
 

@@ -4,9 +4,9 @@ object MainForm: TMainForm
   Anchors = []
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'NForce2XT'
+  Caption = 'nForce2XT v1.1 beta1'
   ClientHeight = 474
-  ClientWidth = 381
+  ClientWidth = 382
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -817,12 +817,12 @@ object MainForm: TMainForm
   OldCreateOrder = False
   Position = poDesktopCenter
   DesignSize = (
-    381
+    382
     474)
   PixelsPerInch = 96
   TextHeight = 13
   object ButtonApply: TButton
-    Left = 304
+    Left = 305
     Top = 446
     Width = 75
     Height = 25
@@ -831,7 +831,7 @@ object MainForm: TMainForm
     OnClick = ButtonApplyClick
   end
   object ButtonRefresh: TButton
-    Left = 223
+    Left = 224
     Top = 446
     Width = 75
     Height = 25
@@ -840,21 +840,24 @@ object MainForm: TMainForm
     OnClick = ButtonRefreshClick
   end
   object TabControl1: TTabControl
-    Left = 1
+    Left = 2
     Top = 6
     Width = 378
     Height = 435
-    Margins.Left = 0
-    Margins.Top = 0
-    Margins.Right = 0
-    Margins.Bottom = 0
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Bottom = 2
     Anchors = []
+    DockSite = True
+    DoubleBuffered = True
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     MultiLine = True
+    OwnerDraw = True
+    ParentDoubleBuffered = False
     ParentFont = False
     TabOrder = 2
     Tabs.Strings = (
@@ -863,526 +866,274 @@ object MainForm: TMainForm
       'Info')
     TabIndex = 0
     OnChange = TabControl1Change
-    object PanelInfo: TPanel
-      Left = 4
-      Top = 24
-      Width = 370
-      Height = 407
-      Align = alClient
-      Anchors = []
-      BevelEdges = []
-      BevelOuter = bvNone
-      Ctl3D = True
-      ParentColor = True
-      ParentCtl3D = False
-      TabOrder = 1
-      Visible = False
-      object GroupBox1: TGroupBox
-        Left = 5
-        Top = 5
-        Width = 359
-        Height = 100
-        Margins.Left = 0
-        Margins.Top = 0
-        Margins.Right = 0
-        Caption = ' CPU '
-        Ctl3D = True
-        ParentCtl3D = False
-        TabOrder = 0
-        DesignSize = (
-          359
-          100)
-        object Label1: TLabel
-          Left = 45
-          Top = 17
-          Width = 27
-          Height = 18
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Name'
-        end
-        object Label2: TLabel
-          Left = 25
-          Top = 37
-          Width = 49
-          Height = 18
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Family'
-        end
-        object Label3: TLabel
-          Left = 164
-          Top = 37
-          Width = 28
-          Height = 13
-          Alignment = taRightJustify
-          Caption = 'Model'
-        end
-        object Label4: TLabel
-          Left = 271
-          Top = 37
-          Width = 42
-          Height = 13
-          Alignment = taRightJustify
-          Caption = 'Stepping'
-        end
-        object Label5: TLabel
-          Left = 273
-          Top = 74
-          Width = 40
-          Height = 18
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Revision'
-        end
-        object Label6: TLabel
-          Left = 25
-          Top = 55
-          Width = 49
-          Height = 18
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Ext Family'
-        end
-        object Label7: TLabel
-          Left = 145
-          Top = 55
-          Width = 47
-          Height = 13
-          Alignment = taRightJustify
-          Caption = 'Ext Model'
-        end
-        object Label9: TLabel
-          Left = 271
-          Top = 55
-          Width = 42
-          Height = 18
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Man Rev'
-        end
-        object Label8: TLabel
-          Left = 51
-          Top = 74
-          Width = 23
-          Height = 18
-          AutoSize = False
-          Caption = 'Core'
-        end
-        object EditFamily: TPanel
-          Left = 78
-          Top = 36
-          Width = 34
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 0
-        end
-        object EditCpuName: TPanel
-          Left = 78
-          Top = 17
-          Width = 273
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 1
-        end
-        object EditModel: TPanel
-          Left = 196
-          Top = 36
-          Width = 34
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 2
-        end
-        object EditStepping: TPanel
-          Left = 317
-          Top = 36
-          Width = 34
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 3
-        end
-        object EditExtFamily: TPanel
-          Left = 78
-          Top = 55
-          Width = 34
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          ParentColor = True
-          ParentCtl3D = False
-          TabOrder = 4
-        end
-        object EditExtModel: TPanel
-          Left = 196
-          Top = 55
-          Width = 34
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 5
-        end
-        object EditManRev: TPanel
-          Left = 317
-          Top = 55
-          Width = 34
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 6
-        end
-        object EditCoreRev: TPanel
-          Left = 317
-          Top = 74
-          Width = 34
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 7
-        end
-        object EditCoreName: TPanel
-          Left = 78
-          Top = 74
-          Width = 152
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 8
-        end
-      end
-      object GroupBox2: TGroupBox
-        Left = 180
-        Top = 111
-        Width = 184
-        Height = 98
-        Caption = ' Caches '
-        Ctl3D = True
-        ParentCtl3D = False
-        TabOrder = 1
-        DesignSize = (
-          184
-          98)
-        object Label13: TLabel
-          Left = 52
-          Top = 13
-          Width = 37
-          Height = 18
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'L1 Data'
-        end
-        object Label14: TLabel
-          Left = 52
-          Top = 32
-          Width = 37
-          Height = 18
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'L1 Inst.'
-        end
-        object Label15: TLabel
-          Left = 78
-          Top = 51
-          Width = 11
-          Height = 18
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Level 1'
-        end
-        object Label16: TLabel
-          Left = 78
-          Top = 70
-          Width = 11
-          Height = 18
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Level 2'
-        end
-        object EditL1DataCahce: TPanel
-          Left = 93
-          Top = 13
-          Width = 83
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 0
-        end
-        object EditL1InstCache: TPanel
-          Left = 93
-          Top = 32
-          Width = 83
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 1
-        end
-        object EditL1Cache: TPanel
-          Left = 93
-          Top = 51
-          Width = 83
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 2
-        end
-        object EditL2Cache: TPanel
-          Left = 93
-          Top = 70
-          Width = 83
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 3
-        end
-      end
-      object GroupBox3: TGroupBox
-        Left = 5
-        Top = 111
-        Width = 169
-        Height = 98
-        Caption = ' Clocks '
-        Ctl3D = True
-        ParentCtl3D = False
-        TabOrder = 2
-        DesignSize = (
-          169
-          98)
-        object Label10: TLabel
-          Left = 51
-          Top = 13
-          Width = 23
-          Height = 18
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Core'
-        end
-        object Label11: TLabel
-          Left = 56
-          Top = 51
-          Width = 18
-          Height = 18
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'FSB'
-        end
-        object Label12: TLabel
-          Left = 52
-          Top = 32
-          Width = 22
-          Height = 18
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Multi'
-        end
-        object EditCoreFrequency: TPanel
-          Left = 78
-          Top = 13
-          Width = 83
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 0
-        end
-        object EditCoreMulti: TPanel
-          Left = 78
-          Top = 32
-          Width = 83
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 1
-        end
-        object EditFsbClock: TPanel
-          Left = 78
-          Top = 51
-          Width = 83
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 2
-        end
-        object Panel1: TPanel
-          Left = 78
-          Top = 70
-          Width = 83
-          Height = 18
-          Anchors = []
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 3
-        end
-      end
-    end
+    OnDrawTab = TabControl1DrawTab
     object PanelChipset: TPanel
       Left = 4
       Top = 24
       Width = 370
       Height = 407
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
       Align = alClient
       BevelEdges = []
       BevelOuter = bvNone
-      Caption = 'Panel2'
       Ctl3D = False
+      ParentBackground = False
       ParentCtl3D = False
       TabOrder = 0
       Visible = False
+      object GroupBox4: TGroupBox
+        Left = 5
+        Top = 5
+        Width = 359
+        Height = 166
+        Caption = ' General '
+        Ctl3D = True
+        ParentCtl3D = False
+        TabOrder = 0
+        object Label44: TLabel
+          Left = 11
+          Top = 42
+          Width = 73
+          Height = 13
+          Caption = 'AGP Fast Write'
+        end
+        object Label45: TLabel
+          Left = 11
+          Top = 65
+          Width = 123
+          Height = 13
+          Caption = 'AGP Sideband Addressing'
+        end
+        object Label46: TLabel
+          Left = 11
+          Top = 88
+          Width = 111
+          Height = 13
+          Caption = 'AGP Controller Latency'
+        end
+        object Label47: TLabel
+          Left = 11
+          Top = 112
+          Width = 81
+          Height = 13
+          Caption = 'AGP Bus Latency'
+        end
+        object Label48: TLabel
+          Left = 11
+          Top = 136
+          Width = 88
+          Height = 13
+          Caption = 'PCI LAtency Timer'
+        end
+        object Label43: TLabel
+          Left = 11
+          Top = 20
+          Width = 75
+          Height = 13
+          Caption = 'CPU Disconnect'
+        end
+        object AGPBusLatency: TTimingComboBox
+          Left = 159
+          Top = 109
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          TabOrder = 0
+          Items.Strings = (
+            '16'
+            '32'
+            '64'
+            '96'
+            '128'
+            '160'
+            '192'
+            '224'
+            '255')
+          CustomItems = True
+          CustomValue = True
+          Max = 255
+          Value = -1
+          ItemValue = -1
+        end
+        object AGPControllerLatency: TTimingComboBox
+          Left = 159
+          Top = 85
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          TabOrder = 1
+          Items.Strings = (
+            '16'
+            '32'
+            '64'
+            '96'
+            '128'
+            '160'
+            '192'
+            '224'
+            '255')
+          CustomItems = True
+          CustomValue = True
+          Max = 255
+          Value = -1
+          ItemValue = -1
+        end
+        object AGPFastWrite: TTimingComboBox
+          Left = 159
+          Top = 39
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          TabOrder = 2
+          Items.Strings = (
+            'Disabled'
+            'Enabled')
+          CustomItems = True
+          Max = 1
+          Value = -1
+          ItemValue = -1
+        end
+        object AGPSBA: TTimingComboBox
+          Left = 159
+          Top = 62
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          TabOrder = 3
+          Items.Strings = (
+            'Disabled'
+            'Enabled')
+          CustomItems = True
+          Max = 1
+          Value = -1
+          ItemValue = -1
+        end
+        object CPUDisconnect: TTimingComboBox
+          Left = 159
+          Top = 16
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          TabOrder = 4
+          Items.Strings = (
+            'Disabled'
+            'Enabled')
+          CustomItems = True
+          Max = 1
+          Value = -1
+          ItemValue = -1
+        end
+        object PCILatency: TTimingComboBox
+          Left = 159
+          Top = 133
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          TabOrder = 5
+          Items.Strings = (
+            '16'
+            '32'
+            '64'
+            '96'
+            '128'
+            '160'
+            '192'
+            '224'
+            '255')
+          CustomItems = True
+          CustomValue = True
+          Max = 255
+          Value = -1
+          ItemValue = -1
+        end
+      end
+      object GroupBox5: TGroupBox
+        Left = 5
+        Top = 177
+        Width = 359
+        Height = 65
+        Caption = ' FSB '
+        Ctl3D = True
+        ParentCtl3D = False
+        TabOrder = 1
+        DesignSize = (
+          359
+          65)
+        object TrackBarPll: TTrackBar
+          Left = 3
+          Top = 20
+          Width = 229
+          Height = 25
+          Max = 350
+          PageSize = 1
+          TabOrder = 0
+          TickStyle = tsNone
+        end
+        object PanelCurrentFsb: TPanel
+          Left = 283
+          Top = 22
+          Width = 65
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 1
+        end
+        object ButtonNextPll: TButton
+          Left = 256
+          Top = 22
+          Width = 20
+          Height = 18
+          Caption = '4'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Webdings'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 2
+        end
+        object ButtonPrevPll: TButton
+          Left = 235
+          Top = 22
+          Width = 20
+          Height = 18
+          Caption = '3'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Webdings'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 3
+        end
+      end
     end
     object PanelDram: TPanel
       Left = 4
       Top = 24
       Width = 370
       Height = 407
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
       Align = alClient
       BevelEdges = []
       BevelOuter = bvNone
-      Ctl3D = False
+      Ctl3D = True
+      ParentBackground = False
       ParentCtl3D = False
       TabOrder = 2
       object GroupBoxTimings: TGroupBox
@@ -2073,6 +1824,96 @@ object MainForm: TMainForm
           Height = 13
           Caption = 'ROMSIP'
         end
+        object Label49: TLabel
+          Left = 71
+          Top = 300
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '65'
+        end
+        object Label50: TLabel
+          Left = 101
+          Top = 300
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '66'
+        end
+        object Label51: TLabel
+          Left = 131
+          Top = 300
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '67'
+        end
+        object Label52: TLabel
+          Left = 161
+          Top = 300
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '68'
+        end
+        object Label53: TLabel
+          Left = 191
+          Top = 300
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '69'
+        end
+        object Label54: TLabel
+          Left = 71
+          Top = 346
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '6A'
+        end
+        object Label55: TLabel
+          Left = 101
+          Top = 346
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '6B'
+        end
+        object Label56: TLabel
+          Left = 131
+          Top = 346
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '6C'
+        end
+        object Label57: TLabel
+          Left = 161
+          Top = 346
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '6D'
+        end
+        object Label58: TLabel
+          Left = 191
+          Top = 346
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '6F'
+        end
         object DIMM0DrvStrB: TTimingComboBox
           Left = 177
           Top = 17
@@ -2428,6 +2269,637 @@ object MainForm: TMainForm
             '15')
           Max = 15
           ItemValue = -1
+        end
+        object Romsip65: TAdvancedEdit
+          Left = 71
+          Top = 317
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 15
+          Max = 255
+        end
+        object Romsip66: TAdvancedEdit
+          Left = 101
+          Top = 317
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 16
+          Max = 255
+        end
+        object Romsip67: TAdvancedEdit
+          Left = 131
+          Top = 317
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 17
+          Max = 255
+        end
+        object Romsip68: TAdvancedEdit
+          Left = 161
+          Top = 317
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 18
+          Max = 255
+        end
+        object Romsip69: TAdvancedEdit
+          Left = 191
+          Top = 317
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 19
+          Max = 255
+        end
+        object Romsip6A: TAdvancedEdit
+          Left = 71
+          Top = 363
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 20
+          Max = 255
+        end
+        object Romsip6B: TAdvancedEdit
+          Left = 101
+          Top = 363
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 21
+          Max = 255
+        end
+        object Romsip6C: TAdvancedEdit
+          Left = 131
+          Top = 363
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 22
+          Max = 255
+        end
+        object Romsip6D: TAdvancedEdit
+          Left = 161
+          Top = 363
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 23
+          Max = 255
+        end
+        object Romsip6F: TAdvancedEdit
+          Left = 191
+          Top = 363
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 24
+          Max = 255
+        end
+      end
+    end
+    object PanelInfo: TPanel
+      Left = 4
+      Top = 24
+      Width = 370
+      Height = 407
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alClient
+      Anchors = []
+      BevelEdges = []
+      BevelOuter = bvNone
+      Ctl3D = True
+      ParentBackground = False
+      ParentCtl3D = False
+      TabOrder = 1
+      Visible = False
+      object GroupBox1: TGroupBox
+        Left = 5
+        Top = 5
+        Width = 359
+        Height = 100
+        Margins.Left = 0
+        Margins.Top = 0
+        Margins.Right = 0
+        Caption = ' CPU '
+        Ctl3D = True
+        ParentCtl3D = False
+        TabOrder = 0
+        DesignSize = (
+          359
+          100)
+        object Label1: TLabel
+          Left = 45
+          Top = 19
+          Width = 27
+          Height = 18
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Name'
+        end
+        object Label2: TLabel
+          Left = 25
+          Top = 38
+          Width = 49
+          Height = 18
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Family'
+        end
+        object Label3: TLabel
+          Left = 164
+          Top = 38
+          Width = 28
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Model'
+        end
+        object Label4: TLabel
+          Left = 271
+          Top = 38
+          Width = 42
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Stepping'
+        end
+        object Label5: TLabel
+          Left = 273
+          Top = 76
+          Width = 40
+          Height = 18
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Revision'
+        end
+        object Label6: TLabel
+          Left = 25
+          Top = 57
+          Width = 49
+          Height = 18
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Ext Family'
+        end
+        object Label7: TLabel
+          Left = 145
+          Top = 57
+          Width = 47
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Ext Model'
+        end
+        object Label9: TLabel
+          Left = 271
+          Top = 57
+          Width = 42
+          Height = 18
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Man Rev'
+        end
+        object Label8: TLabel
+          Left = 51
+          Top = 76
+          Width = 23
+          Height = 18
+          AutoSize = False
+          Caption = 'Core'
+        end
+        object EditFamily: TPanel
+          Left = 78
+          Top = 36
+          Width = 34
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 0
+        end
+        object EditCpuName: TPanel
+          Left = 78
+          Top = 17
+          Width = 273
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 1
+        end
+        object EditModel: TPanel
+          Left = 196
+          Top = 36
+          Width = 34
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 2
+        end
+        object EditStepping: TPanel
+          Left = 317
+          Top = 36
+          Width = 34
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 3
+        end
+        object EditExtFamily: TPanel
+          Left = 78
+          Top = 55
+          Width = 34
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          ParentColor = True
+          ParentCtl3D = False
+          TabOrder = 4
+        end
+        object EditExtModel: TPanel
+          Left = 196
+          Top = 55
+          Width = 34
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 5
+        end
+        object EditManRev: TPanel
+          Left = 317
+          Top = 55
+          Width = 34
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 6
+        end
+        object EditCoreRev: TPanel
+          Left = 317
+          Top = 74
+          Width = 34
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 7
+        end
+        object EditCoreName: TPanel
+          Left = 78
+          Top = 74
+          Width = 152
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 8
+        end
+      end
+      object GroupBox2: TGroupBox
+        Left = 180
+        Top = 111
+        Width = 184
+        Height = 98
+        Caption = ' Caches '
+        Ctl3D = True
+        ParentCtl3D = False
+        TabOrder = 1
+        DesignSize = (
+          184
+          98)
+        object Label13: TLabel
+          Left = 3
+          Top = 15
+          Width = 86
+          Height = 18
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'L1 Data'
+        end
+        object Label14: TLabel
+          Left = 2
+          Top = 34
+          Width = 87
+          Height = 18
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'L1 Inst.'
+        end
+        object Label15: TLabel
+          Left = 3
+          Top = 52
+          Width = 86
+          Height = 18
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Level 1'
+        end
+        object Label16: TLabel
+          Left = 2
+          Top = 72
+          Width = 86
+          Height = 18
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Level 2'
+        end
+        object EditL1DataCahce: TPanel
+          Left = 93
+          Top = 13
+          Width = 83
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 0
+        end
+        object EditL1InstCache: TPanel
+          Left = 93
+          Top = 32
+          Width = 83
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 1
+        end
+        object EditL1Cache: TPanel
+          Left = 93
+          Top = 51
+          Width = 83
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 2
+        end
+        object EditL2Cache: TPanel
+          Left = 93
+          Top = 70
+          Width = 83
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 3
+        end
+      end
+      object GroupBox3: TGroupBox
+        Left = 5
+        Top = 111
+        Width = 169
+        Height = 98
+        Caption = ' Clocks '
+        Ctl3D = True
+        ParentCtl3D = False
+        TabOrder = 2
+        DesignSize = (
+          169
+          98)
+        object Label10: TLabel
+          Left = 51
+          Top = 15
+          Width = 23
+          Height = 18
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Core'
+        end
+        object Label11: TLabel
+          Left = 56
+          Top = 53
+          Width = 18
+          Height = 18
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'FSB'
+        end
+        object Label12: TLabel
+          Left = 52
+          Top = 34
+          Width = 22
+          Height = 18
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Multi'
+        end
+        object EditCoreFrequency: TPanel
+          Left = 78
+          Top = 13
+          Width = 83
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 0
+        end
+        object EditCoreMulti: TPanel
+          Left = 78
+          Top = 32
+          Width = 83
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 1
+        end
+        object EditFsbClock: TPanel
+          Left = 78
+          Top = 51
+          Width = 83
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 2
+        end
+        object Panel1: TPanel
+          Left = 78
+          Top = 70
+          Width = 83
+          Height = 18
+          Anchors = []
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 3
         end
       end
     end

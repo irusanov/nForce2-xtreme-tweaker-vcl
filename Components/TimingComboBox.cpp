@@ -21,15 +21,16 @@ __fastcall TTimingComboBox::TTimingComboBox(TComponent* Owner)
 {
 	this->Style = csDropDownList;
 	this->Width = 52;
-	//this->Color = clYellow;
 	this->OnChange = OptionChange;
+	this->OnDropDown = DropDown;
+	this->OnCloseUp = CloseUp;
 }
 //---------------------------------------------------------------------------
 void __fastcall TTimingComboBox::CreateWnd()
 {
 	this->Style = csOwnerDrawFixed;
 	this->Color = clWindow;
-    //this->DoubleBuffered = true;
+	//this->DoubleBuffered = true;
 
 	TComboBox::CreateWnd();
 
@@ -46,10 +47,26 @@ void __fastcall TTimingComboBox::CreateWnd()
 	}
 }
 //---------------------------------------------------------------------------
+void __fastcall TTimingComboBox::DropDown(TObject *Sender) {
+	this->Color = clWindow;
+}
+//---------------------------------------------------------------------------
+void __fastcall TTimingComboBox::CloseUp(TObject *Sender) {
+	if (tChanged) {
+		this->Color = clInfoBk;
+	}
+	this->Style = csOwnerDrawFixed;
+}
+//---------------------------------------------------------------------------
+//void __fastcall TTimingComboBox::DrawItem(TWinControl *Control, int Index, TRect &Rect,
+//		  TOwnerDrawState State) {
+//	this->Canvas->Brush->Color = clYellow;
+//	this->Canvas->FillRect(Rect);
+//}//---------------------------------------------------------------------------
 void __fastcall TTimingComboBox::OptionChange(TObject *Sender)
 {
 	tChanged = tIndex != this->ItemIndex;
-	this->Color = tChanged ? clYellow : clWindow;
+	this->Color = tChanged ? clInfoBk : clWindow;
 }
 //---------------------------------------------------------------------------
 __fastcall void TTimingComboBox::setValue(int value) {
