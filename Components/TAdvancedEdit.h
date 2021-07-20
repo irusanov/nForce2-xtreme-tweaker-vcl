@@ -17,7 +17,8 @@ private:
     UnicodeString tValue = "";
 	void __fastcall KeyPress(TObject *Sender, System::WideChar &Key);
 	void __fastcall Change(TObject *Sender);
-    void __fastcall Click(TObject *Sender);
+	void __fastcall Click(TObject *Sender);
+	void __fastcall Exit(TObject *Sender);
 protected:
 	virtual void __fastcall CreateWnd();
 public:

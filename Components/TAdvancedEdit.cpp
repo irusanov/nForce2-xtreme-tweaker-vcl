@@ -33,14 +33,14 @@ void __fastcall TAdvancedEdit::CreateWnd()
 	this->Alignment = taCenter;
 	this->OnKeyPress = KeyPress;
 	this->OnChange = Change;
+    this->OnExit = Exit;
 	this->OnClick = Click;
     this->AutoSelect = true;
 
 	TEdit::CreateWnd();
 }
 void __fastcall TAdvancedEdit::Click(TObject *Sender){
-	this->SelStart = 0;
-	this->SelLength = 2;
+	this->SelectAll();
 }
 //---------------------------------------------------------------------------
 void __fastcall TAdvancedEdit::Change(TObject *Sender) {
@@ -70,6 +70,11 @@ void __fastcall TAdvancedEdit::KeyPress(TObject *Sender, System::WideChar &Key)
 		Key = 0;
 	}
 }
+//---------------------------------------------------------------------------
+void __fastcall TAdvancedEdit::Exit(TObject *Sender) {
+	this->SelLength = 0;
+}
+//---------------------------------------------------------------------------
 namespace Tadvancededit
 {
 	void __fastcall PACKAGE Register()
