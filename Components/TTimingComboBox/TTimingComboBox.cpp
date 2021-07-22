@@ -4,7 +4,7 @@
 
 #pragma hdrstop
 
-#include "TimingComboBox.h"
+#include "TTimingComboBox.h"
 #pragma package(smart_init)
 //---------------------------------------------------------------------------
 // ValidCtrCheck is used to assure that the components created do not have
@@ -30,7 +30,7 @@ void __fastcall TTimingComboBox::CreateWnd()
 {
 	this->Style = csOwnerDrawFixed;
 	this->Color = clWindow;
-	//this->DoubleBuffered = true;
+	this->DoubleBuffered = false;
 
 	TComboBox::CreateWnd();
 
@@ -113,7 +113,7 @@ __fastcall void TTimingComboBox::setItemValue(int value) {
 	}
 }
 //---------------------------------------------------------------------------
-namespace Timingcombobox
+namespace Ttimingcombobox
 {
 	void __fastcall PACKAGE Register()
 	{

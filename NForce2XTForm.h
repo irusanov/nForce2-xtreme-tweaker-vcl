@@ -1,8 +1,8 @@
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 #ifndef NForce2XTFormH
 #define NForce2XTFormH
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 #include <System.Classes.hpp>
 #include <System.Types.hpp>
 #include <System.SysUtils.hpp>
@@ -22,13 +22,12 @@
 #include "QueryPerformance.h"
 
 #include "AboutForm.h"
-#include "TimingComboBox.h"
 #include "TAdvancedEdit.h"
+#include "TTimingComboBox.h"
 
-//---------------------------------------------------------------------------
-class TMainForm : public TForm
-{
-__published:	// IDE-managed Components
+// ---------------------------------------------------------------------------
+class TMainForm : public TForm {
+__published: // IDE-managed Components
 	TButton *ButtonApply;
 	TButton *ButtonRefresh;
 	TTabControl *TabControl1;
@@ -74,7 +73,7 @@ __published:	// IDE-managed Components
 	TPanel *EditCoreMulti;
 	TPanel *EditFsbClock;
 	TPanel *Panel1;
-	TPanel *EditL1DataCahce;
+	TPanel *EditL1DataCache;
 	TPanel *EditL1InstCache;
 	TPanel *EditL1Cache;
 	TPanel *EditL2Cache;
@@ -175,18 +174,35 @@ __published:	// IDE-managed Components
 	TLabel *Label56;
 	TLabel *Label57;
 	TLabel *Label58;
+	TTrayIcon *TrayIcon;
+
 	void __fastcall TabControl1Change(TObject *Sender);
 	void __fastcall Exit1Click(TObject *Sender);
 	void __fastcall About1Click(TObject *Sender);
 	void __fastcall ButtonRefreshClick(TObject *Sender);
 	void __fastcall ButtonApplyClick(TObject *Sender);
-	void __fastcall TabControl1DrawTab(TCustomTabControl *Control, int TabIndex, const TRect &Rect,
-          bool Active);
-private:	// User declarations
-public:		// User declarations
+	void __fastcall TabControl1DrawTab(TCustomTabControl *Control, int TabIndex,
+		const TRect &Rect, bool Active);
+	void __fastcall TrayIconDblClick(TObject *Sender);
+	void __fastcall FormDestroy(TObject *Sender);
+	void __fastcall ButtonNextPllClick(TObject *Sender);
+	void __fastcall ButtonPrevPllClick(TObject *Sender);
+	void __fastcall TrackBarPllChange(TObject *Sender);
+
+protected:
+//	virtual void __fastcall CreateParams(TCreateParams &Params);
+
+private: // User declarations
+	bool minimizeHintShown = false;
+	void __fastcall OnMinimize(TObject *Sender);
+	void __fastcall OnRestore(TObject *Sender);
+	void __fastcall UpdatePllSlider(unsigned int position);
+
+public: // User declarations
 	__fastcall TMainForm(TComponent* Owner);
 };
-//---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
 extern PACKAGE TMainForm *MainForm;
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 #endif

@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 
-#ifndef TimingComboBoxH
-#define TimingComboBoxH
+#ifndef TTimingComboBoxH
+#define TTimingComboBoxH
 //---------------------------------------------------------------------------
 #include <System.SysUtils.hpp>
 #include <System.Classes.hpp>

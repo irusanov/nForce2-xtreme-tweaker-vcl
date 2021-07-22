@@ -4,8 +4,8 @@
 #pragma hdrstop
 #include <tchar.h>
 //---------------------------------------------------------------------------
-USEFORM("NForce2XTForm.cpp", MainForm);
 USEFORM("AboutForm.cpp", AboutDialog);
+USEFORM("NForce2XTForm.cpp", MainForm);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {
@@ -13,6 +13,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 	{
 		Application->Initialize();
 		Application->MainFormOnTaskBar = true;
+		Application->Title = "nForce2XT";
 		Application->CreateForm(__classid(TMainForm), &MainForm);
 		Application->CreateForm(__classid(TAboutDialog), &AboutDialog);
 		Application->Run();

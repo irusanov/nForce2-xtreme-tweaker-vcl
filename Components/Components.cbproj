@@ -60,8 +60,8 @@
         <ILINK_GenerateLibFile>true</ILINK_GenerateLibFile>
         <_TCHARMapping>char</_TCHARMapping>
         <Multithreaded>true</Multithreaded>
-        <IncludePath>C:\GIT\nForce2Xtreme\VCL\Components\;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>C:\GIT\nForce2Xtreme\VCL\Components\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>TTimingComboBox\;TAdvancedEdit\;C:\GIT\nForce2Xtreme\VCL\Components\;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>TTimingComboBox\;TAdvancedEdit\;C:\GIT\nForce2Xtreme\VCL\Components\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <SanitizedProjectName>Components</SanitizedProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
@@ -120,12 +120,14 @@
         <PackageImport Include="rtl.bpi">
             <BuildOrder>1</BuildOrder>
         </PackageImport>
-        <CppCompile Include="TAdvancedEdit.cpp">
-            <DependentOn>TAdvancedEdit.h</DependentOn>
+        <CppCompile Include="TAdvancedEdit\TAdvancedEdit.cpp">
+            <VirtualFolder>{07BABB67-7E9B-4190-A9AA-0B25FF6DB836}</VirtualFolder>
+            <DependentOn>TAdvancedEdit\TAdvancedEdit.h</DependentOn>
             <BuildOrder>5</BuildOrder>
         </CppCompile>
-        <CppCompile Include="TimingComboBox.cpp">
-            <DependentOn>TimingComboBox.h</DependentOn>
+        <CppCompile Include="TTimingComboBox\TTimingComboBox.cpp">
+            <VirtualFolder>{2BE8FCD2-0F64-4F26-ADC3-6CCBA8AD77D8}</VirtualFolder>
+            <DependentOn>TTimingComboBox\TTimingComboBox.h</DependentOn>
             <BuildOrder>3</BuildOrder>
         </CppCompile>
         <PackageImport Include="vcl.bpi">
@@ -157,6 +159,10 @@
                 <Source>
                     <Source Name="MainSource">Components.cpp</Source>
                 </Source>
+                <VFOLDERS>
+                    <VFOLDER ID="{07BABB67-7E9B-4190-A9AA-0B25FF6DB836}" name="TAdvancedEdit"/>
+                    <VFOLDER ID="{2BE8FCD2-0F64-4F26-ADC3-6CCBA8AD77D8}" name="TTimingComboBox"/>
+                </VFOLDERS>
             </CPlusPlusBuilder.Personality>
             <Deployment Version="3">
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32c260.dll" Class="DependencyModule">

@@ -1,13 +1,11 @@
-// ---------------------------------------------------------------------------
-
 #include <vcl.h>
 #pragma hdrstop
 
 #include "NForce2XTForm.h"
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
-#pragma link "TimingComboBox"
 #pragma link "TAdvancedEdit"
+#pragma link "TTimingComboBox"
 #pragma resource "*.dfm"
 TMainForm *MainForm;
 
@@ -33,6 +31,10 @@ struct CPUInfo {
 	double fsb;
 	unsigned int fid;
 	double multi;
+	int l1DataCache;
+	int l1InstCache;
+	int l1Cache;
+	int l2Cache;
 	man_id_t manID;
 } cpu_info;
 
@@ -40,7 +42,7 @@ struct CPUInfo {
 const int fid_codes[32] = {
     110, 115, 120, 125, 50, 55, 60, 65,
     70, 75, 80, 85, 90, 95, 100, 105,
-    30, 190, 40, 200, 130, 135, 140, 210,
+	30, 190, 40, 200, 130, 135, 140, 210,
 	150, 225, 160, 165, 170, 180, 230, 240,
 };
 
@@ -145,46 +147,53 @@ static void __fastcall RefreshCpuSpeed() {
 static bool __fastcall InitSystemInfo() {
 	DWORD eax = 0, ebx = 0, ecx = 0, edx = 0;
 
-	if (Cpuid(0x00000001, &eax, &ebx, &ecx, &edx))
-	{
+	// CPUID information
+	if (Cpuid(0x00000001, &eax, &ebx, &ecx, &edx)) {
 		cpu_info.cpuid = eax;
-        cpu_info.stepping = eax & 0xf;
-        cpu_info.family = eax >> 8 & 0xf;
+		cpu_info.stepping = eax & 0xf;
+		cpu_info.family = eax >> 8 & 0xf;
 		cpu_info.model = eax >> 4 & 0xf;
 	}
-	else
-	{
+	else {
 		return false;
 	}
 
-	if (Cpuid(0x80000001, &eax, &ebx, &ecx, &edx))
-    {
-        cpu_info.extFamily = eax >> 8 & 0xf;
-        cpu_info.extModel = eax >> 4 & 0xf;
-    }
-	else
-	{
+	// Extended CPUID information
+	if (Cpuid(0x80000001, &eax, &ebx, &ecx, &edx)) {
+		cpu_info.extFamily = eax >> 8 & 0xf;
+		cpu_info.extModel = eax >> 4 & 0xf;
+	}
+	else {
 		return false;
 	}
 
-	if (Rdmsr(MSR_K7_MANID, &eax, &edx))
-	{
-        cpu_info.manID.minorRev = GetBits(eax, 0, 4);
-        cpu_info.manID.majorRev = GetBits(eax, 4, 4);
-        cpu_info.manID.reticleSite = GetBits(eax, 8, 2);
+	// L1 Data cache
+	if (Cpuid(0x80000005, &eax, &ebx, &ecx, &edx)) {
+		cpu_info.l1DataCache = (ecx >> 24 & 0xff);
+		cpu_info.l1InstCache = (edx >> 24 & 0xff);
+		cpu_info.l1Cache = cpu_info.l1DataCache + cpu_info.l1InstCache;
+	}
+
+	// L2 cache
+	if (Cpuid(0x80000006, &eax, &ebx, &ecx, &edx)) {
+		cpu_info.l2Cache = (ecx >> 16 & 0xffff);
+	}
+
+	if (Rdmsr(MSR_K7_MANID, &eax, &edx)) {
+		cpu_info.manID.minorRev = GetBits(eax, 0, 4);
+		cpu_info.manID.majorRev = GetBits(eax, 4, 4);
+		cpu_info.manID.reticleSite = GetBits(eax, 8, 2);
 	}
 
 	cpu_info.cpuName = GetCpuName();
-	RefreshCpuSpeed();
 
 	return true;
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 // Get timing definition by component name
 static timing_def_t __fastcall GetDefByName(const struct timing_def_t* table,
-	int size, UnicodeString name)
-{
+	int size, UnicodeString name) {
 	for (int i = 0; i < size; i++) {
 		if (table[i].name == name) {
 			return table[i];
@@ -193,10 +202,9 @@ static timing_def_t __fastcall GetDefByName(const struct timing_def_t* table,
 
 	return {};
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-static int __fastcall GetCASValueIndex(unsigned int value)
-{
+static int __fastcall GetCASValueIndex(unsigned int value) {
 	// CAS is bits [5:4], bit 6 is Half Latency toggle
 	// CAS 2.0 = 010 2
 	// CAS 2.5 = 110 5
@@ -209,10 +217,9 @@ static int __fastcall GetCASValueIndex(unsigned int value)
 
 	return -1;
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-static void __fastcall ReadTimings(const struct timing_def_t* table, int size)
-{
+static void __fastcall ReadTimings(const struct timing_def_t* table, int size) {
 	timing_def_t def;
 	unsigned int pciAddress, regValue, value;
 	TTimingComboBox* combo;
@@ -244,11 +251,11 @@ static void __fastcall ReadTimings(const struct timing_def_t* table, int size)
 		}
 	}
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 static void __fastcall ReadRomsipValues(const struct timing_def_t* table,
 	int size) {
-    timing_def_t def;
+	timing_def_t def;
 	unsigned int pciAddress, regValue, value;
 	TAdvancedEdit* box;
 	UnicodeString name;
@@ -266,7 +273,7 @@ static void __fastcall ReadRomsipValues(const struct timing_def_t* table,
 			value = GetBits(regValue, def.offset, def.bits);
 
 			box->Text = IntToHex(Byte(value), 2);
-            box->InitialValue = box->Text;
+			box->InitialValue = box->Text;
 		}
 	}
 }
@@ -306,11 +313,10 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
 		}
 	}
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 static void __fastcall WriteRomsipValues(const struct timing_def_t* table,
-	int size)
-{
+	int size) {
 	timing_def_t def;
 	unsigned int pciAddress, regValue, value;
 	TAdvancedEdit* box;
@@ -335,14 +341,38 @@ static void __fastcall WriteRomsipValues(const struct timing_def_t* table,
 	}
 }
 
-
 static void __fastcall RefreshTimings() {
 	ReadTimings(timingDefs, COUNT_OF(timingDefs));
 	ReadTimings(doubledTimingDefs, COUNT_OF(doubledTimingDefs));
 	ReadTimings(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs));
 	ReadRomsipValues(romsipDefs, COUNT_OF(romsipDefs));
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::UpdatePllSlider(unsigned int position) {
+	if (position != NULL) {
+		TrackBarPll->Position = position;
+	}
+
+	PanelCurrentFsb->Caption =
+		Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.fsb)));
+
+	bool minReached = position <= TrackBarPll->Min;
+	bool maxReached = position >= TrackBarPll->Max;
+
+	ButtonNextPll->Enabled = !maxReached;
+	ButtonPrevPll->Enabled = !minReached;
+}
+// ---------------------------------------------------------------------------
+
+//void __fastcall TMainForm::CreateParams(TCreateParams &Params) {
+//    Params.Style &= ~0x02000000;   // WS_EX_COMPOSITED
+//	Params.ExStyle |= 0x02000000;   // WS_EX_COMPOSITED
+//
+//	TForm::CreateParams(Params);
+//}
+
+// ---------------------------------------------------------------------------
 
 __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
 	if (!InitializeOls()) {
@@ -356,8 +386,12 @@ __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
 		Application->Terminate();
 	}
 
+	Application->OnMinimize = OnMinimize;
+	Application->OnRestore = OnRestore;
+
 	InitSystemInfo();
 	RefreshTimings();
+	RefreshCpuSpeed();
 
 	// Populate static System data
 	EditCpuName->Caption = cpu_info.cpuName.c_str();
@@ -369,13 +403,22 @@ __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
 
 	EditExtFamily->Caption = cpu_info.extFamily;
 	EditExtModel->Caption = cpu_info.extModel;
+
+	EditL1Cache->Caption =
+		Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1Cache)));
+	EditL1DataCache->Caption =
+		Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1DataCache)));
+	EditL1InstCache->Caption =
+		Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1InstCache)));
+	EditL2Cache->Caption =
+		Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l2Cache)));
 	// EditRevision->Caption = cpu_info.coreRevision;
 	// EditRevision->Caption = Format("%d.%d", ARRAYOFCONST((cpu_info.manID.minorRev, cpu_info.manID.minorRev)));
 
 	// UnicodeString name = GetCpuName().c_str();
 	// MessageDlg(name, mtConfirmation, mbOKCancel, 0);
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 void __fastcall TMainForm::TabControl1Change(TObject *Sender) {
 	const int NUMBER_OF_TABS = 3;
@@ -406,34 +449,27 @@ void __fastcall TMainForm::TabControl1Change(TObject *Sender) {
 		break;
 	case 1:
 		RefreshCpuSpeed();
-
-		PanelCurrentFsb->Caption =
-			Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.fsb)));
+		UpdatePllSlider(cpu_info.fsb);
 		break;
 	default: ;
 	}
 }
-//---------------------------------------------------------------------------
-
-void __fastcall TMainForm::Exit1Click(TObject *Sender) {
-	DeinitializeOls();
-	Application->Terminate();
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TMainForm::About1Click(TObject *Sender) {
-	AboutDialog->ShowModal();
-}
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 void __fastcall TMainForm::ButtonRefreshClick(TObject *Sender) {
 	RefreshTimings();
 
-	if (TabControl1->TabIndex != 0) {
+	int index = TabControl1->TabIndex;
+
+	if (index != 0) {
 		RefreshCpuSpeed();
 	}
+
+	if (index == 1) {
+		UpdatePllSlider(cpu_info.fsb);
+	}
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 void __fastcall TMainForm::ButtonApplyClick(TObject *Sender) {
 	switch (TabControl1->TabIndex) {
@@ -446,14 +482,26 @@ void __fastcall TMainForm::ButtonApplyClick(TObject *Sender) {
 	case 1:
 		WriteTimings(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs), false);
 		RefreshTimings();
-        break;
+		UpdatePllSlider(cpu_info.fsb);
+		break;
 	default: ;
 	}
 }
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::TabControl1DrawTab(TCustomTabControl *Control, int TabIndex,
-		  const TRect &Rect, bool Active)
-{
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::Exit1Click(TObject *Sender) {
+	DeinitializeOls();
+	Application->Terminate();
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::About1Click(TObject *Sender) {
+	AboutDialog->ShowModal();
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::TabControl1DrawTab(TCustomTabControl *Control,
+	int TabIndex, const TRect &Rect, bool Active) {
 	int left = Active ? 9 : 5;
 	int top = Active ? 3 : 2;
 
@@ -464,5 +512,74 @@ void __fastcall TMainForm::TabControl1DrawTab(TCustomTabControl *Control, int Ta
 	Control->Canvas->TextOut(Rect.Left + left, Rect.Top + top,
 		(static_cast<TTabControl *>(Control))->Tabs->Strings[TabIndex]);
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::OnMinimize(TObject *Sender) {
+	// If minimize to tray enabled
+	if (false) {
+		TrayIcon->Visible = true;
+		Application->MainFormOnTaskBar = false;
+		Hide();
+		// WindowState = wsMinimized;
+
+		if (!minimizeHintShown) {
+			TrayIcon->Animate = true;
+			TrayIcon->ShowBalloonHint();
+		}
+	}
+
+	TabControl1->Visible = false;
+	ButtonApply->Visible = false;
+	ButtonRefresh->Visible = false;
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::OnRestore(TObject *Sender) {
+	// If minimize to tray enabled
+	if (false) {
+		TrayIcon->Visible = false;
+		Application->MainFormOnTaskBar = true;
+
+		if (!minimizeHintShown) {
+			TrayIcon->BalloonHint = NULL;
+			minimizeHintShown = true;
+		}
+	}
+
+	TabControl1->Visible = true;
+	ButtonApply->Visible = true;
+	ButtonRefresh->Visible = true;
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::TrayIconDblClick(TObject *Sender) {
+	Application->Restore();
+	// Application->MainForm->Show();
+	Show();
+	// WindowState = wsNormal;
+	Application->MainForm->BringToFront();
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::FormDestroy(TObject *Sender) {
+	DeinitializeOls();
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::ButtonNextPllClick(TObject *Sender) {
+	int pos = TrackBarPll->Position;
+	UpdatePllSlider(++pos);
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::ButtonPrevPllClick(TObject *Sender) {
+	int pos = TrackBarPll->Position;
+	UpdatePllSlider(--pos);
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::TrackBarPllChange(TObject *Sender) {
+	int position = static_cast<TTrackBar*>(Sender)->Position;
+	UpdatePllSlider(position);
+}
 

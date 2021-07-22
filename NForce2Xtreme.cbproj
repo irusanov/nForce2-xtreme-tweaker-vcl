@@ -64,8 +64,8 @@
         <SanitizedProjectName>NForce2Xtreme</SanitizedProjectName>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <BCC_BackwardCompatibility>true</BCC_BackwardCompatibility>
-        <IncludePath>Components\;C:\GIT\nForce2Xtreme\VCL\;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>Components\;C:\GIT\nForce2Xtreme\VCL\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>Components\TAdvancedEdit\;Components\TTimingComboBox\;C:\GIT\nForce2Xtreme\VCL\;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>Components\TAdvancedEdit\;Components\TTimingComboBox\;C:\GIT\nForce2Xtreme\VCL\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <VerInfo_Keys>FileVersion=1.0.1.1</VerInfo_Keys>
         <VerInfo_Release>1</VerInfo_Release>
         <VerInfo_Build>1</VerInfo_Build>
@@ -113,10 +113,12 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
         <LinkPackageStatics>rtl.lib;vcl.lib;Components.lib</LinkPackageStatics>
-        <VerInfo_Build>62</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.62;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>97</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.97;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>0</VerInfo_Release>
+        <AppExecutionLevel>requireAdministrator</AppExecutionLevel>
+        <Icon_MainIcon>icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <Defines>NDEBUG;$(Defines)</Defines>
@@ -147,10 +149,6 @@
         <None Include="Constants.h">
             <BuildOrder>3</BuildOrder>
         </None>
-        <RcItem Include="icon.ico">
-            <ResourceType>ICON</ResourceType>
-            <ResourceId>Icon_1</ResourceId>
-        </RcItem>
         <CppCompile Include="Nforce2Pll.cpp">
             <BuildOrder>4</BuildOrder>
         </CppCompile>
@@ -269,12 +267,6 @@
                 </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin64\cc64260mt.dll" Class="DependencyModule">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="icon.ico" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
