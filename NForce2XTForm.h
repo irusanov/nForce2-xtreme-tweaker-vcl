@@ -22,8 +22,8 @@
 #include "QueryPerformance.h"
 
 #include "AboutForm.h"
-#include "TAdvancedEdit.h"
-#include "TTimingComboBox.h"
+#include "Components\TAdvancedEdit\TAdvancedEdit.h"
+#include "Components\TTimingComboBox\TTimingComboBox.h"
 
 // ---------------------------------------------------------------------------
 class TMainForm : public TForm {

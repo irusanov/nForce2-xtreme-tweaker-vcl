@@ -29,8 +29,14 @@ struct CPUInfo {
 	double frequency;
 	double pllValue;
 	double fsb;
-	unsigned int fid;
 	double multi;
+	unsigned int maxVid;
+	unsigned int startVid;
+	unsigned int currVid;
+	unsigned int maxFid;
+	unsigned int startFid;
+	unsigned int currFid;
+	bool MP;
 	int l1DataCache;
 	int l1InstCache;
 	int l1Cache;
@@ -44,6 +50,16 @@ const int fid_codes[32] = {
     70, 75, 80, 85, 90, 95, 100, 105,
 	30, 190, 40, 200, 130, 135, 140, 210,
 	150, 225, 160, 165, 170, 180, 230, 240,
+};
+
+enum CodeName {
+	Spitfire,
+	Morgan,
+	Applebred,
+	Thunderbird,
+	Palomino,
+	Thoroughbred,
+	Barton,
 };
 
 struct timing_def_t {
@@ -137,9 +153,16 @@ static void __fastcall RefreshCpuSpeed() {
 	cpu_info.frequency = qpc.MeasureCPUFrequency();
 
 	Rdmsr(MSR_K7_FID_VID_STATUS, &eax, &edx);
-	unsigned int cfid = GetBits(eax, 0, 6);
-	cpu_info.fid = cfid;
-	cpu_info.multi = fid_codes[cfid] / 10.0;
+
+	cpu_info.currVid = GetBits(edx, 0, 6);
+	cpu_info.startVid = GetBits(edx, 8, 6);
+	cpu_info.maxVid = GetBits(edx, 16, 6);
+
+	cpu_info.currFid = GetBits(eax, 0, 6);
+	cpu_info.startFid = GetBits(eax, 8, 6);
+	cpu_info.maxFid = GetBits(eax, 16, 6);
+
+	cpu_info.multi = fid_codes[cpu_info.currFid] / 10.0;
 	cpu_info.fsb = cpu_info.frequency / cpu_info.multi;
 }
 
@@ -162,6 +185,7 @@ static bool __fastcall InitSystemInfo() {
 	if (Cpuid(0x80000001, &eax, &ebx, &ecx, &edx)) {
 		cpu_info.extFamily = eax >> 8 & 0xf;
 		cpu_info.extModel = eax >> 4 & 0xf;
+		cpu_info.MP = edx >> FEATURE_K7_ECC_BIT & 1;
 	}
 	else {
 		return false;
@@ -186,6 +210,11 @@ static bool __fastcall InitSystemInfo() {
 	}
 
 	cpu_info.cpuName = GetCpuName();
+
+	switch(cpu_info.cpuid) {
+		default:
+		;
+    }
 
 	return true;
 }
@@ -228,7 +257,7 @@ static void __fastcall ReadTimings(const struct timing_def_t* table, int size) {
 	for (int i = 0; i < size; i++) {
 		name = table[i].name;
 		def = GetDefByName(table, size, name);
-		combo = reinterpret_cast<TTimingComboBox*>
+		combo = static_cast<TTimingComboBox*>
 			(Application->FindComponent("MainForm")->FindComponent(name));
 
 		if (combo != NULL && combo != 0 && sizeof(def) > 0) {
@@ -263,7 +292,7 @@ static void __fastcall ReadRomsipValues(const struct timing_def_t* table,
 	for (int i = 0; i < size; i++) {
 		name = table[i].name;
 		def = GetDefByName(table, size, name);
-		box = reinterpret_cast<TAdvancedEdit*>
+		box = static_cast<TAdvancedEdit*>
 			(Application->FindComponent("MainForm")->FindComponent(name));
 
 		if (box != NULL && box != 0 && sizeof(def) > 0) {
@@ -287,7 +316,7 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
 
 	for (int i = 0; i < size; i++) {
 		name = table[i].name;
-		combo = reinterpret_cast<TTimingComboBox*>
+		combo = static_cast<TTimingComboBox*>
 			(Application->FindComponent("MainForm")->FindComponent(name));
 
 		if (combo != NULL && combo != 0 && combo->Changed) {
@@ -324,7 +353,7 @@ static void __fastcall WriteRomsipValues(const struct timing_def_t* table,
 
 	for (int i = 0; i < size; i++) {
 		name = table[i].name;
-		box = reinterpret_cast<TAdvancedEdit*>
+		box = static_cast<TAdvancedEdit*>
 			(Application->FindComponent("MainForm")->FindComponent(name));
 
 		if (box != NULL && box != 0 && box->Changed) {
@@ -519,7 +548,7 @@ void __fastcall TMainForm::OnMinimize(TObject *Sender) {
 	if (false) {
 		TrayIcon->Visible = true;
 		Application->MainFormOnTaskBar = false;
-		Hide();
+		Application->MainForm->Hide();
 		// WindowState = wsMinimized;
 
 		if (!minimizeHintShown) {
@@ -554,8 +583,7 @@ void __fastcall TMainForm::OnRestore(TObject *Sender) {
 
 void __fastcall TMainForm::TrayIconDblClick(TObject *Sender) {
 	Application->Restore();
-	// Application->MainForm->Show();
-	Show();
+	Application->MainForm->Show();
 	// WindowState = wsNormal;
 	Application->MainForm->BringToFront();
 }

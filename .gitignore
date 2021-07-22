@@ -36,3 +36,5 @@ __history/
 *.local
 
 Win32/
+
+__astcache/
