@@ -30,7 +30,7 @@ void __fastcall TTimingComboBox::CreateWnd()
 {
 	this->Style = csOwnerDrawFixed;
 	this->Color = clWindow;
-	this->DoubleBuffered = false;
+	//this->DoubleBuffered = false;
 
 	TComboBox::CreateWnd();
 

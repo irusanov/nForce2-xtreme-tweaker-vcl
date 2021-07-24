@@ -30,6 +30,9 @@ struct CPUInfo {
 	double pllValue;
 	double fsb;
 	double multi;
+    double dram;
+	unsigned char fsbDiv;
+	unsigned char dramDiv;
 	unsigned int maxVid;
 	unsigned int startVid;
 	unsigned int currVid;
@@ -99,7 +102,9 @@ const struct timing_def_t timingDefs[] = {
 	//{ "DLLEnable",   			0,  0,  1, 0xA4,  0,  1 },
 	{ "DriveStrengthMode",   	0,  0,  1, 0xA4,  1,  1 },
 	{ "SuperBypass",   			0,  0,  1, 0xFC,  0,  1 },
-	{ "DataScavengedRate",   	0,  0,  1, 0xF8,  2,  1 }
+	{ "DataScavengedRate",   	0,  0,  1, 0xF8,  2,  1 },
+
+	{ "FsbDramRatio",           0,  0,  3, 0x7C,  0,  8 },
 };
 
 const struct timing_def_t doubledTimingDefs[] = {
@@ -118,6 +123,8 @@ const struct timing_def_t doubledTimingDefs[] = {
 const struct timing_def_t chipsetTimingDefs[] = {
 	// name, 					b, d, f, reg, offset, bits
 	{ "CPUDisconnect",			0,  0,  0, 0x6C, 28,  1 },
+	{ "HALTDisconnect",			0,  0,  0, 0x6C, 14,  1 },
+	{ "STPGNTDisconnect",		0,  0,  0, 0x6C, 31,  1 },
 	{ "AGPFastWrite",			0,  0,  0, 0x44,  4,  1 },
 	{ "AGPSBA",					0,  0,  0, 0x48,  9,  1 },
 	{ "AGPControllerLatency",	0, 30,  0, 0x0C,  8,  8 },
@@ -126,6 +133,27 @@ const struct timing_def_t chipsetTimingDefs[] = {
 	//{ "DIMM_B0_CFG",			0,  0,  2, 0x40,  0,  1 },
 	//{ "DIMM_B1_CFG",			0,  0,  2, 0x44,  0,  1 },
 	//{ "DIMM_A0_CFG",			0,  0,  2, 0x48,  0,  1 },
+
+	// Thermal Throttling Ratio
+	{ "TTHRatio",			    0,  1,  0, 0x95,  1,  3 },
+	// Normal Throttling Ratio
+	{ "NTHRatio",			    0,  1,  0, 0x95,  1,  3 },
+};
+
+const struct timing_def_t s2kTimings[] = {
+	// S2K Control 1 Register
+	{ "SYSDCIN_Delay",			0,  0,  0, 0xE4,  0,  3 },
+	{ "SYSDCOUT_Delay",			0,  0,  0, 0xE4,  4,  2 },
+	{ "RDTOWR_Delay",			0,  0,  0, 0xE4,  7,  2 },
+	{ "WRTORD_Delay",			0,  0,  0, 0xE4, 10,  1 },
+	{ "WRDATA_Delay",			0,  0,  0, 0xE4, 12,  3 },
+	{ "XCAARB_PRCOUNT",			0,  0,  0, 0xE4, 16,  3 },
+	{ "XCAARB_RDCOUNT",			0,  0,  0, 0xE4, 19,  3 },
+	{ "XCAARB_WRCOUNT",			0,  0,  0, 0xE4, 22,  3 },
+};
+
+const struct timing_def_t s2kDoubledTimings[] = {
+
 };
 
 const struct timing_def_t romsipDefs[] = {
@@ -146,6 +174,19 @@ const struct timing_def_t romsipDefs[] = {
 Nforce2Pll pll;
 QueryPerformance qpc;
 
+// Get timing definition by component name
+static timing_def_t __fastcall GetDefByName(const struct timing_def_t* table,
+	int size, UnicodeString name) {
+	for (int i = 0; i < size; i++) {
+		if (table[i].name == name) {
+			return table[i];
+		}
+	}
+
+	return {};
+}
+// ---------------------------------------------------------------------------
+
 static void __fastcall RefreshCpuSpeed() {
 	DWORD eax = 0, ebx = 0, ecx = 0, edx = 0;
 
@@ -164,7 +205,21 @@ static void __fastcall RefreshCpuSpeed() {
 
 	cpu_info.multi = fid_codes[cpu_info.currFid] / 10.0;
 	cpu_info.fsb = cpu_info.frequency / cpu_info.multi;
+
+	timing_def_t def = GetDefByName(timingDefs, COUNT_OF(timingDefs), "FsbDramRatio");
+
+	unsigned int pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
+	unsigned int regValue = ReadPciReg(pciAddress);
+	unsigned int value = GetBits(regValue, def.offset, def.bits);
+
+	cpu_info.fsbDiv = value & 0xf;
+	cpu_info.dramDiv = value >> 4 & 0xf;
+
+	if (cpu_info.fsbDiv > 0 && cpu_info.dramDiv > 0) {
+        cpu_info.dram = cpu_info.fsb * cpu_info.dramDiv / cpu_info.fsbDiv;
+	}
 }
+// ---------------------------------------------------------------------------
 
 // Read cpu and system info
 static bool __fastcall InitSystemInfo() {
@@ -210,6 +265,7 @@ static bool __fastcall InitSystemInfo() {
 	}
 
 	cpu_info.cpuName = GetCpuName();
+	RefreshCpuSpeed();
 
 	switch(cpu_info.cpuid) {
 		default:
@@ -217,19 +273,6 @@ static bool __fastcall InitSystemInfo() {
     }
 
 	return true;
-}
-// ---------------------------------------------------------------------------
-
-// Get timing definition by component name
-static timing_def_t __fastcall GetDefByName(const struct timing_def_t* table,
-	int size, UnicodeString name) {
-	for (int i = 0; i < size; i++) {
-		if (table[i].name == name) {
-			return table[i];
-		}
-	}
-
-	return {};
 }
 // ---------------------------------------------------------------------------
 
@@ -332,10 +375,12 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
 			}
 
 			if (doubled) {
-				value = value << 4 | value;
+				value = (value << 4) | value;
 			}
 
-			if (name != "CAS" && name != "CR") {
+			if (name != "CAS" && name != "CR" && name != "HALTDisconnect"
+				&& name != "STPGNTDisconnect")
+			{
 				regValue = SetBits(regValue, def.offset, def.bits, value);
 				WritePciReg(pciAddress, regValue);
 			}
@@ -343,6 +388,37 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
 	}
 }
 // ---------------------------------------------------------------------------
+
+static void __fastcall WriteBusDisconnect() {
+	bool busDisconnect;
+	timing_def_t def;
+	unsigned int pciAddress = MakePciAddress(0, 0, 0, 0x6C);
+	unsigned int regValue, value;
+	TTimingComboBox* combo;
+
+	combo = static_cast<TTimingComboBox*>
+		(Application->FindComponent("MainForm")->FindComponent("STPGNTDisconnect"));
+
+	if (combo != NULL && combo != 0 && combo->Changed) {
+		regValue = ReadPciReg(pciAddress);
+		value = (unsigned int) combo->Value;
+
+		regValue = SetBits(regValue, 28, 1, ~value);
+		regValue = SetBits(regValue, 31, 1, value);
+		WritePciReg(pciAddress, regValue);
+	}
+
+	combo = static_cast<TTimingComboBox*>
+		(Application->FindComponent("MainForm")->FindComponent("HALTDisconnect"));
+
+	if (combo != NULL && combo != 0 && combo->Changed) {
+		regValue = ReadPciReg(pciAddress);
+		value = (unsigned int) combo->Value;
+
+		regValue = SetBits(regValue, 14, 2, (value << 1) | value);
+		WritePciReg(pciAddress, regValue);
+	}
+}
 
 static void __fastcall WriteRomsipValues(const struct timing_def_t* table,
 	int size) {
@@ -374,6 +450,7 @@ static void __fastcall RefreshTimings() {
 	ReadTimings(timingDefs, COUNT_OF(timingDefs));
 	ReadTimings(doubledTimingDefs, COUNT_OF(doubledTimingDefs));
 	ReadTimings(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs));
+    ReadTimings(s2kTimings, COUNT_OF(s2kTimings));
 	ReadRomsipValues(romsipDefs, COUNT_OF(romsipDefs));
 }
 // ---------------------------------------------------------------------------
@@ -420,7 +497,6 @@ __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
 
 	InitSystemInfo();
 	RefreshTimings();
-	RefreshCpuSpeed();
 
 	// Populate static System data
 	EditCpuName->Caption = cpu_info.cpuName.c_str();
@@ -457,11 +533,8 @@ void __fastcall TMainForm::TabControl1Change(TObject *Sender) {
 	TPanel *Panel;
 	for (int i = 0; i < NUMBER_OF_TABS; i++) {
 		Panel = TabPanels[i];
-		Panel->Visible = false;
+		Panel->Visible = (i == index);
 	}
-
-	Panel = TabPanels[index];
-	Panel->Visible = true;
 
 	int test;
 
@@ -475,6 +548,13 @@ void __fastcall TMainForm::TabControl1Change(TObject *Sender) {
 			Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.frequency)));
 		EditFsbClock->Caption =
 			Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.fsb)));
+
+		if (cpu_info.dram > 0) {
+			EditDramFrequency->Caption =
+				Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.dram)));
+			EditFsbDramRatio->Caption =
+				Format("%d:%d", ARRAYOFCONST(( cpu_info.fsbDiv, cpu_info.dramDiv)));
+		}
 		break;
 	case 1:
 		RefreshCpuSpeed();
@@ -510,6 +590,8 @@ void __fastcall TMainForm::ButtonApplyClick(TObject *Sender) {
 		break;
 	case 1:
 		WriteTimings(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs), false);
+		WriteTimings(s2kTimings, COUNT_OF(s2kTimings), false);
+		WriteBusDisconnect();
 		RefreshTimings();
 		UpdatePllSlider(cpu_info.fsb);
 		break;
@@ -535,7 +617,7 @@ void __fastcall TMainForm::TabControl1DrawTab(TCustomTabControl *Control,
 	int top = Active ? 3 : 2;
 
 	Control->Canvas->Brush->Color = clBtnFace;
-	Control->Canvas->Font->Color = Active ? clNavy : clWindowText;
+	Control->Canvas->Font->Color = Active ? clBlue : clWindowText;
 	Control->Canvas->FillRect(Rect);
 
 	Control->Canvas->TextOut(Rect.Left + left, Rect.Top + top,
