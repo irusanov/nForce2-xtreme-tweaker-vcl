@@ -4,7 +4,7 @@ object MainForm: TMainForm
   Anchors = []
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'nForce2XT v1.1 beta2'
+  Caption = 'nForce2XT v1.1 beta3'
   ClientHeight = 474
   ClientWidth = 382
   Color = clBtnFace
@@ -3082,6 +3082,8 @@ object MainForm: TMainForm
         Width = 153
         Height = 210
         Caption = 'S2K'
+        Ctl3D = True
+        ParentCtl3D = False
         TabOrder = 2
         object Label61: TLabel
           Left = 7
@@ -3251,8 +3253,14 @@ object MainForm: TMainForm
           ParentDoubleBuffered = False
           TabOrder = 3
           Items.Strings = (
-            'Disabled'
-            'Enabled')
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7')
           Max = 7
           Value = -1
           ItemValue = -1
@@ -3267,8 +3275,8 @@ object MainForm: TMainForm
           ParentDoubleBuffered = False
           TabOrder = 4
           Items.Strings = (
-            '0'
-            '1')
+            '1'
+            '2')
           CustomItems = True
           Max = 1
           Value = -1

@@ -403,7 +403,7 @@ static void __fastcall WriteBusDisconnect() {
 		regValue = ReadPciReg(pciAddress);
 		value = (unsigned int) combo->Value;
 
-		regValue = SetBits(regValue, 28, 1, ~value);
+		regValue = SetBits(regValue, 28, 1, ~value & 0x1);
 		regValue = SetBits(regValue, 31, 1, value);
 		WritePciReg(pciAddress, regValue);
 	}
