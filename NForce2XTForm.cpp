@@ -171,6 +171,8 @@ const struct timing_def_t romsipDefs[] = {
 	{ "Romsip6F",				0,  0,  3, 0x6C, 24,  8 },
 };
 
+const int NUMBER_OF_TABS = 3;
+
 Nforce2Pll pll;
 QueryPerformance qpc;
 
@@ -529,7 +531,6 @@ __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
 // ---------------------------------------------------------------------------
 
 void __fastcall TMainForm::TabControl1Change(TObject *Sender) {
-	const int NUMBER_OF_TABS = 3;
 	TPanel* TabPanels[NUMBER_OF_TABS] = {PanelDram, PanelChipset, PanelInfo};
 	int index = TabControl1->TabIndex;
 

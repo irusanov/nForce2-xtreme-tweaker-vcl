@@ -47,10 +47,13 @@ void Nforce2Pll::init() {
 double Nforce2Pll::nforce2_calc_fsb(int pll)
 {
 	double mul, div;
+
 	mul = (pll >> 8) & 0xff;
 	div = pll & 0xff;
+
 	if (div > 0)
 		return 25.0 * mul / div;
+
 	return 0;
 }
 
@@ -65,6 +68,7 @@ int Nforce2Pll::nforce2_calc_pll(unsigned int fsb)
 	unsigned char xmul, xdiv;
 	unsigned char mul = 0, div = 0;
 	int tried = 0;
+
 	/* Try to calculate multiplier and divider up to 4 times */
 	while (((mul == 0) || (div == 0)) && (tried <= 3)) {
 		for (xdiv = 2; xdiv <= 0x80; xdiv++)
@@ -76,6 +80,7 @@ int Nforce2Pll::nforce2_calc_pll(unsigned int fsb)
 				}
 		tried++;
 	}
+
 	if ((mul == 0) || (div == 0))
 		return -1;
 	return NFORCE2_PLL(mul, div);
@@ -90,8 +95,10 @@ int Nforce2Pll::nforce2_calc_pll(unsigned int fsb)
 void Nforce2Pll::nforce2_write_pll(int pll)
 {
 	int temp;
+
 	/* Set the pll addr. to 0x00 */
 	WritePciConfigDwordEx(nforce2_dev, NFORCE2_PLLADR, 0);
+
 	/* Now write the value in all 64 registers */
 	for (temp = 0; temp <= 0x3f; temp++)
 		WritePciConfigDwordEx(nforce2_dev, NFORCE2_PLLREG, pll);
@@ -106,22 +113,25 @@ void Nforce2Pll::nforce2_write_pll(int pll)
 unsigned int Nforce2Pll::nforce2_fsb_read(int bootfsb)
 {
 	unsigned int nforce2_sub5, fsb, temp = 0;
+
 	/* Get chipset boot FSB from subdevice 5 (FSB at boot-time) */
 	nforce2_sub5 = FindPciDeviceById(PCI_VENDOR_ID_NVIDIA, 0x01EF, 0);
 
 	if (!nforce2_sub5)
 		return 0;
+
 	ReadPciConfigDwordEx(nforce2_sub5, NFORCE2_BOOTFSB, (DWORD *) &fsb);
 
 	fsb /= 1000000;
+
 	/* Check if PLL register is already set */
 	ReadPciConfigByteEx(nforce2_dev, NFORCE2_PLLENABLE, (BYTE *)&temp);
 
 	if (bootfsb || !temp)
 		return fsb;
+
 	/* Use PLL register FSB value */
 	ReadPciConfigDwordEx(nforce2_dev, NFORCE2_PLLREG, (DWORD *) &temp);
-
 	fsb = nforce2_calc_fsb(temp);
 
 	return fsb;
@@ -149,30 +159,39 @@ int Nforce2Pll::nforce2_set_fsb(unsigned int fsb)
 		//MessageBox(NULL, L"Error while reading the FSB!", L"Error", MB_ICONERROR | MB_OK);
 		return -1;
 	}
+
 	/* First write? Then set actual value */
 	ReadPciConfigByteEx(nforce2_dev, NFORCE2_PLLENABLE, (BYTE *)&temp);
 
-	if (temp == 0x1) {
+	if (!temp) {
 		pll = nforce2_calc_pll(tfsb);
+
 		if (pll < 0)
 			return -1;
+
 		nforce2_write_pll(pll);
 	}
+
 	/* Enable write access */
 	temp = 0x01;
 	WritePciConfigByteEx(nforce2_dev, NFORCE2_PLLENABLE, temp);
 	diff = tfsb - fsb;
+
 	if (!diff)
 		return 0;
+
 	while ((tfsb != fsb) && (tfsb <= 350) && (tfsb >= 50)) {
 		if (diff < 0)
 			tfsb++;
 		else
 			tfsb--;
+
 		/* Calculate the PLL reg. value */
 		pll = nforce2_calc_pll(tfsb);
+
 		if (pll == -1)
 			return -1;
+
 		nforce2_write_pll(pll);
 #ifdef NFORCE2_DELAY
 		Sleep(NFORCE2_DELAY);
@@ -180,6 +199,7 @@ int Nforce2Pll::nforce2_set_fsb(unsigned int fsb)
 	}
 	temp = 0x40;
 	WritePciConfigByteEx(nforce2_dev, NFORCE2_PLLADR, temp);
+
 	return 0;
 }
 
@@ -207,7 +227,6 @@ void Nforce2Pll::GenerateFsbTable()
 
 	//possibleFsb.sort();
 }
-
 
 Nforce2Pll::~Nforce2Pll(void)
 {
