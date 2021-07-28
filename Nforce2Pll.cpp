@@ -10,24 +10,32 @@
  *  Partial port of the nforce2 linux driver 
  *  https://github.com/torvalds/linux/blob/master/drivers/cpufreq/cpufreq-nforce2.c
  */
+#include <map>
+#include <vcl.h>
 
 #include "OlsApi.h"
+#include "Utils.h"
 #include "Nforce2Pll.h"
 
-unsigned int Nforce2Pll::nforce2_dev;
+using namespace std;
+
+unsigned long nforce2_dev;
+map<double, int> possibleFsb;
 
 Nforce2Pll::Nforce2Pll(void)
 {
-	// Detect the southbridge, which contains PLL logic
+    //GenerateFsbTable();
+}
+
+void Nforce2Pll::init() {
+    // Detect the southbridge, which contains PLL logic
 	nforce2_dev = FindPciDeviceById(PCI_VENDOR_ID_NVIDIA, PCI_DEVICE_ID_NVIDIA_NFORCE2, 0);
 
 	if (nforce2_dev == 0xFFFFFFFF)
 	{
-		//MessageBox(NULL, L"Not a NForce2 chipset!", L"Error", MB_ICONERROR | MB_OK);
-		//return -1;
+		MessageDlg("Not a NForce2 chipset!", mtError, mbOKCancel, 0);
+		return;
 	}
-
-    //GenerateFsbTable();
 }
 
 /**
@@ -36,13 +44,13 @@ Nforce2Pll::Nforce2Pll(void)
  *
  *   Calculates FSB from PLL value
  */
-int Nforce2Pll::nforce2_calc_fsb(int pll)
+double Nforce2Pll::nforce2_calc_fsb(int pll)
 {
-	unsigned char mul, div;
+	double mul, div;
 	mul = (pll >> 8) & 0xff;
 	div = pll & 0xff;
 	if (div > 0)
-		return NFORCE2_XTAL * mul / div;
+		return 25.0 * mul / div;
 	return 0;
 }
 
@@ -87,7 +95,6 @@ void Nforce2Pll::nforce2_write_pll(int pll)
 	/* Now write the value in all 64 registers */
 	for (temp = 0; temp <= 0x3f; temp++)
 		WritePciConfigDwordEx(nforce2_dev, NFORCE2_PLLREG, pll);
-	return;
 }
 
 /**
@@ -98,22 +105,25 @@ void Nforce2Pll::nforce2_write_pll(int pll)
  */
 unsigned int Nforce2Pll::nforce2_fsb_read(int bootfsb)
 {
-	DWORD nforce2_sub5;
-	DWORD fsb = 0;
-	DWORD temp = 0;
+	unsigned int nforce2_sub5, fsb, temp = 0;
 	/* Get chipset boot FSB from subdevice 5 (FSB at boot-time) */
 	nforce2_sub5 = FindPciDeviceById(PCI_VENDOR_ID_NVIDIA, 0x01EF, 0);
+
 	if (!nforce2_sub5)
 		return 0;
-	ReadPciConfigDwordEx(nforce2_sub5, NFORCE2_BOOTFSB, &fsb);
+	ReadPciConfigDwordEx(nforce2_sub5, NFORCE2_BOOTFSB, (DWORD *) &fsb);
+
 	fsb /= 1000000;
 	/* Check if PLL register is already set */
 	ReadPciConfigByteEx(nforce2_dev, NFORCE2_PLLENABLE, (BYTE *)&temp);
+
 	if (bootfsb || !temp)
 		return fsb;
 	/* Use PLL register FSB value */
-	ReadPciConfigDwordEx(nforce2_dev, NFORCE2_PLLREG, &temp);
+	ReadPciConfigDwordEx(nforce2_dev, NFORCE2_PLLREG, (DWORD *) &temp);
+
 	fsb = nforce2_calc_fsb(temp);
+
 	return fsb;
 }
 
@@ -134,13 +144,15 @@ int Nforce2Pll::nforce2_set_fsb(unsigned int fsb)
 		return -EINVAL;
 	}*/
 	tfsb = nforce2_fsb_read(0);
+
 	if (!tfsb) {
 		//MessageBox(NULL, L"Error while reading the FSB!", L"Error", MB_ICONERROR | MB_OK);
 		return -1;
 	}
 	/* First write? Then set actual value */
 	ReadPciConfigByteEx(nforce2_dev, NFORCE2_PLLENABLE, (BYTE *)&temp);
-	if (!temp) {
+
+	if (temp == 0x1) {
 		pll = nforce2_calc_pll(tfsb);
 		if (pll < 0)
 			return -1;
@@ -148,7 +160,7 @@ int Nforce2Pll::nforce2_set_fsb(unsigned int fsb)
 	}
 	/* Enable write access */
 	temp = 0x01;
-	WritePciConfigByteEx(nforce2_dev, NFORCE2_PLLENABLE, (char)temp);
+	WritePciConfigByteEx(nforce2_dev, NFORCE2_PLLENABLE, temp);
 	diff = tfsb - fsb;
 	if (!diff)
 		return 0;
@@ -167,8 +179,33 @@ int Nforce2Pll::nforce2_set_fsb(unsigned int fsb)
 #endif
 	}
 	temp = 0x40;
-	WritePciConfigByteEx(nforce2_dev, NFORCE2_PLLADR, (char)temp);
+	WritePciConfigByteEx(nforce2_dev, NFORCE2_PLLADR, temp);
 	return 0;
+}
+
+void Nforce2Pll::GenerateFsbTable()
+{
+	BYTE xmul, xdiv;
+	map<double,int>::iterator it;
+
+	for (xdiv = 2; xdiv <= 0x80; xdiv++)
+	{
+		for (xmul = 1; xmul <= 0xfe; xmul++)
+		{
+			int pll = NFORCE2_PLL(xmul, xdiv);
+			double fsb = nforce2_calc_pll(pll);
+
+			if (fsb >= 30 && fsb <= 350)
+			{
+				it = possibleFsb.find(fsb);
+				if (it == possibleFsb.end()) {
+					possibleFsb.insert(pair<double,int>(fsb, pll));
+				}
+			}
+		}
+	}
+
+	//possibleFsb.sort();
 }
 
 

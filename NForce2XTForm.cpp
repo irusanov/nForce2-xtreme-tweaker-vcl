@@ -49,8 +49,8 @@ struct CPUInfo {
 
 // https://github.com/torvalds/linux/blob/master/drivers/cpufreq/powernow-k7.c#L78
 const int fid_codes[32] = {
-    110, 115, 120, 125, 50, 55, 60, 65,
-    70, 75, 80, 85, 90, 95, 100, 105,
+	110, 115, 120, 125, 50, 55, 60, 65,
+	70, 75, 80, 85, 90, 95, 100, 105,
 	30, 190, 40, 200, 130, 135, 140, 210,
 	150, 225, 160, 165, 170, 180, 230, 240,
 };
@@ -76,35 +76,35 @@ struct timing_def_t {
 };
 
 const struct timing_def_t timingDefs[] = {
-	// name, 					b,  d,  f, reg, offset, bits
-	{ "CAS",					0,  0,  1, 0xB0,  4,  3 },
+	// name,                    b,  d,  f, reg, offset, bits
+	{ "CAS",                    0,  0,  1, 0xB0,  4,  3 },
 
-	{ "TRC",    				0,  0,  1, 0x90,  0,  5 },
-	{ "TRFC",   				0,  0,  1, 0x90,  8,  5 },
-	{ "TRAS",   				0,  0,  1, 0x90, 15,  4 },
-	{ "TRCDR",  				0,  0,  1, 0x90, 20,  4 },
-	{ "TRCDW",  				0,  0,  1, 0x90, 24,  4 },
-	{ "TRP",  					0,  0,  1, 0x90, 28,  4 },
+	{ "TRC",                    0,  0,  1, 0x90,  0,  5 },
+	{ "TRFC",                   0,  0,  1, 0x90,  8,  5 },
+	{ "TRAS",                   0,  0,  1, 0x90, 15,  4 },
+	{ "TRCDR",                  0,  0,  1, 0x90, 20,  4 },
+	{ "TRCDW",                  0,  0,  1, 0x90, 24,  4 },
+	{ "TRP",                    0,  0,  1, 0x90, 28,  4 },
 
-	{ "TDOE",   				0,  0,  1, 0x94, 28,  3 },
-	{ "TRRD",   				0,  0,  1, 0x94, 24,  3 },
-	{ "TWTP",   				0,  0,  1, 0x94, 20,  3 },
-	{ "TWTR",   				0,  0,  1, 0x94, 16,  3 },
-	{ "TREXT",  				0,  0,  1, 0x94, 12,  2 },
-	{ "TRTP",   				0,  0,  1, 0x94,  8,  3 },
-	{ "TRTW",   				0,  0,  1, 0x94,  4,  3 },
+	{ "TDOE",                   0,  0,  1, 0x94, 28,  3 },
+	{ "TRRD",                   0,  0,  1, 0x94, 24,  3 },
+	{ "TWTP",                   0,  0,  1, 0x94, 20,  3 },
+	{ "TWTR",                   0,  0,  1, 0x94, 16,  3 },
+	{ "TREXT",                  0,  0,  1, 0x94, 12,  2 },
+	{ "TRTP",                   0,  0,  1, 0x94,  8,  3 },
+	{ "TRTW",                   0,  0,  1, 0x94,  4,  3 },
 
-	{ "CR",     				0,  0,  1, 0x84, 29,  1 },
-	{ "TREF",   				0,  0,  1, 0x60,  0, 16 },
+	{ "CR",                     0,  0,  1, 0x84, 29,  1 },
+	{ "TREF",                   0,  0,  1, 0x60,  0, 16 },
 
-	{ "AutoPrecharge",   		0,  0,  1, 0x84, 17,  1 },
-	{ "BurstMode",   			0,  0,  1, 0xA0,  3,  1 },
-	//{ "DLLEnable",   			0,  0,  1, 0xA4,  0,  1 },
-	{ "DriveStrengthMode",   	0,  0,  1, 0xA4,  1,  1 },
-	{ "SuperBypass",   			0,  0,  1, 0xFC,  0,  1 },
+	{ "AutoPrecharge",          0,  0,  1, 0x84, 17,  1 },
+	{ "BurstMode",              0,  0,  1, 0xA0,  3,  1 },
+	//{ "DLLEnable",            0,  0,  1, 0xA4,  0,  1 },
+	{ "DriveStrengthMode",      0,  0,  1, 0xA4,  1,  1 },
+	{ "SuperBypass",            0,  0,  1, 0xFC,  0,  1 },
 	{ "DataScavengedRate",   	0,  0,  1, 0xF8,  2,  1 },
 
-	{ "FsbDramRatio",           0,  0,  3, 0x7C,  0,  8 },
+	{ "FsbDramRatio",   		0,  0,  3, 0x7C,  0,  8 },
 };
 
 const struct timing_def_t doubledTimingDefs[] = {
@@ -216,7 +216,7 @@ static void __fastcall RefreshCpuSpeed() {
 	cpu_info.dramDiv = value >> 4 & 0xf;
 
 	if (cpu_info.fsbDiv > 0 && cpu_info.dramDiv > 0) {
-        cpu_info.dram = cpu_info.fsb * cpu_info.dramDiv / cpu_info.fsbDiv;
+		cpu_info.dram = cpu_info.fsb * cpu_info.dramDiv / cpu_info.fsbDiv;
 	}
 }
 // ---------------------------------------------------------------------------
@@ -476,7 +476,8 @@ void __fastcall TMainForm::UpdatePllSlider(unsigned int position) {
 //	Params.ExStyle |= 0x02000000;   // WS_EX_COMPOSITED
 //
 //	TForm::CreateParams(Params);
-//}
+//}
+
 
 // ---------------------------------------------------------------------------
 
@@ -491,6 +492,8 @@ __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
 		DeinitializeOls();
 		Application->Terminate();
 	}
+
+	pll.init();
 
 	Application->OnMinimize = OnMinimize;
 	Application->OnRestore = OnRestore;
@@ -593,6 +596,8 @@ void __fastcall TMainForm::ButtonApplyClick(TObject *Sender) {
 		WriteTimings(s2kTimings, COUNT_OF(s2kTimings), false);
 		WriteBusDisconnect();
 		RefreshTimings();
+		pll.nforce2_set_fsb(TrackBarPll->Position);
+        RefreshCpuSpeed();
 		UpdatePllSlider(cpu_info.fsb);
 		break;
 	default: ;
@@ -679,12 +684,16 @@ void __fastcall TMainForm::FormDestroy(TObject *Sender) {
 void __fastcall TMainForm::ButtonNextPllClick(TObject *Sender) {
 	int pos = TrackBarPll->Position;
 	UpdatePllSlider(++pos);
+    PanelCurrentFsb->Caption =
+		Format("%.2f MHz", ARRAYOFCONST(((long double)TrackBarPll->Position)));
 }
 // ---------------------------------------------------------------------------
 
 void __fastcall TMainForm::ButtonPrevPllClick(TObject *Sender) {
 	int pos = TrackBarPll->Position;
 	UpdatePllSlider(--pos);
+	PanelCurrentFsb->Caption =
+		Format("%.2f MHz", ARRAYOFCONST(((long double)TrackBarPll->Position)));
 }
 // ---------------------------------------------------------------------------
 

@@ -15,13 +15,15 @@
 class Nforce2Pll
 {
 private:
-	static unsigned int nforce2_dev;
+//	static unsigned int nforce2_dev;
 
 public:
 	Nforce2Pll(void);
 	virtual ~Nforce2Pll(void);
 
-	static int nforce2_calc_fsb(int pll);
+	void init();
+    static void GenerateFsbTable();
+	static double nforce2_calc_fsb(int pll);
 	static int nforce2_calc_pll(unsigned int fsb);
 	static void nforce2_write_pll(int pll);
 	static unsigned int nforce2_fsb_read(int bootfsb);
