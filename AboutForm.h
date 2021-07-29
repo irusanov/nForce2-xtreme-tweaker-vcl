@@ -11,9 +11,9 @@
 class TAboutDialog : public TForm
 {
 __published:	// IDE-managed Components
-private:	// User declarations
-public:		// User declarations
-	__fastcall TAboutDialog(TComponent* Owner);
+private:  // User declarations
+public:   // User declarations
+  __fastcall TAboutDialog(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TAboutDialog *AboutDialog;
