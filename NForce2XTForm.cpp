@@ -29,6 +29,7 @@ struct CPUInfo {
     double frequency;
     double pllValue;
     double fsb;
+    double fsbFactor;
     double multi;
     double dram;
     unsigned char fsbDiv;
@@ -56,13 +57,13 @@ const int fid_codes[32] = {
 };
 
 enum CodeName {
-  Spitfire,
-  Morgan,
-  Applebred,
-  Thunderbird,
-  Palomino,
-  Thoroughbred,
-  Barton,
+    Spitfire,
+    Morgan,
+    Applebred,
+    Thunderbird,
+    Palomino,
+    Thoroughbred,
+    Barton,
 };
 
 struct timing_def_t {
@@ -175,6 +176,9 @@ const int NUMBER_OF_TABS = 3;
 
 Nforce2Pll pll;
 QueryPerformance qpc;
+double targetFsb;
+int targetPll;
+bool updateFromButtons = false;
 
 // Get timing definition by component name
 static timing_def_t __fastcall GetDefByName(const struct timing_def_t* table,
@@ -223,6 +227,9 @@ static void __fastcall RefreshCpuSpeed() {
     if (cpu_info.fsbDiv > 0 && cpu_info.dramDiv > 0) {
         cpu_info.dram = cpu_info.fsb * cpu_info.dramDiv / cpu_info.fsbDiv;
     }
+
+    int realFsb = pll.nforce2_fsb_read(0);
+    cpu_info.fsbFactor = realFsb / cpu_info.fsb;
 }
 // ---------------------------------------------------------------------------
 
@@ -464,16 +471,19 @@ static void __fastcall RefreshTimings() {
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TMainForm::UpdatePllSlider(unsigned int position) {
-    if (position != NULL) {
-        TrackBarPll->Position = position;
-    }
+void __fastcall TMainForm::UpdatePllSlider(double fsb, int pll) {
+//    if (fsb) {
+//        TrackBarPll->Position = fsb;
+//    }
+
+    targetFsb = fsb;
+    targetPll = pll;
 
     PanelCurrentFsb->Caption =
-        Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.fsb)));
+        Format("%.2f MHz", ARRAYOFCONST(((long double)targetFsb)));
 
-    bool minReached = position <= TrackBarPll->Min;
-    bool maxReached = position >= TrackBarPll->Max;
+    bool minReached = targetFsb <= TrackBarPll->Min;
+    bool maxReached = targetFsb >= TrackBarPll->Max;
 
     ButtonNextPll->Enabled = !maxReached;
     ButtonPrevPll->Enabled = !minReached;
@@ -569,7 +579,10 @@ void __fastcall TMainForm::TabControl1Change(TObject *Sender) {
         break;
     case 1:
         RefreshCpuSpeed();
-        UpdatePllSlider(cpu_info.fsb);
+        updateFromButtons = true;
+        TrackBarPll->Position = cpu_info.fsb;
+        UpdatePllSlider(cpu_info.fsb, 0);
+        updateFromButtons = false;
         break;
     default: ;
     }
@@ -586,7 +599,10 @@ void __fastcall TMainForm::ButtonRefreshClick(TObject *Sender) {
     }
 
     if (index == 1) {
-        UpdatePllSlider(cpu_info.fsb);
+        UpdatePllSlider(cpu_info.fsb, 0);
+        updateFromButtons = true;
+        TrackBarPll->Position = cpu_info.fsb;
+        updateFromButtons = false;
     }
 }
 // ---------------------------------------------------------------------------
@@ -604,9 +620,11 @@ void __fastcall TMainForm::ButtonApplyClick(TObject *Sender) {
         WriteTimings(s2kTimings, COUNT_OF(s2kTimings), false);
         WriteBusDisconnect();
         RefreshTimings();
-        pll.nforce2_set_fsb(TrackBarPll->Position);
+        if (targetPll != 0) {
+            pll.nforce2_set_fsb_pll(targetFsb, targetPll);
+        }
         RefreshCpuSpeed();
-        UpdatePllSlider(cpu_info.fsb);
+        UpdatePllSlider(cpu_info.fsb, 0);
         break;
     default: ;
     }
@@ -690,23 +708,40 @@ void __fastcall TMainForm::FormDestroy(TObject *Sender) {
 // ---------------------------------------------------------------------------
 
 void __fastcall TMainForm::ButtonNextPllClick(TObject *Sender) {
-    int pos = TrackBarPll->Position;
+    pair<double, int> nextPll = pll.GetNextPll(targetFsb);
+    double fsb = nextPll.first;
+    int pll = nextPll.second;
 
-    UpdatePllSlider(++pos);
-    PanelCurrentFsb->Caption =
-        Format("%.2f MHz", ARRAYOFCONST(((long double)TrackBarPll->Position)));
+    if (fsb > 0) {
+        updateFromButtons = true;
+        TrackBarPll->Position = fsb;
+        UpdatePllSlider(fsb, pll);
+        updateFromButtons = false;
+    }
 }
 // ---------------------------------------------------------------------------
 
 void __fastcall TMainForm::ButtonPrevPllClick(TObject *Sender) {
-    int pos = TrackBarPll->Position;
-    UpdatePllSlider(--pos);
-    PanelCurrentFsb->Caption =
-        Format("%.2f MHz", ARRAYOFCONST(((long double)TrackBarPll->Position)));
+    pair<double, int> prevPll = pll.GetPrevPll(targetFsb);
+    double fsb = prevPll.first;
+    int pll = prevPll.second;
+
+    if (fsb > 0) {
+        updateFromButtons = true;
+        TrackBarPll->Position = fsb;
+        UpdatePllSlider(fsb, pll);
+        updateFromButtons = false;
+    }
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TMainForm::TrackBarPllChange(TObject *Sender) {
-    int position = static_cast<TTrackBar*>(Sender)->Position;
-    UpdatePllSlider(position);
+void __fastcall TMainForm::TrackBarPllChange(TObject *Sender)
+{
+    if (!updateFromButtons) {
+        int position = static_cast<TTrackBar*>(Sender)->Position;
+        pair<double, int> p = pll.GetPrevPll(position);
+        UpdatePllSlider(p.first, p.second);
+    }
 }
+//---------------------------------------------------------------------------
+
