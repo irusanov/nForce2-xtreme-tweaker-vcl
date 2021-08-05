@@ -231,12 +231,17 @@ static void __fastcall RefreshCpuSpeed() {
         cpu_info.currFid = GetBits(eax, 0, 6);
     }
 
+    cpu_info.fid = GetFID();
+
     // FID from chipset is 1 byte and covers up to 12.5x
     // CurrFID from MSR_K7_FID_VID_STATUS is also unreliable
     // Calculate multiplier from CPU frequency and FSB (from PLL)
-    //cpu_info.fid = GetFID();
-    //cpu_info.multi = fid_codes[cpu_info.fid] / 10.0;
-    cpu_info.multi = floor(((cpu_info.frequency / cpu_info.fsbFromPll) * 2) + 0.5) / 2;
+    if (cpu_info.fsbFromPll > 0) {
+        cpu_info.multi = floor(((cpu_info.frequency / cpu_info.fsbFromPll) * 2) + 0.5) / 2;
+    } else {
+        cpu_info.multi = fid_codes[cpu_info.fid] / 10.0;
+    }
+
     cpu_info.fsb = cpu_info.frequency / cpu_info.multi;
     targetFsb = cpu_info.fsb;
 
