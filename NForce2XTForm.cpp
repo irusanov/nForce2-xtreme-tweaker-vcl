@@ -27,7 +27,7 @@ struct CPUInfo {
     unsigned char stepping;
     unsigned char patchLevel;
     double frequency;
-    double pllValue;
+    double fsbFromPll;
     double fsb;
     double multi;
     double dram;
@@ -39,6 +39,7 @@ struct CPUInfo {
     unsigned int maxFid;
     unsigned int startFid;
     unsigned int currFid;
+    unsigned int fid;
     bool MP;
     int l1DataCache;
     int l1InstCache;
@@ -48,6 +49,7 @@ struct CPUInfo {
 } cpu_info;
 
 // https://github.com/torvalds/linux/blob/master/drivers/cpufreq/powernow-k7.c#L78
+// 0x0 - 0x1f. 0 - 31
 const int fid_codes[32] = {
     110, 115, 120, 125, 50, 55, 60, 65,
     70, 75, 80, 85, 90, 95, 100, 105,
@@ -56,13 +58,13 @@ const int fid_codes[32] = {
 };
 
 enum CodeName {
-  Spitfire,
-  Morgan,
-  Applebred,
-  Thunderbird,
-  Palomino,
-  Thoroughbred,
-  Barton,
+    Spitfire,
+    Morgan,
+    Applebred,
+    Thunderbird,
+    Palomino,
+    Thoroughbred,
+    Barton,
 };
 
 struct timing_def_t {
@@ -150,6 +152,7 @@ const struct timing_def_t s2kTimings[] = {
     { "XCAARB_PRCOUNT",         0,  0,  0, 0xE4, 16,  3 },
     { "XCAARB_RDCOUNT",         0,  0,  0, 0xE4, 19,  3 },
     { "XCAARB_WRCOUNT",         0,  0,  0, 0xE4, 22,  3 },
+    { "FID",                    0,  0,  0, 0xF0, 28,  4 },
 };
 
 const struct timing_def_t s2kDoubledTimings[] = {
@@ -175,6 +178,9 @@ const int NUMBER_OF_TABS = 3;
 
 Nforce2Pll pll;
 QueryPerformance qpc;
+double targetFsb;
+int targetPll;
+bool updateFromButtons = false;
 
 // Get timing definition by component name
 static timing_def_t __fastcall GetDefByName(const struct timing_def_t* table,
@@ -190,32 +196,55 @@ static timing_def_t __fastcall GetDefByName(const struct timing_def_t* table,
 }
 // ---------------------------------------------------------------------------
 
+static unsigned int __fastcall GetFID() {
+    timing_def_t def;
+    unsigned int pciAddress;
+    unsigned int regValue;
+    unsigned int value;
+
+    // Get actual FID from chipset
+    def = GetDefByName(s2kTimings, COUNT_OF(s2kTimings), "FID");
+    pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
+    regValue = ReadPciReg(pciAddress);
+    // if value is 0011 (0x3), ratio is >= 12.5x (FID 0x3)
+    value = GetBits(regValue, def.offset, def.bits);
+
+    return value;
+}
+
+// Refresh frequency related parameters
 static void __fastcall RefreshCpuSpeed() {
     DWORD eax = 0, ebx = 0, ecx = 0, edx = 0;
+    timing_def_t def;
+    unsigned int pciAddress;
+    unsigned int regValue;
+    unsigned int value;
 
-    cpu_info.pllValue = pll.nforce2_fsb_read(0);
+    // Read current FSB
+    cpu_info.fsbFromPll = pll.nforce2_fsb_read(0);
+    // Measure current CPU frequency
     cpu_info.frequency = qpc.MeasureCPUFrequency();
 
-    Rdmsr(MSR_K7_FID_VID_STATUS, &eax, &edx);
+    // Update current FID and VID
+    if (Rdmsr(MSR_K7_FID_VID_STATUS, &eax, &edx)) {
+        cpu_info.currVid = GetBits(edx, 0, 6);
+        cpu_info.currFid = GetBits(eax, 0, 6);
+    }
 
-    cpu_info.currVid = GetBits(edx, 0, 6);
-    cpu_info.startVid = GetBits(edx, 8, 6);
-    cpu_info.maxVid = GetBits(edx, 16, 6);
-
-    cpu_info.currFid = GetBits(eax, 0, 6);
-    cpu_info.startFid = GetBits(eax, 8, 6);
-    cpu_info.maxFid = GetBits(eax, 16, 6);
-
-    cpu_info.multi = fid_codes[cpu_info.currFid] / 10.0;
+    // FID from chipset is 1 byte and covers up to 12.5x
+    // CurrFID from MSR_K7_FID_VID_STATUS is also unreliable
+    // Calculate multiplier from CPU frequency and FSB (from PLL)
+    //cpu_info.fid = GetFID();
+    //cpu_info.multi = fid_codes[cpu_info.fid] / 10.0;
+    cpu_info.multi = floor(((cpu_info.frequency / cpu_info.fsbFromPll) * 2) + 0.5) / 2;
     cpu_info.fsb = cpu_info.frequency / cpu_info.multi;
+    targetFsb = cpu_info.fsb;
 
-    timing_def_t def = GetDefByName(timingDefs, COUNT_OF(timingDefs),
-        "FsbDramRatio");
-
-    unsigned int pciAddress = MakePciAddress(def.bus, def.device, def.function,
-        def.reg);
-    unsigned int regValue = ReadPciReg(pciAddress);
-    unsigned int value = GetBits(regValue, def.offset, def.bits);
+    // Get FSB:DRAM ratio
+    def = GetDefByName(timingDefs, COUNT_OF(timingDefs), "FsbDramRatio");
+    pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
+    regValue = ReadPciReg(pciAddress);
+    value = GetBits(regValue, def.offset, def.bits);
 
     cpu_info.fsbDiv = value & 0xf;
     cpu_info.dramDiv = value >> 4 & 0xf;
@@ -226,7 +255,7 @@ static void __fastcall RefreshCpuSpeed() {
 }
 // ---------------------------------------------------------------------------
 
-// Read cpu and system info
+// Read CPU and system info, invoked once
 static bool __fastcall InitSystemInfo() {
     DWORD eax = 0, ebx = 0, ecx = 0, edx = 0;
 
@@ -269,7 +298,19 @@ static bool __fastcall InitSystemInfo() {
         cpu_info.manID.reticleSite = GetBits(eax, 8, 2);
     }
 
+    // Read CPU FID and VID values
+    if (Rdmsr(MSR_K7_FID_VID_STATUS, &eax, &edx)) {
+        cpu_info.currVid = GetBits(edx, 0, 6);
+        cpu_info.startVid = GetBits(edx, 8, 6);
+        cpu_info.maxVid = GetBits(edx, 16, 6);
+
+        cpu_info.currFid = GetBits(eax, 0, 6);
+        cpu_info.startFid = GetBits(eax, 8, 6);
+        cpu_info.maxFid = GetBits(eax, 16, 6);
+    }
+
     cpu_info.cpuName = GetCpuName();
+
     RefreshCpuSpeed();
 
     switch (cpu_info.cpuid) {
@@ -464,31 +505,22 @@ static void __fastcall RefreshTimings() {
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TMainForm::UpdatePllSlider(unsigned int position) {
-    if (position != NULL) {
-        TrackBarPll->Position = position;
-    }
+void __fastcall TMainForm::UpdatePllSlider(double fsb, int pll) {
+    targetFsb = fsb;
+    targetPll = pll;
 
     PanelCurrentFsb->Caption =
-        Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.fsb)));
+        Format("%.2f MHz", ARRAYOFCONST(((long double)targetFsb)));
 
-    bool minReached = position <= TrackBarPll->Min;
-    bool maxReached = position >= TrackBarPll->Max;
+    bool minReached = TrackBarPll->Position <= TrackBarPll->Min;
+    bool maxReached = TrackBarPll->Position >= TrackBarPll->Max;
 
     ButtonNextPll->Enabled = !maxReached;
     ButtonPrevPll->Enabled = !minReached;
 }
 // ---------------------------------------------------------------------------
 
-// void __fastcall TMainForm::CreateParams(TCreateParams &Params) {
-// Params.Style &= ~0x02000000;   // WS_EX_COMPOSITED
-// Params.ExStyle |= 0x02000000;   // WS_EX_COMPOSITED
-//
-// TForm::CreateParams(Params);
-// }
-
-// ---------------------------------------------------------------------------
-
+// Main
 __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
     if (!InitializeOls()) {
         MessageDlg("Error initializing OpenLibSys", mtError, mbOKCancel, 0);
@@ -569,7 +601,10 @@ void __fastcall TMainForm::TabControl1Change(TObject *Sender) {
         break;
     case 1:
         RefreshCpuSpeed();
-        UpdatePllSlider(cpu_info.fsb);
+        updateFromButtons = true;
+        TrackBarPll->Position = cpu_info.fsb;
+        UpdatePllSlider(cpu_info.fsb, 0);
+        updateFromButtons = false;
         break;
     default: ;
     }
@@ -586,7 +621,10 @@ void __fastcall TMainForm::ButtonRefreshClick(TObject *Sender) {
     }
 
     if (index == 1) {
-        UpdatePllSlider(cpu_info.fsb);
+        updateFromButtons = true;
+        TrackBarPll->Position = cpu_info.fsb;
+        UpdatePllSlider(cpu_info.fsb, 0);
+        updateFromButtons = false;
     }
 }
 // ---------------------------------------------------------------------------
@@ -604,9 +642,13 @@ void __fastcall TMainForm::ButtonApplyClick(TObject *Sender) {
         WriteTimings(s2kTimings, COUNT_OF(s2kTimings), false);
         WriteBusDisconnect();
         RefreshTimings();
-        pll.nforce2_set_fsb(TrackBarPll->Position);
+        if (targetPll != 0) {
+            pll.nforce2_set_fsb_pll(targetFsb, targetPll);
+        }
         RefreshCpuSpeed();
-        UpdatePllSlider(cpu_info.fsb);
+        updateFromButtons = true;
+        UpdatePllSlider(cpu_info.fsb, targetPll);
+        updateFromButtons = false;
         break;
     default: ;
     }
@@ -690,23 +732,40 @@ void __fastcall TMainForm::FormDestroy(TObject *Sender) {
 // ---------------------------------------------------------------------------
 
 void __fastcall TMainForm::ButtonNextPllClick(TObject *Sender) {
-    int pos = TrackBarPll->Position;
+    pair<double, int> nextPll = pll.GetNextPll(targetFsb);
+    double fsb = nextPll.first;
+    int pll = nextPll.second;
 
-    UpdatePllSlider(++pos);
-    PanelCurrentFsb->Caption =
-        Format("%.2f MHz", ARRAYOFCONST(((long double)TrackBarPll->Position)));
+    if (fsb > 0) {
+        updateFromButtons = true;
+        TrackBarPll->Position = fsb;
+        UpdatePllSlider(fsb, pll);
+        updateFromButtons = false;
+    }
 }
 // ---------------------------------------------------------------------------
 
 void __fastcall TMainForm::ButtonPrevPllClick(TObject *Sender) {
-    int pos = TrackBarPll->Position;
-    UpdatePllSlider(--pos);
-    PanelCurrentFsb->Caption =
-        Format("%.2f MHz", ARRAYOFCONST(((long double)TrackBarPll->Position)));
+    pair<double, int> prevPll = pll.GetPrevPll(targetFsb);
+    double fsb = prevPll.first;
+    int pll = prevPll.second;
+
+    if (fsb > 0) {
+        updateFromButtons = true;
+        TrackBarPll->Position = fsb;
+        UpdatePllSlider(fsb, pll);
+        updateFromButtons = false;
+    }
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TMainForm::TrackBarPllChange(TObject *Sender) {
-    int position = static_cast<TTrackBar*>(Sender)->Position;
-    UpdatePllSlider(position);
+void __fastcall TMainForm::TrackBarPllChange(TObject *Sender)
+{
+    if (!updateFromButtons) {
+        int position = static_cast<TTrackBar*>(Sender)->Position;
+        pair<double, int> p = pll.GetPrevPll(position);
+        UpdatePllSlider(p.first, p.second);
+    }
 }
+//---------------------------------------------------------------------------
+

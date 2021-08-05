@@ -9,6 +9,7 @@
 #define NFORCE2_SAFE_DISTANCE           50
 #define NFORCE2_PLL(mul, div) (0x100000 | (mul << 8) | div)
 
+#include <map>
 /* Delay in ms between FSB changes */
 // #define NFORCE2_DELAY 10
 
@@ -21,10 +22,13 @@ public:
     virtual ~Nforce2Pll(void);
 
     void init();
-    static void GenerateFsbTable();
+    static std::map<double, int> nforce2_gen_fsb_table();
     static double nforce2_calc_fsb(int pll);
     static int nforce2_calc_pll(unsigned int fsb);
     static void nforce2_write_pll(int pll);
     static unsigned int nforce2_fsb_read(int bootfsb);
     static int nforce2_set_fsb(unsigned int fsb);
+    static int nforce2_set_fsb_pll(unsigned int fsb, int pll);
+    std::pair<double, int> GetPrevPll(double fsb);
+    std::pair<double, int> GetNextPll(double fsb);
 };

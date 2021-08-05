@@ -213,6 +213,7 @@ __published: // IDE-managed Components
     void __fastcall ButtonPrevPllClick(TObject *Sender);
     void __fastcall TrackBarPllChange(TObject *Sender);
 
+
 protected:
     // virtual void __fastcall CreateParams(TCreateParams &Params);
 
@@ -220,7 +221,7 @@ private: // User declarations
         bool minimizeHintShown = false;
     void __fastcall OnMinimize(TObject *Sender);
     void __fastcall OnRestore(TObject *Sender);
-    void __fastcall UpdatePllSlider(unsigned int position);
+    void __fastcall UpdatePllSlider(double fsb, int pll);
 
 public: // User declarations
     __fastcall TMainForm(TComponent* Owner);
