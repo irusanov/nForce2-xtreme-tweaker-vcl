@@ -22,7 +22,7 @@ public:
     virtual ~Nforce2Pll(void);
 
     void init();
-    static std::map<double, int> GenerateFsbTable();
+    static std::map<double, int> nforce2_gen_fsb_table();
     static double nforce2_calc_fsb(int pll);
     static int nforce2_calc_pll(unsigned int fsb);
     static void nforce2_write_pll(int pll);

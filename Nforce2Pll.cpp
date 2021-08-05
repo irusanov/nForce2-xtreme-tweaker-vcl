@@ -23,12 +23,12 @@ unsigned long nforce2_dev;
 map<double, int>possibleFsb;
 
 #ifdef DEBUG_CONSOLE
-    String text = "";
-    static HANDLE handle;
+String text = "";
+static HANDLE handle;
 #endif
 
 Nforce2Pll::Nforce2Pll(void) {
-    //possibleFsb = GenerateFsbTable();
+    // possibleFsb = GenerateFsbTable();
 #ifdef DEBUG_CONSOLE
     if (!handle) {
         AllocConsole();
@@ -42,7 +42,7 @@ void Nforce2Pll::init() {
     nforce2_dev = FindPciDeviceById(PCI_VENDOR_ID_NVIDIA,
         PCI_DEVICE_ID_NVIDIA_NFORCE2, 0);
 
-    possibleFsb = GenerateFsbTable();
+    possibleFsb = nforce2_gen_fsb_table();
 
 #ifdef DEBUG_CONSOLE
     for (const auto &[k, v] : possibleFsb) {
@@ -243,21 +243,21 @@ int Nforce2Pll::nforce2_set_fsb(unsigned int fsb) {
     return 0;
 }
 
-map<double, int> Nforce2Pll::GenerateFsbTable() {
+map<double, int> Nforce2Pll::nforce2_gen_fsb_table() {
     int xmul, xdiv;
     map<double, int>fsbMap;
     map<double, int>::iterator it;
 
     for (xdiv = 2; xdiv <= 0x80; xdiv++) {
-        for (xmul = 0xf1; xmul <= 0xfe; xmul++) {
+        for (xmul = 0xf0; xmul <= 0xfe; xmul++) {
             int pll = NFORCE2_PLL(xmul, xdiv);
-            double fsb = nforce2_calc_fsb(pll);
+            double fsb = nforce2_calc_fsb(pll) * 1.00225;
 
             if (fsb >= 30.0 && fsb <= 350.0) {
                 it = fsbMap.find(fsb);
 
                 if (it == fsbMap.end()) {
-                    fsbMap.insert({ fsb, pll });
+                    fsbMap.insert({fsb, pll});
                 }
             }
         }
@@ -266,39 +266,46 @@ map<double, int> Nforce2Pll::GenerateFsbTable() {
     return fsbMap;
 }
 
-
 pair<double, int> Nforce2Pll::GetPrevPll(double fsb) {
     map<double, int>::reverse_iterator it;
 
-    for (it = possibleFsb.rbegin(); it != possibleFsb.rend(); ++it)
-    {
-        if (fsb - it->first > 0.33) {
+    for (it = possibleFsb.rbegin(); it != possibleFsb.rend(); ++it) {
+        if (fsb - it->first >= 0.05) {
 #ifdef DEBUG_CONSOLE
-            text = Format("Prev PLL: %.2f", ARRAYOFCONST(((long double)it->first))) + "\n";
+            text = Format("Prev PLL: %.2f",
+                ARRAYOFCONST(((long double)it->first))) + "\n";
             WriteConsole(handle, text.c_str(), text.Length(), 0, 0);
 #endif
-            return { it->first, it->second };
+            return {
+                it->first, it->second
+            };
         }
     }
 
-    return {0, 0};
+    return {
+        0, 0
+    };
 }
 
 pair<double, int> Nforce2Pll::GetNextPll(double fsb) {
     map<double, int>::iterator it;
 
-    for (it = possibleFsb.begin(); it != possibleFsb.end(); it++)
-    {
-        if (it->first > fsb > 0.33) {
+    for (it = possibleFsb.begin(); it != possibleFsb.end(); it++) {
+        if (it->first - fsb >= 0.05) {
 #ifdef DEBUG_CONSOLE
-            text = Format("Next PLL: %.2f", ARRAYOFCONST(((long double)it->first))) + "\n";
+            text = Format("Next PLL: %.2f",
+                ARRAYOFCONST(((long double)it->first))) + "\n";
             WriteConsole(handle, text.c_str(), text.Length(), 0, 0);
 #endif
-            return { it->first, it->second };
+            return {
+                it->first, it->second
+            };
         }
     }
 
-    return {0, 0};
+    return {
+        0, 0
+    };
 }
 
 Nforce2Pll::~Nforce2Pll(void) {
