@@ -81,7 +81,7 @@ double Nforce2Pll::nforce2_calc_fsb(int pll) {
  *
  *   Calculate PLL value for given FSB
  */
-int Nforce2Pll::nforce2_calc_pll(unsigned int fsb) {
+int Nforce2Pll::nforce2_calc_pll(double fsb) {
     unsigned char xmul, xdiv;
     unsigned char mul = 0, div = 0;
     int tried = 0;
@@ -126,7 +126,7 @@ void Nforce2Pll::nforce2_write_pll(int pll) {
  *   Read FSB from chipset
  *   If bootfsb != 0, return FSB at boot-time
  */
-unsigned int Nforce2Pll::nforce2_fsb_read(int bootfsb) {
+double Nforce2Pll::nforce2_fsb_read(int bootfsb) {
     unsigned int nforce2_sub5, fsb, temp = 0;
 
     /* Get chipset boot FSB from subdevice 5 (FSB at boot-time) */
@@ -143,26 +143,31 @@ unsigned int Nforce2Pll::nforce2_fsb_read(int bootfsb) {
     ReadPciConfigByteEx(nforce2_dev, NFORCE2_PLLENABLE, (BYTE *)&temp);
 
     if (bootfsb || !temp)
-        return fsb;
+        return ceil(fsb * 100.0) / 100.0;
 
     /* Use PLL register FSB value */
     ReadPciConfigDwordEx(nforce2_dev, NFORCE2_PLLREG, (DWORD *) &temp);
-    fsb = nforce2_calc_fsb(temp);
+    double cfsb = nforce2_calc_fsb(temp);
 
-    return fsb;
+    return cfsb;
 }
 
-int Nforce2Pll::nforce2_set_fsb_pll(unsigned int fsb, int pll) {
+int Nforce2Pll::nforce2_set_fsb_pll(double tfsb, int tpll) {
     unsigned int temp = 0;
-
-    if (!pll) {
-        return nforce2_set_fsb(fsb);
-    }
+    double fsb, diff;
+    int pll = -1;
+    pair<double, int> p;
 
     /* First write? Then set actual value */
     ReadPciConfigByteEx(nforce2_dev, NFORCE2_PLLENABLE, (BYTE *)&temp);
 
     if (!temp) {
+        fsb = nforce2_fsb_read(0);
+        pll = nforce2_calc_pll(fsb);
+
+        if (pll < 0)
+            return -1;
+
         nforce2_write_pll(pll);
     }
 
@@ -170,7 +175,21 @@ int Nforce2Pll::nforce2_set_fsb_pll(unsigned int fsb, int pll) {
     temp = 0x01;
     WritePciConfigByteEx(nforce2_dev, NFORCE2_PLLENABLE, temp);
 
-    nforce2_write_pll(pll);
+    fsb = nforce2_fsb_read(0);
+    diff = tfsb - fsb;
+
+    while (pll != tpll) {
+        if (diff > 0) {
+            p = GetNextPll(fsb);
+        } else {
+            p = GetPrevPll(fsb);
+        }
+
+        fsb = p.first;
+        pll = p.second;
+
+        nforce2_write_pll(pll);
+    }
 
     temp = 0x40;
     WritePciConfigByteEx(nforce2_dev, NFORCE2_PLLADR, temp);
@@ -184,9 +203,9 @@ int Nforce2Pll::nforce2_set_fsb_pll(unsigned int fsb, int pll) {
  *
  *   Sets new FSB
  */
-int Nforce2Pll::nforce2_set_fsb(unsigned int fsb) {
+int Nforce2Pll::nforce2_set_fsb(double fsb) {
     unsigned int temp = 0;
-    unsigned int tfsb;
+    double tfsb;
     int diff;
     int pll = 0;
     /* if ((fsb > max_fsb) || (fsb < NFORCE2_MIN_FSB)) {
