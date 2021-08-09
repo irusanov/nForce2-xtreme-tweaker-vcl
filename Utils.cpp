@@ -4,11 +4,11 @@
 
 unsigned int SetBits(unsigned int val, int offset, int n, unsigned int newValue)
 {
-    return val & (~(((1U << n) - 1) << offset) | newValue << offset);
+    return (val & ~(((1U << n) - 1) << offset)) | (newValue << offset);
 }
 
 unsigned int GetBits(unsigned int val, int offset, int n) {
-    return (val >> offset)&~(~0U << n);
+     return (val >> offset) & ~(~0U << n);
 }
 
 unsigned int MakePciAddress(int bus, int device, int function, int offset) {

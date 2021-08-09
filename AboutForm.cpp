@@ -13,3 +13,9 @@ TAboutDialog *AboutDialog;
 __fastcall TAboutDialog::TAboutDialog(TComponent* Owner) : TForm(Owner) {
 }
 // ---------------------------------------------------------------------------
+void __fastcall TAboutDialog::Button1Click(TObject *Sender)
+{
+    Close();
+}
+//---------------------------------------------------------------------------
+
