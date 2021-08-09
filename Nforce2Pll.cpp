@@ -10,7 +10,7 @@
  *  Partial port of the nforce2 linux driver
  *  https://github.com/torvalds/linux/blob/master/drivers/cpufreq/cpufreq-nforce2.c
  */
-#define DEBUG_CONSOLE
+//#define DEBUG_CONSOLE
 #include <vcl.h>
 
 #include "OlsApi.h"
@@ -85,12 +85,13 @@ int Nforce2Pll::nforce2_calc_pll(double fsb) {
     unsigned char xmul, xdiv;
     unsigned char mul = 0, div = 0;
     int tried = 0;
+    int tfsb = round(fsb);
 
     /* Try to calculate multiplier and divider up to 4 times */
     while (((mul == 0) || (div == 0)) && (tried <= 3)) {
         for (xdiv = 2; xdiv <= 0x80; xdiv++)
-            for (xmul = 0xf1; xmul <= 0xfe; xmul++)
-                if (nforce2_calc_fsb(NFORCE2_PLL(xmul, xdiv)) == fsb + tried) {
+            for (xmul = 0x1; xmul <= 0xfe; xmul++)
+                if (nforce2_calc_fsb(NFORCE2_PLL(xmul, xdiv)) == tfsb + tried) {
                     mul = xmul;
                     div = xdiv;
                 }
