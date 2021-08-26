@@ -199,6 +199,11 @@ __published: // IDE-managed Components
     TTimingComboBox *STPGNTDisconnect;
     TLabel *Label70;
     TGroupBox *GroupBox7;
+    TGroupBox *GroupBox6;
+    TTrackBar *TrackBarAgp;
+    TPanel *PanelCurrentAgpPci;
+    TButton *ButtonNextAgp;
+    TButton *ButtonPrevAgp;
 
     void __fastcall TabControl1Change(TObject *Sender);
     void __fastcall Exit1Click(TObject *Sender);
@@ -212,16 +217,20 @@ __published: // IDE-managed Components
     void __fastcall ButtonNextPllClick(TObject *Sender);
     void __fastcall ButtonPrevPllClick(TObject *Sender);
     void __fastcall TrackBarPllChange(TObject *Sender);
+    void __fastcall ButtonPrevAgpClick(TObject *Sender);
+    void __fastcall ButtonNextAgpClick(TObject *Sender);
+    void __fastcall TrackBarAgpChange(TObject *Sender);
 
 
 protected:
     // virtual void __fastcall CreateParams(TCreateParams &Params);
 
 private: // User declarations
-        bool minimizeHintShown = false;
+    bool minimizeHintShown = false;
     void __fastcall OnMinimize(TObject *Sender);
     void __fastcall OnRestore(TObject *Sender);
     void __fastcall UpdatePllSlider(double fsb, int pll);
+    void __fastcall UpdateAgpSlider(unsigned int pos);
 
 public: // User declarations
     __fastcall TMainForm(TComponent* Owner);

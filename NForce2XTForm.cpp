@@ -31,6 +31,8 @@ struct CPUInfo {
     double fsb;
     double multi;
     double dram;
+    unsigned int pciMul;
+    unsigned int pciDiv;
     unsigned char fsbDiv;
     unsigned char dramDiv;
     unsigned int maxVid;
@@ -132,6 +134,7 @@ const struct timing_def_t chipsetTimingDefs[] = {
     { "AGPControllerLatency",   0, 30,  0, 0x0C,  8,  8 },
     { "AGPBusLatency",          0, 30,  0, 0x18, 24,  8 },
     { "PCILatency",             0,  8,  0, 0x18, 24,  8 },
+    { "PCIFrequency",           0,  0,  3, 0x78,  0, 16 },
     //{ "DIMM_B0_CFG",          0,  0,  2, 0x40,  0,  1 },
     //{ "DIMM_B1_CFG",          0,  0,  2, 0x44,  0,  1 },
     //{ "DIMM_A0_CFG",          0,  0,  2, 0x48,  0,  1 },
@@ -212,6 +215,45 @@ static unsigned int __fastcall GetFID() {
     return value;
 }
 
+static void __fastcall WritePciFrequency(unsigned int value) {
+    timing_def_t def;
+    unsigned int pciAddress, regValue;
+
+    def = GetDefByName(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs), "PCIFrequency");
+    pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
+    regValue = ReadPciReg(pciAddress);
+
+    regValue = SetBits(regValue, def.offset, def.bits, value);
+    WritePciReg(pciAddress, regValue);
+}
+// ---------------------------------------------------------------------------
+
+static void __fastcall RefreshPciFrequency() {
+    timing_def_t def;
+    unsigned int pciAddress;
+    unsigned int regValue;
+    unsigned int value;
+
+    // Get current PCI bus frequency
+    def = GetDefByName(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs), "PCIFrequency");
+    pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
+    regValue = ReadPciReg(pciAddress);
+    value = GetBits(regValue, def.offset, def.bits);
+
+    cpu_info.pciDiv = value & 0xff;
+    cpu_info.pciMul = value >> 8 & 0xff;
+
+    // First write?
+    if (cpu_info.pciDiv != 0xf) {
+        unsigned int newMul = (cpu_info.pciMul * 0xf) / cpu_info.pciDiv;
+        cpu_info.pciDiv = 0xf;
+        cpu_info.pciMul = newMul;
+
+        WritePciFrequency(cpu_info.pciMul << 8 | cpu_info.pciDiv);
+    }
+}
+// ---------------------------------------------------------------------------
+
 // Refresh frequency related parameters
 static void __fastcall RefreshCpuSpeed() {
     DWORD eax = 0, ebx = 0, ecx = 0, edx = 0;
@@ -257,6 +299,8 @@ static void __fastcall RefreshCpuSpeed() {
     if (cpu_info.fsbDiv > 0 && cpu_info.dramDiv > 0) {
         cpu_info.dram = cpu_info.fsb * cpu_info.dramDiv / cpu_info.fsbDiv;
     }
+
+    RefreshPciFrequency();
 }
 // ---------------------------------------------------------------------------
 
@@ -525,6 +569,21 @@ void __fastcall TMainForm::UpdatePllSlider(double fsb, int pll) {
 }
 // ---------------------------------------------------------------------------
 
+void __fastcall TMainForm::UpdateAgpSlider(unsigned int mul) {
+    double pci = (mul / 15.0) * 6.25;
+    double agp = pci * 2.0;
+
+    PanelCurrentAgpPci->Caption =
+        Format("%.2f / %.2f", ARRAYOFCONST(((long double)agp, (long double)pci)));
+
+    bool minReached = TrackBarAgp->Position <= TrackBarAgp->Min;
+    bool maxReached = TrackBarAgp->Position >= TrackBarAgp->Max;
+
+    ButtonNextAgp->Enabled = !maxReached;
+    ButtonPrevAgp->Enabled = !minReached;
+}
+// ---------------------------------------------------------------------------
+
 // Main
 __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
     if (!InitializeOls()) {
@@ -608,7 +667,9 @@ void __fastcall TMainForm::TabControl1Change(TObject *Sender) {
         RefreshCpuSpeed();
         updateFromButtons = true;
         TrackBarPll->Position = cpu_info.fsb;
+        TrackBarAgp->Position = cpu_info.pciMul;
         UpdatePllSlider(cpu_info.fsb, 0);
+        //UpdateAgpSlider(cpu_info.pciBus);
         updateFromButtons = false;
         break;
     default: ;
@@ -628,7 +689,9 @@ void __fastcall TMainForm::ButtonRefreshClick(TObject *Sender) {
     if (index == 1) {
         updateFromButtons = true;
         TrackBarPll->Position = cpu_info.fsb;
+        TrackBarAgp->Position = cpu_info.pciMul;
         UpdatePllSlider(cpu_info.fsb, 0);
+        //UpdateAgpSlider(cpu_info.pciBus);
         updateFromButtons = false;
     }
 }
@@ -646,6 +709,7 @@ void __fastcall TMainForm::ButtonApplyClick(TObject *Sender) {
         WriteTimings(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs), false);
         WriteTimings(s2kTimings, COUNT_OF(s2kTimings), false);
         WriteBusDisconnect();
+        WritePciFrequency(TrackBarAgp->Position << 8 | 0xf);
         RefreshTimings();
         if (targetPll != 0) {
             pll.nforce2_set_fsb_pll(targetFsb, targetPll);
@@ -653,6 +717,7 @@ void __fastcall TMainForm::ButtonApplyClick(TObject *Sender) {
         RefreshCpuSpeed();
         updateFromButtons = true;
         UpdatePllSlider(cpu_info.fsb, targetPll);
+        UpdateAgpSlider(cpu_info.pciMul);
         updateFromButtons = false;
         break;
     default: ;
@@ -771,6 +836,24 @@ void __fastcall TMainForm::TrackBarPllChange(TObject *Sender)
         pair<double, int> p = pll.GetPrevPll(position);
         UpdatePllSlider(p.first, p.second);
     }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainForm::ButtonPrevAgpClick(TObject *Sender)
+{
+    TrackBarAgp->Position--;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainForm::ButtonNextAgpClick(TObject *Sender)
+{
+    TrackBarAgp->Position++;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainForm::TrackBarAgpChange(TObject *Sender)
+{
+    UpdateAgpSlider(TrackBarAgp->Position);
 }
 //---------------------------------------------------------------------------
 
