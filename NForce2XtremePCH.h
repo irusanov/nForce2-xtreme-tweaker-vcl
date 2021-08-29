@@ -6,4 +6,3 @@
 #include "Constants.h"
 #include "Utils.h"
 #include "QueryPerformance.h"
-

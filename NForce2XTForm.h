@@ -14,6 +14,7 @@
 #include <Vcl.ToolWin.hpp>
 #include <Vcl.Dialogs.hpp>
 #include <Vcl.ExtCtrls.hpp>
+#include <IniFiles.hpp>
 
 #include "OlsApi.h"
 #include "Nforce2Pll.h"
@@ -22,6 +23,7 @@
 #include "QueryPerformance.h"
 
 #include "AboutForm.h"
+#include "ValidationBot.h"
 #include "Components\TAdvancedEdit\TAdvancedEdit.h"
 #include "Components\TTimingComboBox\TTimingComboBox.h"
 
@@ -204,6 +206,8 @@ __published: // IDE-managed Components
     TPanel *PanelCurrentAgpPci;
     TButton *ButtonNextAgp;
     TButton *ButtonPrevAgp;
+    TMenuItem *ools1;
+    TMenuItem *AutoValidationBot;
 
     void __fastcall TabControl1Change(TObject *Sender);
     void __fastcall Exit1Click(TObject *Sender);
@@ -220,7 +224,7 @@ __published: // IDE-managed Components
     void __fastcall ButtonPrevAgpClick(TObject *Sender);
     void __fastcall ButtonNextAgpClick(TObject *Sender);
     void __fastcall TrackBarAgpChange(TObject *Sender);
-
+    void __fastcall AutoValidationBotClick(TObject *Sender);
 
 protected:
     // virtual void __fastcall CreateParams(TCreateParams &Params);
@@ -233,7 +237,57 @@ private: // User declarations
     void __fastcall UpdateAgpSlider(unsigned int pos);
 
 public: // User declarations
+    // MANID Register, MSR C001_001Eh
+    typedef struct {
+        unsigned char reticleSite; // [9-8]
+        unsigned char majorRev; // [7-4]
+        unsigned char minorRev; // [3-0]
+    } man_id_t;
+
+    typedef struct {
+        unsigned int cpuid;
+        string codeName;
+        string cpuName;
+        unsigned char family;
+        unsigned char model;
+        unsigned char extFamily;
+        unsigned char extModel;
+        unsigned char stepping;
+        unsigned char patchLevel;
+        double frequency;
+        double fsbFromPll;
+        double fsb;
+        double multi;
+        double dram;
+        unsigned int pciMul;
+        unsigned int pciDiv;
+        unsigned char fsbDiv;
+        unsigned char dramDiv;
+        unsigned int maxVid;
+        unsigned int startVid;
+        unsigned int currVid;
+        unsigned int maxFid;
+        unsigned int startFid;
+        unsigned int currFid;
+        unsigned int fid;
+        bool MP;
+        int l1DataCache;
+        int l1InstCache;
+        int l1Cache;
+        int l2Cache;
+        man_id_t manID;
+    } cpu_info_t;
+
     __fastcall TMainForm(TComponent* Owner);
+    void __fastcall RefreshCpuSpeed();
+    void __fastcall RefreshPciFrequency();
+    bool __fastcall InitSystemInfo();
+
+    cpu_info_t cpu_info;
+    Nforce2Pll pll;
+    QueryPerformance qpc;
+    double targetFsb;
+    int targetPll;
 };
 
 // ---------------------------------------------------------------------------

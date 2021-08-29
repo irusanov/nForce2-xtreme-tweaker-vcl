@@ -9,46 +9,9 @@
 #pragma resource "*.dfm"
 TMainForm *MainForm;
 
-// MANID Register, MSR C001_001Eh
-typedef struct {
-    unsigned char reticleSite; // [9-8]
-    unsigned char majorRev; // [7-4]
-    unsigned char minorRev; // [3-0]
-} man_id_t;
-
-struct CPUInfo {
-    unsigned int cpuid;
-    string codeName;
-    string cpuName;
-    unsigned char family;
-    unsigned char model;
-    unsigned char extFamily;
-    unsigned char extModel;
-    unsigned char stepping;
-    unsigned char patchLevel;
-    double frequency;
-    double fsbFromPll;
-    double fsb;
-    double multi;
-    double dram;
-    unsigned int pciMul;
-    unsigned int pciDiv;
-    unsigned char fsbDiv;
-    unsigned char dramDiv;
-    unsigned int maxVid;
-    unsigned int startVid;
-    unsigned int currVid;
-    unsigned int maxFid;
-    unsigned int startFid;
-    unsigned int currFid;
-    unsigned int fid;
-    bool MP;
-    int l1DataCache;
-    int l1InstCache;
-    int l1Cache;
-    int l2Cache;
-    man_id_t manID;
-} cpu_info;
+struct AppSettings {
+    bool minimizeToTray;
+} appSettings;
 
 // https://github.com/torvalds/linux/blob/master/drivers/cpufreq/powernow-k7.c#L78
 // 0x0 - 0x1f. 0 - 31
@@ -158,10 +121,6 @@ const struct timing_def_t s2kTimings[] = {
     { "FID",                    0,  0,  0, 0xF0, 28,  4 },
 };
 
-const struct timing_def_t s2kDoubledTimings[] = {
-
-};
-
 const struct timing_def_t romsipDefs[] = {
     // name,                      b,  d,  f, reg, offset, bits
     { "Romsip65",                 0,  0,  3, 0x64,  8,  8 },
@@ -178,11 +137,6 @@ const struct timing_def_t romsipDefs[] = {
 };
 
 const int NUMBER_OF_TABS = 3;
-
-Nforce2Pll pll;
-QueryPerformance qpc;
-double targetFsb;
-int targetPll;
 bool updateFromButtons = false;
 
 // Get timing definition by component name
@@ -228,7 +182,7 @@ static void __fastcall WritePciFrequency(unsigned int value) {
 }
 // ---------------------------------------------------------------------------
 
-static void __fastcall RefreshPciFrequency() {
+void __fastcall TMainForm::RefreshPciFrequency() {
     timing_def_t def;
     unsigned int pciAddress;
     unsigned int regValue;
@@ -255,7 +209,7 @@ static void __fastcall RefreshPciFrequency() {
 // ---------------------------------------------------------------------------
 
 // Refresh frequency related parameters
-static void __fastcall RefreshCpuSpeed() {
+void __fastcall TMainForm::RefreshCpuSpeed() {
     DWORD eax = 0, ebx = 0, ecx = 0, edx = 0;
     timing_def_t def;
     unsigned int pciAddress;
@@ -305,7 +259,7 @@ static void __fastcall RefreshCpuSpeed() {
 // ---------------------------------------------------------------------------
 
 // Read CPU and system info, invoked once
-static bool __fastcall InitSystemInfo() {
+bool __fastcall TMainForm::InitSystemInfo() {
     DWORD eax = 0, ebx = 0, ecx = 0, edx = 0;
 
     // CPUID information
@@ -629,6 +583,15 @@ __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
 
     // UnicodeString name = GetCpuName().c_str();
     // MessageDlg(name, mtConfirmation, mbOKCancel, 0);
+
+    // Settings INI file
+    AnsiString Path = ExtractFilePath(Application->ExeName);
+
+    TIniFile *Settings = new TIniFile(Path + "settings.ini");
+    appSettings.minimizeToTray = Settings->ReadBool("Options", "minimizeToTray", false);
+
+    //Settings->Free();
+    delete Settings;
 }
 // ---------------------------------------------------------------------------
 
@@ -752,7 +715,7 @@ void __fastcall TMainForm::TabControl1DrawTab(TCustomTabControl *Control,
 
 void __fastcall TMainForm::OnMinimize(TObject *Sender) {
     // If minimize to tray enabled
-    if (false) {
+    if (appSettings.minimizeToTray) {
         TrayIcon->Visible = true;
         Application->MainFormOnTaskBar = false;
         Application->MainForm->Hide();
@@ -772,7 +735,7 @@ void __fastcall TMainForm::OnMinimize(TObject *Sender) {
 
 void __fastcall TMainForm::OnRestore(TObject *Sender) {
     // If minimize to tray enabled
-    if (false) {
+    if (appSettings.minimizeToTray) {
         TrayIcon->Visible = false;
         Application->MainFormOnTaskBar = true;
 
@@ -857,3 +820,9 @@ void __fastcall TMainForm::TrackBarAgpChange(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+
+void __fastcall TMainForm::AutoValidationBotClick(TObject *Sender)
+{
+    ValidationBotDialog->ShowModal();
+}
+//---------------------------------------------------------------------------

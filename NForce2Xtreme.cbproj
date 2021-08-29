@@ -113,8 +113,8 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
         <LinkPackageStatics>rtl.lib;vcl.lib;Components.lib;vclimg.lib</LinkPackageStatics>
-        <VerInfo_Build>220</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.220;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>239</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.239;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>0</VerInfo_Release>
         <AppExecutionLevel>requireAdministrator</AppExecutionLevel>
@@ -145,7 +145,7 @@
             <Form>AboutDialog</Form>
             <FormType>dfm</FormType>
             <DependentOn>AboutForm.h</DependentOn>
-            <BuildOrder>12</BuildOrder>
+            <BuildOrder>11</BuildOrder>
         </CppCompile>
         <None Include="Constants.h">
             <BuildOrder>3</BuildOrder>
@@ -181,10 +181,17 @@
         <None Include="Utils.h">
             <BuildOrder>9</BuildOrder>
         </None>
+        <CppCompile Include="ValidationBot.cpp">
+            <Form>ValidationBotDialog</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>ValidationBot.h</DependentOn>
+            <BuildOrder>12</BuildOrder>
+        </CppCompile>
         <LibFiles Include="WinRing0.lib" Condition="'$(Platform)'=='Win32'">
             <BuildOrder>11</BuildOrder>
             <IgnorePath>true</IgnorePath>
         </LibFiles>
+        <FormResources Include="ValidationBot.dfm"/>
         <FormResources Include="AboutForm.dfm"/>
         <FormResources Include="NForce2XTForm.dfm"/>
         <BuildConfiguration Include="Release">
