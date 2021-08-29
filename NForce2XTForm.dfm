@@ -4,7 +4,7 @@ object MainForm: TMainForm
   Anchors = []
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'nForce2XT v1.1 beta11'
+  Caption = 'nForce2XT v1.1 beta12'
   ClientHeight = 474
   ClientWidth = 382
   Color = clBtnFace
