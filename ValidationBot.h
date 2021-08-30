@@ -18,15 +18,12 @@ __published:	// IDE-managed Components
     TButton *ButtonBotRun;
     TLabel *Label1;
     TEdit *EditCpuzPath;
-    TLabel *Label2;
-    TEdit *EditCpuzWait;
     TEdit *EditBotSleep;
     TLabel *Label3;
     TStatusBar *StatusBarBot;
     TTimer *TimerBot;
     TOpenDialog *OpenDialogBot;
     TButton *ButtonBrowseCpuz;
-    TLabel *Label4;
     TLabel *Label5;
     TLabel *Label6;
     TPanel *PanelCurrentFsb;
@@ -39,7 +36,9 @@ __published:	// IDE-managed Components
     void __fastcall ButtonBotRunClick(TObject *Sender);
     void __fastcall TimerBotTimer(TObject *Sender);
     void __fastcall ButtonBrowseCpuzClick(TObject *Sender);
+    void __fastcall FormShow(TObject *Sender);
 private:	// User declarations
+    HWND __fastcall FindCpuzWindow();
 public:		// User declarations
     __fastcall TValidationBotDialog(TComponent* Owner);
 };

@@ -1,4 +1,4 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{3ADCCCC5-740D-49E0-BE07-8F6C0E1EDE18}</ProjectGuid>
         <ProjectVersion>18.8</ProjectVersion>
@@ -113,8 +113,8 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
         <LinkPackageStatics>rtl.lib;vcl.lib;Components.lib;vclimg.lib</LinkPackageStatics>
-        <VerInfo_Build>240</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.240;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>251</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.251;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>0</VerInfo_Release>
         <AppExecutionLevel>requireAdministrator</AppExecutionLevel>

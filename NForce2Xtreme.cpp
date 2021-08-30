@@ -4,9 +4,9 @@
 #pragma hdrstop
 #include <tchar.h>
 // ---------------------------------------------------------------------------
-USEFORM("NForce2XTForm.cpp", MainForm);
-USEFORM("AboutForm.cpp", AboutDialog);
 USEFORM("ValidationBot.cpp", ValidationBotDialog);
+USEFORM("AboutForm.cpp", AboutDialog);
+USEFORM("NForce2XTForm.cpp", MainForm);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {
     try {
