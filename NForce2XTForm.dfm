@@ -815,7 +815,9 @@ object MainForm: TMainForm
     0000AC410000AC410000AC410000AC410000AC410000AC41}
   Menu = MainMenu1
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poDefault
+  OnClose = FormClose
+  OnCreate = FormCreate
   OnDestroy = FormDestroy
   DesignSize = (
     382

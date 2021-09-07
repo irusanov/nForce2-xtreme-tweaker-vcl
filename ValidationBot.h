@@ -37,6 +37,7 @@ __published:	// IDE-managed Components
     void __fastcall TimerBotTimer(TObject *Sender);
     void __fastcall ButtonBrowseCpuzClick(TObject *Sender);
     void __fastcall FormShow(TObject *Sender);
+    void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
 private:	// User declarations
     HWND __fastcall FindCpuzWindow();
 public:		// User declarations

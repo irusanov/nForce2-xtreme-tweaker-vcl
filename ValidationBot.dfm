@@ -14,6 +14,7 @@ object ValidationBotDialog: TValidationBotDialog
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -75,7 +76,6 @@ object ValidationBotDialog: TValidationBotDialog
     Height = 19
     Panels = <>
     SimplePanel = True
-    ExplicitTop = 160
   end
   object ButtonBotRun: TButton
     Left = 288

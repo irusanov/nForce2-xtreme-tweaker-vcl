@@ -21,6 +21,7 @@
 #include "Constants.h"
 #include "Utils.h"
 #include "QueryPerformance.h"
+#include "AppSettings.h"
 
 #include "AboutForm.h"
 #include "ValidationBot.h"
@@ -225,6 +226,8 @@ __published: // IDE-managed Components
     void __fastcall ButtonNextAgpClick(TObject *Sender);
     void __fastcall TrackBarAgpChange(TObject *Sender);
     void __fastcall AutoValidationBotClick(TObject *Sender);
+    void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+    void __fastcall FormCreate(TObject *Sender);
 
 protected:
     // virtual void __fastcall CreateParams(TCreateParams &Params);
@@ -288,6 +291,7 @@ public: // User declarations
     QueryPerformance qpc;
     double targetFsb;
     int targetPll;
+    AppSettings settings;
 };
 
 // ---------------------------------------------------------------------------

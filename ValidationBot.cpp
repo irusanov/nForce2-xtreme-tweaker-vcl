@@ -15,6 +15,11 @@ HWND hWndCpuz;
 __fastcall TValidationBotDialog::TValidationBotDialog(TComponent* Owner)
     : TForm(Owner)
 {
+    // Load Bot settings
+    EditCpuzPath->Text = MainForm->settings.CpuzPath;
+    EditBotSleep->Text = MainForm->settings.Sleep;
+    EditFsbStep->Text = MainForm->settings.Step;
+    CheckBoxUltra->Checked = MainForm->settings.Ultra;
 }
 //---------------------------------------------------------------------------
 
@@ -182,6 +187,17 @@ void __fastcall TValidationBotDialog::FormShow(TObject *Sender)
 
     EditCoreFrequency->Caption =
             Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->cpu_info.frequency)));
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TValidationBotDialog::FormClose(TObject *Sender, TCloseAction &Action)
+
+{
+    // Save Bot settings
+    MainForm->settings.CpuzPath = EditCpuzPath->Text;
+    TryStrToInt(EditBotSleep->Text, MainForm->settings.Sleep);
+    TryStrToInt(EditFsbStep->Text, MainForm->settings.Step);
+    MainForm->settings.Ultra = CheckBoxUltra->Checked;
 }
 //---------------------------------------------------------------------------
 

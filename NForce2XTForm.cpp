@@ -9,10 +9,6 @@
 #pragma resource "*.dfm"
 TMainForm *MainForm;
 
-struct AppSettings {
-    bool minimizeToTray;
-} appSettings;
-
 // https://github.com/torvalds/linux/blob/master/drivers/cpufreq/powernow-k7.c#L78
 // 0x0 - 0x1f. 0 - 31
 const int fid_codes[32] = {
@@ -583,15 +579,6 @@ __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
 
     // UnicodeString name = GetCpuName().c_str();
     // MessageDlg(name, mtConfirmation, mbOKCancel, 0);
-
-    // Settings INI file
-    AnsiString Path = ExtractFilePath(Application->ExeName);
-
-    TIniFile *Settings = new TIniFile(Path + "settings.ini");
-    appSettings.minimizeToTray = Settings->ReadBool("Options", "minimizeToTray", false);
-
-    //Settings->Free();
-    delete Settings;
 }
 // ---------------------------------------------------------------------------
 
@@ -715,7 +702,7 @@ void __fastcall TMainForm::TabControl1DrawTab(TCustomTabControl *Control,
 
 void __fastcall TMainForm::OnMinimize(TObject *Sender) {
     // If minimize to tray enabled
-    if (appSettings.minimizeToTray) {
+    if (settings.MinimizeToTray) {
         TrayIcon->Visible = true;
         Application->MainFormOnTaskBar = false;
         Application->MainForm->Hide();
@@ -735,7 +722,7 @@ void __fastcall TMainForm::OnMinimize(TObject *Sender) {
 
 void __fastcall TMainForm::OnRestore(TObject *Sender) {
     // If minimize to tray enabled
-    if (appSettings.minimizeToTray) {
+    if (settings.MinimizeToTray) {
         TrayIcon->Visible = false;
         Application->MainFormOnTaskBar = true;
 
@@ -825,4 +812,20 @@ void __fastcall TMainForm::AutoValidationBotClick(TObject *Sender)
 {
     ValidationBotDialog->ShowModal();
 }
-//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action){
+    settings.save();
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::FormCreate(TObject *Sender){
+    settings.load();
+
+    if (settings.SaveWindowPosition) {
+        Position = poDefault;
+        MainForm->Top = settings.WindowTop;
+        MainForm->Left = settings.WindowLeft;
+    } else {
+        Position = poDesktopCenter;
+    }
+}
+//---------------------------------------------------------------------------
+
