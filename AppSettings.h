@@ -12,6 +12,7 @@ private:
 public:
     // General options
     bool MinimizeToTray;
+    bool MinimizeHintShown;
     bool SaveWindowPosition;
     int WindowTop;
     int WindowLeft;
@@ -23,12 +24,13 @@ public:
     bool Ultra;
 
     // Load settings.ini
-    bool load() {
+    void load() {
         // Settings INI file
         AnsiString Path = ExtractFilePath(Application->ExeName);
         TIniFile *Settings = new TIniFile(Path + FILENAME);
 
         MinimizeToTray = Settings->ReadBool("Options", "MinimizeToTray", false);
+        MinimizeHintShown = Settings->ReadBool("Options", "MinimizeHintShown", false);
         SaveWindowPosition = Settings->ReadBool("Options", "SaveWindowPosition", false);
 
         WindowTop = Settings->ReadInteger("Options", "WindowTop", 0);
@@ -42,20 +44,19 @@ public:
         //Settings->Free();
 
         delete Settings;
-
-        return true;
     }
 
     // Save settings.ini
-    bool save() {
+    void save() {
         // Settings INI file
         AnsiString Path = ExtractFilePath(Application->ExeName);
         TIniFile *Settings = new TIniFile(Path + FILENAME);
 
         Settings->WriteBool("Options", "MinimizeToTray", MinimizeToTray);
+        Settings->WriteBool("Options", "MinimizeHintShown", MinimizeHintShown);
         Settings->WriteBool("Options", "SaveWindowPosition", SaveWindowPosition);
 
-        if (Application->MainForm->WindowState == wsNormal)) {
+        if (Application->MainForm->WindowState == wsNormal) {
             Settings->WriteInteger("Options", "WindowTop",
                     SaveWindowPosition ? Application->MainForm->Top : 0);
             Settings->WriteInteger("Options", "WindowLeft",
@@ -68,8 +69,11 @@ public:
         Settings->WriteBool("Bot", "Ultra", Ultra);
 
         delete Settings;
+    }
 
-        return true;
+    void reset() {
+        DeleteFile(FILENAME);
+        load();
     }
 };
 

@@ -1,4 +1,4 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{3ADCCCC5-740D-49E0-BE07-8F6C0E1EDE18}</ProjectGuid>
         <ProjectVersion>18.8</ProjectVersion>
@@ -64,8 +64,8 @@
         <SanitizedProjectName>NForce2Xtreme</SanitizedProjectName>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <BCC_BackwardCompatibility>true</BCC_BackwardCompatibility>
-        <IncludePath>Components\TAdvancedEdit\;Components\TTimingComboBox\;C:\GIT\nForce2Xtreme\VCL\;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>Components\TAdvancedEdit\;Components\TTimingComboBox\;C:\GIT\nForce2Xtreme\VCL\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>$(BDS)\ObjRepos\EN\Cpp\;Components\TAdvancedEdit\;Components\TTimingComboBox\;C:\GIT\nForce2Xtreme\VCL\;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>$(BDS)\ObjRepos\EN\Cpp\;Components\TAdvancedEdit\;Components\TTimingComboBox\;C:\GIT\nForce2Xtreme\VCL\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <VerInfo_Keys>FileVersion=1.0.1.1</VerInfo_Keys>
         <VerInfo_Release>1</VerInfo_Release>
         <VerInfo_Build>1</VerInfo_Build>
@@ -178,6 +178,12 @@
         <None Include="QueryPerformance.h">
             <BuildOrder>7</BuildOrder>
         </None>
+        <CppCompile Include="SettingsWindow.cpp">
+            <Form>SettingsForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>SettingsWindow.h</DependentOn>
+            <BuildOrder>14</BuildOrder>
+        </CppCompile>
         <CppCompile Include="Utils.cpp">
             <BuildOrder>8</BuildOrder>
         </CppCompile>
@@ -197,6 +203,7 @@
         <FormResources Include="ValidationBot.dfm"/>
         <FormResources Include="AboutForm.dfm"/>
         <FormResources Include="NForce2XTForm.dfm"/>
+        <FormResources Include="SettingsWindow.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

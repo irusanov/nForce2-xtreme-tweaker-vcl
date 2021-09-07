@@ -708,7 +708,7 @@ void __fastcall TMainForm::OnMinimize(TObject *Sender) {
         Application->MainForm->Hide();
         // WindowState = wsMinimized;
 
-        if (!minimizeHintShown) {
+        if (!settings.MinimizeHintShown) {
             TrayIcon->Animate = true;
             TrayIcon->ShowBalloonHint();
         }
@@ -726,9 +726,10 @@ void __fastcall TMainForm::OnRestore(TObject *Sender) {
         TrayIcon->Visible = false;
         Application->MainFormOnTaskBar = true;
 
-        if (!minimizeHintShown) {
+        if (!settings.MinimizeHintShown) {
             TrayIcon->BalloonHint = NULL;
-            minimizeHintShown = true;
+            settings.MinimizeHintShown = true;
+            settings.save();
         }
     }
 
@@ -826,6 +827,10 @@ void __fastcall TMainForm::AutoValidationBotClick(TObject *Sender)
     } else {
         Position = poDesktopCenter;
     }
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::SettingsMenuItemClick(TObject *Sender){
+    SettingsForm->ShowModal();
 }
 //---------------------------------------------------------------------------
 

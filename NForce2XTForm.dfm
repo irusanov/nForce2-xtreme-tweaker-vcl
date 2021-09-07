@@ -3460,6 +3460,10 @@ object MainForm: TMainForm
     end
     object ools1: TMenuItem
       Caption = 'Tools'
+      object SettingsMenuItem: TMenuItem
+        Caption = 'Options'
+        OnClick = SettingsMenuItemClick
+      end
       object AutoValidationBot: TMenuItem
         Caption = 'Auto Validation Bot'
         OnClick = AutoValidationBotClick

@@ -25,6 +25,7 @@
 
 #include "AboutForm.h"
 #include "ValidationBot.h"
+#include "SettingsWindow.h"
 #include "Components\TAdvancedEdit\TAdvancedEdit.h"
 #include "Components\TTimingComboBox\TTimingComboBox.h"
 
@@ -209,6 +210,7 @@ __published: // IDE-managed Components
     TButton *ButtonPrevAgp;
     TMenuItem *ools1;
     TMenuItem *AutoValidationBot;
+    TMenuItem *SettingsMenuItem;
 
     void __fastcall TabControl1Change(TObject *Sender);
     void __fastcall Exit1Click(TObject *Sender);
@@ -228,12 +230,12 @@ __published: // IDE-managed Components
     void __fastcall AutoValidationBotClick(TObject *Sender);
     void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
     void __fastcall FormCreate(TObject *Sender);
+    void __fastcall SettingsMenuItemClick(TObject *Sender);
 
 protected:
     // virtual void __fastcall CreateParams(TCreateParams &Params);
 
 private: // User declarations
-    bool minimizeHintShown = false;
     void __fastcall OnMinimize(TObject *Sender);
     void __fastcall OnRestore(TObject *Sender);
     void __fastcall UpdatePllSlider(double fsb, int pll);
