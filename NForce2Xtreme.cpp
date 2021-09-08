@@ -4,10 +4,11 @@
 #pragma hdrstop
 #include <tchar.h>
 // ---------------------------------------------------------------------------
+USEFORM("SettingsWindow.cpp", SettingsForm);
 USEFORM("ValidationBot.cpp", ValidationBotDialog);
 USEFORM("AboutForm.cpp", AboutDialog);
 USEFORM("NForce2XTForm.cpp", MainForm);
-USEFORM("SettingsWindow.cpp", SettingsForm);
+USEFORM("ProfileSaveWindow.cpp", ProfileSaveForm);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {
     try {
@@ -18,6 +19,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {
          Application->CreateForm(__classid(TAboutDialog), &AboutDialog);
          Application->CreateForm(__classid(TValidationBotDialog), &ValidationBotDialog);
          Application->CreateForm(__classid(TSettingsForm), &SettingsForm);
+         Application->CreateForm(__classid(TProfileSaveForm), &ProfileSaveForm);
          Application->Run();
     }
     catch (Exception &exception) {

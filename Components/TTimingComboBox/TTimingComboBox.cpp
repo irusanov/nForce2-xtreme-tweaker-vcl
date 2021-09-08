@@ -119,6 +119,12 @@ __fastcall void TTimingComboBox::setItemValue(int value) {
 }
 
 // ---------------------------------------------------------------------------
+__fastcall void TTimingComboBox::setChanged() {
+    tChanged = true;
+    this->Color = clInfoBk;
+}
+
+// ---------------------------------------------------------------------------
 namespace Ttimingcombobox {
     void __fastcall PACKAGE Register() {
         TComponentClass classes[1] = {__classid(TTimingComboBox)};

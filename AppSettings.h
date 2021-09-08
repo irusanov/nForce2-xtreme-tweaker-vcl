@@ -4,10 +4,11 @@
 #include <vcl.h>
 #include <IniFiles.hpp>
 
-#define FILENAME "settings.ini"
-
 class AppSettings {
 private:
+    UnicodeString ExeName = ExtractFileName(Application->ExeName);
+    UnicodeString FileName = ChangeFileExt(ExeName, ".ini");
+    UnicodeString Path = ExtractFilePath(Application->ExeName) + FileName;
 
 public:
     // General options
@@ -26,8 +27,7 @@ public:
     // Load settings.ini
     void load() {
         // Settings INI file
-        AnsiString Path = ExtractFilePath(Application->ExeName);
-        TIniFile *Settings = new TIniFile(Path + FILENAME);
+        TIniFile *Settings = new TIniFile(Path);
 
         MinimizeToTray = Settings->ReadBool("Options", "MinimizeToTray", false);
         MinimizeHintShown = Settings->ReadBool("Options", "MinimizeHintShown", false);
@@ -44,23 +44,32 @@ public:
         //Settings->Free();
 
         delete Settings;
+
+        if (!FileExists(Path)) {
+            save();
+        }
     }
 
     // Save settings.ini
     void save() {
         // Settings INI file
-        AnsiString Path = ExtractFilePath(Application->ExeName);
-        TIniFile *Settings = new TIniFile(Path + FILENAME);
+        TIniFile *Settings = new TIniFile(Path);
 
         Settings->WriteBool("Options", "MinimizeToTray", MinimizeToTray);
         Settings->WriteBool("Options", "MinimizeHintShown", MinimizeHintShown);
         Settings->WriteBool("Options", "SaveWindowPosition", SaveWindowPosition);
 
-        if (Application->MainForm->WindowState == wsNormal) {
-            Settings->WriteInteger("Options", "WindowTop",
-                    SaveWindowPosition ? Application->MainForm->Top : 0);
-            Settings->WriteInteger("Options", "WindowLeft",
-                    SaveWindowPosition ? Application->MainForm->Left : 0);
+        if (Application->MainForm != NULL) {
+            if (Application->MainForm->WindowState == wsNormal) {
+                Settings->WriteInteger("Options", "WindowTop",
+                        SaveWindowPosition ? Application->MainForm->Top : 0);
+                Settings->WriteInteger("Options", "WindowLeft",
+                        SaveWindowPosition ? Application->MainForm->Left : 0);
+            }
+        }
+        else {
+            Settings->WriteInteger("Options", "WindowTop", 0);
+            Settings->WriteInteger("Options", "WindowLeft", 0);
         }
 
         Settings->WriteString("Bot", "CpuzPath", CpuzPath);
@@ -72,9 +81,8 @@ public:
     }
 
     void reset() {
-        DeleteFile(FILENAME);
+        DeleteFile(Path);
         load();
     }
 };
-
 #endif

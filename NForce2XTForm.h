@@ -22,12 +22,15 @@
 #include "Utils.h"
 #include "QueryPerformance.h"
 #include "AppSettings.h"
+#include "ProfilesManager.h"
 
 #include "AboutForm.h"
 #include "ValidationBot.h"
 #include "SettingsWindow.h"
+#include "ProfileSaveWindow.h"
 #include "Components\TAdvancedEdit\TAdvancedEdit.h"
 #include "Components\TTimingComboBox\TTimingComboBox.h"
+#include <Vcl.ExtDlgs.hpp>
 
 // ---------------------------------------------------------------------------
 class TMainForm : public TForm {
@@ -211,6 +214,9 @@ __published: // IDE-managed Components
     TMenuItem *ools1;
     TMenuItem *AutoValidationBot;
     TMenuItem *SettingsMenuItem;
+    TMenuItem *LoadProfileMenuItem;
+    TMenuItem *SaveProfileMenuItem;
+    TOpenTextFileDialog *OpenTextFileDialog1;
 
     void __fastcall TabControl1Change(TObject *Sender);
     void __fastcall Exit1Click(TObject *Sender);
@@ -231,6 +237,8 @@ __published: // IDE-managed Components
     void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
     void __fastcall FormCreate(TObject *Sender);
     void __fastcall SettingsMenuItemClick(TObject *Sender);
+    void __fastcall LoadProfileMenuItemClick(TObject *Sender);
+    void __fastcall SaveProfileMenuItemClick(TObject *Sender);
 
 protected:
     // virtual void __fastcall CreateParams(TCreateParams &Params);
@@ -294,6 +302,7 @@ public: // User declarations
     double targetFsb;
     int targetPll;
     AppSettings settings;
+    ProfilesManager profiles;
 };
 
 // ---------------------------------------------------------------------------

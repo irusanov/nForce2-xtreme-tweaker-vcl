@@ -833,4 +833,17 @@ void __fastcall TMainForm::AutoValidationBotClick(TObject *Sender)
     SettingsForm->ShowModal();
 }
 //---------------------------------------------------------------------------
+void __fastcall TMainForm::LoadProfileMenuItemClick(TObject *Sender){
+    OpenTextFileDialog1->InitialDir = profiles.GetDefaultPath();
+    OpenTextFileDialog1->Execute();
+
+    if (FileExists(OpenTextFileDialog1->FileName)) {
+        profiles.load(OpenTextFileDialog1->FileName);
+    }
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::SaveProfileMenuItemClick(TObject *Sender){
+    ProfileSaveForm->ShowModal();
+}
+//---------------------------------------------------------------------------
 

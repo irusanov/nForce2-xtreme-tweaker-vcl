@@ -89,6 +89,7 @@ __published:
     __property int Max = {read = tMax, write = setMax};
     __property int Value = {read = getValue, write = setValue};
     __property int ItemValue = {read = getItemValue, write = setItemValue};
+    __fastcall void setChanged();
 };
 // ---------------------------------------------------------------------------
 #endif

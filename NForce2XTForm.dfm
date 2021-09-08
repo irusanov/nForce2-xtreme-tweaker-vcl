@@ -4,7 +4,7 @@ object MainForm: TMainForm
   Anchors = []
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'nForce2XT v1.1 beta13'
+  Caption = 'nForce2XT v1.1 beta14'
   ClientHeight = 474
   ClientWidth = 382
   Color = clBtnFace
@@ -3453,6 +3453,14 @@ object MainForm: TMainForm
     Top = 448
     object File1: TMenuItem
       Caption = 'File'
+      object LoadProfileMenuItem: TMenuItem
+        Caption = 'Load Profile'
+        OnClick = LoadProfileMenuItemClick
+      end
+      object SaveProfileMenuItem: TMenuItem
+        Caption = 'Save Profile'
+        OnClick = SaveProfileMenuItemClick
+      end
       object Exit1: TMenuItem
         Caption = 'Exit'
         OnClick = Exit1Click
@@ -4288,6 +4296,13 @@ object MainForm: TMainForm
       0000AC410000AC410000AC410000AC410000AC410000AC41}
     OnDblClick = TrayIconDblClick
     Left = 8
+    Top = 448
+  end
+  object OpenTextFileDialog1: TOpenTextFileDialog
+    DefaultExt = 'profile'
+    Filter = 'profile files (*.profile)|*.profile|All files (*.*)|*.*"'
+    Options = [ofHideReadOnly, ofNoNetworkButton, ofEnableSizing]
+    Left = 88
     Top = 448
   end
 end
