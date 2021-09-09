@@ -17,6 +17,8 @@ __fastcall TProfileSaveForm::TProfileSaveForm(TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TProfileSaveForm::ButtonSaveProfileClick(TObject *Sender)
 {
+    bool res = false;
+
     ProfilesManager::profile_options_t Options = {};
     Options.author = PanelAuthor->Text;
     Options.comment = PanelComment->Text;
@@ -29,10 +31,12 @@ void __fastcall TProfileSaveForm::ButtonSaveProfileClick(TObject *Sender)
 
     if (SaveTextFileDialog1->Execute()) {
         if (SaveTextFileDialog1->FileName.Length() > 0) {
-            MainForm->profiles.save(SaveTextFileDialog1->FileName, Options);
+            res = MainForm->profiles.save(SaveTextFileDialog1->FileName, Options);
         }
     }
 
-    Close();
+    if (res) {
+        Close();
+    }
 }
 //---------------------------------------------------------------------------

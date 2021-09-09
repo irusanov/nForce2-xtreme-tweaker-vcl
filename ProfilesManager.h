@@ -211,13 +211,31 @@ public:
         delete iniFile;
     }
 
-    void save(UnicodeString FilePath, profile_options_t Opts) {
-        if (FileExists(FilePath)) {
-            // TODO: Add confirmation dialog
-            DeleteFile(FilePath);
-        }
-
+    bool save(UnicodeString FilePath, profile_options_t Opts) {
         TIniFile *iniFile = new TIniFile(FilePath);
+
+        if (FileExists(FilePath)) {
+            String msg = "Profile already exists. Do you want to overwrite it?";
+
+            if (MessageDlg(msg, mtConfirmation, mbOKCancel, 0) != mrOk) {
+                delete iniFile;
+                return false;
+            }
+
+            // Save existing author and comment
+            if (Opts.author.Length() == 0) {
+                Opts.author = iniFile->ReadString("Metadata", "Author", "");
+            }
+
+            if (Opts.comment.Length() == 0) {
+                Opts.comment = iniFile->ReadString("Metadata", "Comment", "");
+            }
+
+            iniFile->EraseSection("Timings");
+            iniFile->EraseSection("DSSR");
+            iniFile->EraseSection("Advanced");
+            iniFile->EraseSection("ROMSIP");
+        }
 
         writeMetadata(iniFile, Opts);
 
@@ -238,6 +256,8 @@ public:
         }
 
         delete iniFile;
+
+        return true;
     }
 
     void init() {

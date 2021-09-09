@@ -109,6 +109,7 @@ object ProfileSaveForm: TProfileSaveForm
     BevelInner = bvLowered
     BevelOuter = bvNone
     TabOrder = 7
+    WantReturns = False
   end
   object SaveTextFileDialog1: TSaveTextFileDialog
     DefaultExt = 'profile'
