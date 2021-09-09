@@ -28,6 +28,7 @@
 #include "ValidationBot.h"
 #include "SettingsWindow.h"
 #include "ProfileSaveWindow.h"
+#include "ProfilePreloadWindow.h"
 #include "Components\TAdvancedEdit\TAdvancedEdit.h"
 #include "Components\TTimingComboBox\TTimingComboBox.h"
 #include <Vcl.ExtDlgs.hpp>

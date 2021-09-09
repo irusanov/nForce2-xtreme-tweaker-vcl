@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 
-#ifndef ProfileSaveWindowH
-#define ProfileSaveWindowH
+#ifndef ProfilePreloadWindowH
+#define ProfilePreloadWindowH
 //---------------------------------------------------------------------------
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>
@@ -11,28 +11,29 @@
 #include <Vcl.ExtDlgs.hpp>
 
 #include "ProfilesManager.h"
+#include <Vcl.ExtCtrls.hpp>
 //---------------------------------------------------------------------------
-class TProfileSaveForm : public TForm
+class TProfilePreloadForm : public TForm
 {
 __published:	// IDE-managed Components
     TCheckBox *CheckBoxTimings;
     TCheckBox *CheckBoxDSSR;
     TCheckBox *CheckBoxAdvanced;
     TCheckBox *CheckBoxRomsip;
-    TButton *ButtonSaveProfile;
+    TButton *ButtonLoadProfile;
     TButton *ButtonCancel;
-    TSaveTextFileDialog *SaveTextFileDialog1;
     TLabel *Label1;
-    TMemo *PanelAuthor;
     TLabel *Label2;
     TMemo *PanelComment;
+    TMemo *PanelAuthor;
     TLabel *Label3;
-    void __fastcall ButtonSaveProfileClick(TObject *Sender);
+    void __fastcall ButtonLoadProfileClick(TObject *Sender);
+    void __fastcall FormShow(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
-    __fastcall TProfileSaveForm(TComponent* Owner);
+    __fastcall TProfilePreloadForm(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
-extern PACKAGE TProfileSaveForm *ProfileSaveForm;
+extern PACKAGE TProfilePreloadForm *ProfilePreloadForm;
 //---------------------------------------------------------------------------
 #endif

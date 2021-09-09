@@ -2,7 +2,7 @@
 #define ProfilesManagerH
 
 #define VERSION_MAJOR 1
-#define VERSION_MINOR 0
+#define VERSION_MINOR 1
 
 #include <vcl.h>
 #include <IniFiles.hpp>
@@ -18,9 +18,9 @@ const String advanced[5] = {
     "BurstMode"};
 
 const String dssr[9] = {
-    "DIMM0DrvStrA", "DIMM0DrvStrB", "DIMM0SlewRate",
-    "DIMM1DrvStrA", "DIMM1DrvStrB", "DIMM1SlewRate",
-    "DIMM2DrvStrA", "DIMM2DrvStrB", "DIMM2SlewRate"};
+    "DIMM0DrvStrA", "DIMM0DrvStrB", "DIMM0SlewRate", "DIMM1DrvStrA",
+    "DIMM1DrvStrB", "DIMM1SlewRate", "DIMM2DrvStrA", "DIMM2DrvStrB",
+    "DIMM2SlewRate"};
 
 const String romsip[10] = {
     "Romsip65", "Romsip66", "Romsip67", "Romsip68", "Romsip69", "Romsip6A",
@@ -29,7 +29,7 @@ const String romsip[10] = {
 class ProfilesManager {
 private:
     UnicodeString DefaultPath = ExtractFilePath(Application->ExeName) +
-        "profiles";
+        "profiles\\";
 
     void CreateDirIfNotPresent(UnicodeString DirPath) {
         if (!DirectoryExists(DirPath, false)) {
@@ -104,7 +104,8 @@ private:
                 (names[i]));
 
             if (box != NULL) {
-                ini->WriteString(section, StringReplace(names[i], "Romsip", "", TReplaceFlags()), box->Text);
+                ini->WriteString(section, StringReplace(names[i], "Romsip", "",
+                    TReplaceFlags()), box->Text);
             }
         }
     }
@@ -116,7 +117,8 @@ private:
         TAdvancedEdit* box; ;
 
         for (i = 0; i < size; i++) {
-            value = ini->ReadString(section, StringReplace(names[i], "Romsip", "", TReplaceFlags()), "");
+            value = ini->ReadString(section, StringReplace(names[i], "Romsip",
+                "", TReplaceFlags()), "");
 
             if (value == "")
                 continue;
@@ -131,39 +133,85 @@ private:
         }
     }
 
-    void WriteVersion(TIniFile* ini) {
-        ini->WriteString("PMVersion", "Major", VERSION_MAJOR);
-        ini->WriteString("PMVersion", "Minor", VERSION_MINOR);
-    }
-
 public:
     typedef struct {
+        String author;
+        String comment;
         bool timings;
         bool dssr;
         bool advanced;
         bool romsip;
-    } profile_options_t;
+    }
+
+    profile_options_t;
+
+    typedef struct {
+        int versionMajor;
+        int versionMinor;
+        String path;
+        profile_options_t options;
+    }
+
+    profile_metadata_t;
 
     UnicodeString GetDefaultPath() {
         return DefaultPath;
     }
 
-    void load(UnicodeString FilePath) {
-        CreateDirIfNotPresent(DefaultPath);
-
+    profile_metadata_t readMetadata(UnicodeString FilePath) {
         TIniFile *iniFile = new TIniFile(FilePath);
 
-        LoadTimings(iniFile, "Timings", timings, COUNT_OF(timings));
-        LoadTimings(iniFile, "DSSR", dssr, COUNT_OF(dssr));
-        LoadTimings(iniFile, "Advanced", advanced, COUNT_OF(advanced));
-        LoadRomsipValues(iniFile, "ROMSIP", romsip, COUNT_OF(romsip));
+        previewMetadata.path = FilePath;
+
+        previewMetadata.versionMajor =
+            iniFile->ReadInteger("PMVersion", "Major", 0);
+        previewMetadata.versionMinor =
+            iniFile->ReadInteger("PMVersion", "Minor", 0);
+        previewMetadata.options.author =
+            iniFile->ReadString("Metadata", "Author", "");
+        previewMetadata.options.comment =
+            iniFile->ReadString("Metadata", "Comment", "");
+
+        previewMetadata.options.timings = iniFile->SectionExists("Timings");
+        previewMetadata.options.dssr = iniFile->SectionExists("DSSR");
+        previewMetadata.options.advanced = iniFile->SectionExists("Advanced");
+        previewMetadata.options.romsip = iniFile->SectionExists("ROMSIP");
+
+        delete iniFile;
+
+        return previewMetadata;
+    }
+
+    void writeMetadata(TIniFile* ini, profile_options_t Opts) {
+        ini->WriteString("PMVersion", "Major", VERSION_MAJOR);
+        ini->WriteString("PMVersion", "Minor", VERSION_MINOR);
+        ini->WriteString("Metadata", "Author", Opts.author);
+        ini->WriteString("Metadata", "Comment", Opts.comment);
+    }
+
+    void load(UnicodeString FilePath, profile_options_t Opts) {
+        TIniFile *iniFile = new TIniFile(FilePath);
+
+        if (Opts.timings) {
+            LoadTimings(iniFile, "Timings", timings, COUNT_OF(timings));
+        }
+
+        if (Opts.dssr) {
+            LoadTimings(iniFile, "DSSR", dssr, COUNT_OF(dssr));
+        }
+
+        if (Opts.advanced) {
+            LoadTimings(iniFile, "Advanced", advanced, COUNT_OF(advanced));
+        }
+
+        if (Opts.romsip) {
+            LoadRomsipValues(iniFile, "ROMSIP", romsip, COUNT_OF(romsip));
+        }
 
         delete iniFile;
     }
 
     void save(UnicodeString FilePath, profile_options_t Opts) {
-        CreateDirIfNotPresent(DefaultPath);
-
         if (FileExists(FilePath)) {
             // TODO: Add confirmation dialog
             DeleteFile(FilePath);
@@ -171,7 +219,7 @@ public:
 
         TIniFile *iniFile = new TIniFile(FilePath);
 
-        WriteVersion(iniFile);
+        writeMetadata(iniFile, Opts);
 
         if (Opts.timings) {
             SaveTimings(iniFile, "Timings", timings, COUNT_OF(timings));
@@ -191,5 +239,12 @@ public:
 
         delete iniFile;
     }
+
+    void init() {
+        CreateDirIfNotPresent(DefaultPath);
+    }
+
+    // Preload profile data
+    profile_metadata_t previewMetadata;
 };
 #endif

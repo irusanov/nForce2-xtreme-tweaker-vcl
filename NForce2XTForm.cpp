@@ -819,6 +819,7 @@ void __fastcall TMainForm::AutoValidationBotClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::FormCreate(TObject *Sender){
     settings.load();
+    profiles.init();
 
     if (settings.SaveWindowPosition) {
         Position = poDefault;
@@ -835,10 +836,12 @@ void __fastcall TMainForm::AutoValidationBotClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::LoadProfileMenuItemClick(TObject *Sender){
     OpenTextFileDialog1->InitialDir = profiles.GetDefaultPath();
-    OpenTextFileDialog1->Execute();
 
-    if (FileExists(OpenTextFileDialog1->FileName)) {
-        profiles.load(OpenTextFileDialog1->FileName);
+    if (OpenTextFileDialog1->Execute()) {
+        if (FileExists(OpenTextFileDialog1->FileName)) {
+            profiles.readMetadata(OpenTextFileDialog1->FileName);
+            ProfilePreloadForm->ShowModal();
+        }
     }
 }
 //---------------------------------------------------------------------------

@@ -18,16 +18,19 @@ __fastcall TProfileSaveForm::TProfileSaveForm(TComponent* Owner)
 void __fastcall TProfileSaveForm::ButtonSaveProfileClick(TObject *Sender)
 {
     ProfilesManager::profile_options_t Options = {};
+    Options.author = PanelAuthor->Text;
+    Options.comment = PanelComment->Text;
     Options.timings = CheckBoxTimings->Checked;
     Options.dssr = CheckBoxDSSR->Checked;
     Options.advanced = CheckBoxAdvanced->Checked;
     Options.romsip = CheckBoxRomsip->Checked;
 
     SaveTextFileDialog1->InitialDir = MainForm->profiles.GetDefaultPath();
-    SaveTextFileDialog1->Execute();
 
-    if (SaveTextFileDialog1->FileName.Length() > 0) {
-        MainForm->profiles.save(SaveTextFileDialog1->FileName, Options);
+    if (SaveTextFileDialog1->Execute()) {
+        if (SaveTextFileDialog1->FileName.Length() > 0) {
+            MainForm->profiles.save(SaveTextFileDialog1->FileName, Options);
+        }
     }
 
     Close();

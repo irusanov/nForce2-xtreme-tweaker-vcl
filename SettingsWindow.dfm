@@ -39,6 +39,7 @@ object SettingsForm: TSettingsForm
     Width = 75
     Height = 25
     Caption = 'Apply'
+    Default = True
     Enabled = False
     TabOrder = 2
     OnClick = ButtonApplySettingsClick
