@@ -870,1373 +870,6 @@ object MainForm: TMainForm
     TabIndex = 0
     OnChange = TabControl1Change
     OnDrawTab = TabControl1DrawTab
-    object PanelDram: TPanel
-      Left = 4
-      Top = 24
-      Width = 370
-      Height = 407
-      Margins.Left = 0
-      Margins.Top = 0
-      Margins.Right = 0
-      Margins.Bottom = 0
-      BevelEdges = []
-      BevelOuter = bvNone
-      Ctl3D = True
-      DoubleBuffered = True
-      ParentBackground = False
-      ParentCtl3D = False
-      ParentDoubleBuffered = False
-      TabOrder = 2
-      object GroupBoxTimings: TGroupBox
-        Left = 5
-        Top = 5
-        Width = 124
-        Height = 396
-        Margins.Left = 0
-        Margins.Top = 0
-        Margins.Right = 0
-        Margins.Bottom = 0
-        Caption = ' Timings '
-        Color = clBtnFace
-        Ctl3D = True
-        DoubleBuffered = True
-        ParentBackground = False
-        ParentColor = False
-        ParentCtl3D = False
-        ParentDoubleBuffered = False
-        TabOrder = 0
-        object LabelCAS: TLabel
-          Left = 11
-          Top = 22
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TCL'
-        end
-        object LabelTRCDR: TLabel
-          Left = 11
-          Top = 44
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TRCDR'
-        end
-        object Label17: TLabel
-          Left = 11
-          Top = 67
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TRCDW'
-        end
-        object Label18: TLabel
-          Left = 11
-          Top = 91
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TRP'
-        end
-        object Label19: TLabel
-          Left = 11
-          Top = 114
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TRAS'
-        end
-        object Label20: TLabel
-          Left = 11
-          Top = 137
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TRC'
-        end
-        object Label21: TLabel
-          Left = 11
-          Top = 159
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TRFC'
-        end
-        object Label22: TLabel
-          Left = 11
-          Top = 182
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'CR'
-        end
-        object Label23: TLabel
-          Left = 11
-          Top = 204
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TDOE'
-        end
-        object Label24: TLabel
-          Left = 11
-          Top = 228
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TRRD'
-        end
-        object Label25: TLabel
-          Left = 11
-          Top = 251
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TWTP'
-        end
-        object Label26: TLabel
-          Left = 11
-          Top = 274
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TWTR'
-        end
-        object Label27: TLabel
-          Left = 11
-          Top = 298
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TREXT'
-        end
-        object Label28: TLabel
-          Left = 11
-          Top = 321
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TRTP'
-        end
-        object Label29: TLabel
-          Left = 11
-          Top = 344
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TRTW'
-        end
-        object Label30: TLabel
-          Left = 11
-          Top = 367
-          Width = 40
-          Height = 16
-          AutoSize = False
-          Caption = 'TREF'
-        end
-        object CAS: TTimingComboBox
-          Left = 61
-          Top = 17
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          Enabled = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          ParentFont = False
-          TabOrder = 0
-          Text = '2.0'
-          Items.Strings = (
-            '2.0'
-            '2.5'
-            '3.0')
-          CustomItems = True
-          Max = 2
-          ItemValue = -1
-        end
-        object TRCDR: TTimingComboBox
-          Left = 61
-          Top = 40
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 1
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          ItemValue = -1
-        end
-        object TRCDW: TTimingComboBox
-          Left = 61
-          Top = 63
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 2
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          ItemValue = -1
-        end
-        object TRP: TTimingComboBox
-          Left = 61
-          Top = 86
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 3
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          ItemValue = -1
-        end
-        object TRAS: TTimingComboBox
-          Left = 61
-          Top = 109
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 4
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15'
-            '16'
-            '17'
-            '18'
-            '19'
-            '20'
-            '21'
-            '22'
-            '23'
-            '24'
-            '25'
-            '26'
-            '27'
-            '28'
-            '29'
-            '30'
-            '31')
-          Max = 31
-          Value = -1
-          ItemValue = -1
-        end
-        object TRC: TTimingComboBox
-          Left = 61
-          Top = 132
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 5
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15'
-            '16'
-            '17'
-            '18'
-            '19'
-            '20'
-            '21'
-            '22'
-            '23'
-            '24'
-            '25'
-            '26'
-            '27'
-            '28'
-            '29'
-            '30'
-            '31')
-          Max = 31
-          ItemValue = -1
-        end
-        object TRFC: TTimingComboBox
-          Left = 61
-          Top = 155
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 6
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15'
-            '16'
-            '17'
-            '18'
-            '19'
-            '20'
-            '21'
-            '22'
-            '23'
-            '24'
-            '25'
-            '26'
-            '27'
-            '28'
-            '29'
-            '30'
-            '31')
-          Max = 31
-          ItemValue = -1
-        end
-        object CR: TTimingComboBox
-          Left = 61
-          Top = 178
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          Enabled = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 7
-          Text = '1T'
-          Items.Strings = (
-            '1T'
-            '2T')
-          CustomItems = True
-          Max = 1
-          ItemValue = -1
-        end
-        object TDOE: TTimingComboBox
-          Left = 61
-          Top = 201
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 8
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7')
-          Max = 7
-          ItemValue = -1
-        end
-        object TRRD: TTimingComboBox
-          Left = 61
-          Top = 224
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 9
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7')
-          Max = 7
-          ItemValue = -1
-        end
-        object TWTP: TTimingComboBox
-          Left = 61
-          Top = 247
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 10
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7')
-          Max = 7
-          ItemValue = -1
-        end
-        object TWTR: TTimingComboBox
-          Left = 61
-          Top = 270
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 11
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7')
-          Max = 7
-          ItemValue = -1
-        end
-        object TREXT: TTimingComboBox
-          Left = 61
-          Top = 294
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 12
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3')
-          Max = 3
-          ItemValue = -1
-        end
-        object TRTP: TTimingComboBox
-          Left = 61
-          Top = 317
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 13
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7')
-          Max = 7
-          ItemValue = -1
-        end
-        object TRTW: TTimingComboBox
-          Left = 61
-          Top = 340
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 14
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7')
-          Max = 7
-          ItemValue = -1
-        end
-        object TREF: TTimingComboBox
-          Left = 61
-          Top = 363
-          Width = 52
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 15
-          Items.Strings = (
-            '16'
-            '32'
-            '64'
-            '128'
-            '388'
-            '516'
-            '648'
-            '776'
-            '780'
-            '908'
-            '1032'
-            '1168'
-            '1296'
-            '1536'
-            '1552'
-            '1560'
-            '1816'
-            '2048'
-            '2064'
-            '2336'
-            '2560'
-            '2592'
-            '3072'
-            '3120'
-            '3632'
-            '3684'
-            '4128'
-            '4196'
-            '4672'
-            '4708')
-          CustomItems = True
-          CustomValue = True
-          Max = 7
-          Value = -1
-          ItemValue = -1
-        end
-      end
-      object GroupBoxAdvanced: TGroupBox
-        Left = 136
-        Top = 5
-        Width = 228
-        Height = 396
-        Margins.Left = 0
-        Margins.Top = 0
-        Margins.Right = 0
-        Margins.Bottom = 0
-        Caption = ' Advanced '
-        Color = clBtnFace
-        Ctl3D = True
-        DoubleBuffered = True
-        ParentBackground = False
-        ParentColor = False
-        ParentCtl3D = False
-        ParentDoubleBuffered = False
-        TabOrder = 1
-        object Label31: TLabel
-          Left = 11
-          Top = 22
-          Width = 116
-          Height = 13
-          AutoSize = False
-          Caption = 'DIMM0 Drive Strengths'
-        end
-        object Label32: TLabel
-          Left = 11
-          Top = 44
-          Width = 116
-          Height = 13
-          AutoSize = False
-          Caption = 'DIMM0 Slew Rate'
-        end
-        object Label33: TLabel
-          Left = 11
-          Top = 67
-          Width = 116
-          Height = 13
-          AutoSize = False
-          Caption = 'DIMM1 Drive Strengths'
-        end
-        object Label34: TLabel
-          Left = 11
-          Top = 90
-          Width = 116
-          Height = 13
-          AutoSize = False
-          Caption = 'DIMM1 Slew Rate'
-        end
-        object Label35: TLabel
-          Left = 11
-          Top = 113
-          Width = 116
-          Height = 13
-          AutoSize = False
-          Caption = 'DIMM2 Drive Strengths'
-        end
-        object Label36: TLabel
-          Left = 11
-          Top = 136
-          Width = 116
-          Height = 13
-          AutoSize = False
-          Caption = 'DIMM2 Slew Rate'
-        end
-        object Label37: TLabel
-          Left = 11
-          Top = 159
-          Width = 116
-          Height = 13
-          AutoSize = False
-          Caption = 'Auto Precharge'
-        end
-        object Label38: TLabel
-          Left = 11
-          Top = 182
-          Width = 116
-          Height = 13
-          AutoSize = False
-          Caption = 'Super Bypass'
-        end
-        object Label39: TLabel
-          Left = 11
-          Top = 205
-          Width = 116
-          Height = 13
-          AutoSize = False
-          Caption = 'Data Scavenged Rate'
-        end
-        object Label40: TLabel
-          Left = 11
-          Top = 228
-          Width = 116
-          Height = 13
-          AutoSize = False
-          Caption = 'Drive Strength Mode'
-        end
-        object Label41: TLabel
-          Left = 11
-          Top = 251
-          Width = 116
-          Height = 13
-          AutoSize = False
-          Caption = 'Burst Mode'
-        end
-        object Label42: TLabel
-          Left = 11
-          Top = 274
-          Width = 39
-          Height = 13
-          AutoSize = False
-          Caption = 'ROMSIP'
-        end
-        object Label49: TLabel
-          Left = 71
-          Top = 300
-          Width = 26
-          Height = 13
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '65'
-        end
-        object Label50: TLabel
-          Left = 101
-          Top = 300
-          Width = 26
-          Height = 13
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '66'
-        end
-        object Label51: TLabel
-          Left = 131
-          Top = 300
-          Width = 26
-          Height = 13
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '67'
-        end
-        object Label52: TLabel
-          Left = 161
-          Top = 300
-          Width = 26
-          Height = 13
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '68'
-        end
-        object Label53: TLabel
-          Left = 191
-          Top = 300
-          Width = 26
-          Height = 13
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '69'
-        end
-        object Label54: TLabel
-          Left = 71
-          Top = 346
-          Width = 26
-          Height = 13
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '6A'
-        end
-        object Label55: TLabel
-          Left = 101
-          Top = 346
-          Width = 26
-          Height = 13
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '6B'
-        end
-        object Label56: TLabel
-          Left = 131
-          Top = 346
-          Width = 26
-          Height = 13
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '6C'
-        end
-        object Label57: TLabel
-          Left = 161
-          Top = 346
-          Width = 26
-          Height = 13
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '6D'
-        end
-        object Label58: TLabel
-          Left = 191
-          Top = 346
-          Width = 26
-          Height = 13
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '6F'
-        end
-        object DIMM0DrvStrB: TTimingComboBox
-          Left = 177
-          Top = 17
-          Width = 40
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 0
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          ItemValue = -1
-        end
-        object AutoPrecharge: TTimingComboBox
-          Left = 133
-          Top = 155
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 1
-          Text = 'Disabled'
-          Items.Strings = (
-            'Disabled'
-            'Enabled')
-          CustomItems = True
-          Max = 15
-          ItemValue = -1
-        end
-        object SuperBypass: TTimingComboBox
-          Left = 133
-          Top = 178
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 2
-          Text = 'Disabled'
-          Items.Strings = (
-            'Disabled'
-            'Enabled')
-          CustomItems = True
-          Max = 15
-          ItemValue = -1
-        end
-        object DataScavengedRate: TTimingComboBox
-          Left = 133
-          Top = 201
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 3
-          Text = 'Fast'
-          Items.Strings = (
-            'Fast'
-            'Normal')
-          CustomItems = True
-          Max = 15
-          ItemValue = -1
-        end
-        object DriveStrengthMode: TTimingComboBox
-          Left = 133
-          Top = 224
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 4
-          Text = 'Normal'
-          Items.Strings = (
-            'Normal'
-            'Weak')
-          CustomItems = True
-          Max = 15
-          ItemValue = -1
-        end
-        object BurstMode: TTimingComboBox
-          Left = 133
-          Top = 247
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 5
-          Text = 'Sequential'
-          Items.Strings = (
-            'Sequential'
-            'Interleave')
-          CustomItems = True
-          Max = 15
-          ItemValue = -1
-        end
-        object TimingComboBox29: TTimingComboBox
-          Left = 71
-          Top = 270
-          Width = 146
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 6
-          Text = 'Auto'
-          Items.Strings = (
-            'Auto')
-          CustomItems = True
-          Max = 15
-          ItemValue = -1
-        end
-        object DIMM0DrvStrA: TTimingComboBox
-          Left = 133
-          Top = 17
-          Width = 40
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 7
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          ItemValue = -1
-        end
-        object DIMM2DrvStrB: TTimingComboBox
-          Left = 177
-          Top = 109
-          Width = 40
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 8
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          ItemValue = -1
-        end
-        object DIMM0SlewRate: TTimingComboBox
-          Left = 133
-          Top = 40
-          Width = 40
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 9
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          ItemValue = -1
-        end
-        object DIMM1DrvStrA: TTimingComboBox
-          Left = 133
-          Top = 63
-          Width = 40
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 10
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          ItemValue = -1
-        end
-        object DIMM1DrvStrB: TTimingComboBox
-          Left = 177
-          Top = 63
-          Width = 40
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 11
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          ItemValue = -1
-        end
-        object DIMM1SlewRate: TTimingComboBox
-          Left = 133
-          Top = 86
-          Width = 40
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 12
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          ItemValue = -1
-        end
-        object DIMM2DrvStrA: TTimingComboBox
-          Left = 133
-          Top = 109
-          Width = 40
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 13
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          ItemValue = -1
-        end
-        object DIMM2SlewRate: TTimingComboBox
-          Left = 133
-          Top = 132
-          Width = 40
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ItemIndex = 0
-          ParentDoubleBuffered = False
-          TabOrder = 14
-          Text = '0'
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          ItemValue = -1
-        end
-        object Romsip65: TAdvancedEdit
-          Left = 71
-          Top = 317
-          Width = 26
-          Height = 22
-          Alignment = taCenter
-          AutoSize = False
-          CharCase = ecUpperCase
-          HideSelection = False
-          MaxLength = 2
-          TabOrder = 15
-          Max = 255
-        end
-        object Romsip66: TAdvancedEdit
-          Left = 101
-          Top = 317
-          Width = 26
-          Height = 22
-          Alignment = taCenter
-          AutoSize = False
-          CharCase = ecUpperCase
-          HideSelection = False
-          MaxLength = 2
-          TabOrder = 16
-          Max = 255
-        end
-        object Romsip67: TAdvancedEdit
-          Left = 131
-          Top = 317
-          Width = 26
-          Height = 22
-          Alignment = taCenter
-          AutoSize = False
-          CharCase = ecUpperCase
-          HideSelection = False
-          MaxLength = 2
-          TabOrder = 17
-          Max = 255
-        end
-        object Romsip68: TAdvancedEdit
-          Left = 161
-          Top = 317
-          Width = 26
-          Height = 22
-          Alignment = taCenter
-          AutoSize = False
-          CharCase = ecUpperCase
-          HideSelection = False
-          MaxLength = 2
-          TabOrder = 18
-          Max = 255
-        end
-        object Romsip69: TAdvancedEdit
-          Left = 191
-          Top = 317
-          Width = 26
-          Height = 22
-          Alignment = taCenter
-          AutoSize = False
-          CharCase = ecUpperCase
-          HideSelection = False
-          MaxLength = 2
-          TabOrder = 19
-          Max = 255
-        end
-        object Romsip6A: TAdvancedEdit
-          Left = 71
-          Top = 363
-          Width = 26
-          Height = 22
-          Alignment = taCenter
-          AutoSize = False
-          CharCase = ecUpperCase
-          HideSelection = False
-          MaxLength = 2
-          TabOrder = 20
-          Max = 255
-        end
-        object Romsip6B: TAdvancedEdit
-          Left = 101
-          Top = 363
-          Width = 26
-          Height = 22
-          Alignment = taCenter
-          AutoSize = False
-          CharCase = ecUpperCase
-          HideSelection = False
-          MaxLength = 2
-          TabOrder = 21
-          Max = 255
-        end
-        object Romsip6C: TAdvancedEdit
-          Left = 131
-          Top = 363
-          Width = 26
-          Height = 22
-          Alignment = taCenter
-          AutoSize = False
-          CharCase = ecUpperCase
-          HideSelection = False
-          MaxLength = 2
-          TabOrder = 22
-          Max = 255
-        end
-        object Romsip6D: TAdvancedEdit
-          Left = 161
-          Top = 363
-          Width = 26
-          Height = 22
-          Alignment = taCenter
-          AutoSize = False
-          CharCase = ecUpperCase
-          HideSelection = False
-          MaxLength = 2
-          TabOrder = 23
-          Max = 255
-        end
-        object Romsip6F: TAdvancedEdit
-          Left = 191
-          Top = 363
-          Width = 26
-          Height = 22
-          Alignment = taCenter
-          AutoSize = False
-          CharCase = ecUpperCase
-          HideSelection = False
-          MaxLength = 2
-          TabOrder = 24
-          Max = 255
-        end
-      end
-    end
     object PanelChipset: TPanel
       Left = 4
       Top = 24
@@ -3444,6 +2077,1356 @@ object MainForm: TMainForm
           ParentCtl3D = False
           ParentFont = False
           TabOrder = 4
+        end
+      end
+    end
+    object PanelDram: TPanel
+      Left = 4
+      Top = 24
+      Width = 370
+      Height = 407
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      BevelEdges = []
+      BevelOuter = bvNone
+      Ctl3D = True
+      DoubleBuffered = True
+      ParentBackground = False
+      ParentCtl3D = False
+      ParentDoubleBuffered = False
+      TabOrder = 2
+      object GroupBoxTimings: TGroupBox
+        Left = 5
+        Top = 5
+        Width = 124
+        Height = 396
+        Margins.Left = 0
+        Margins.Top = 0
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Caption = ' Timings '
+        Color = clBtnFace
+        Ctl3D = True
+        DoubleBuffered = True
+        ParentBackground = False
+        ParentColor = False
+        ParentCtl3D = False
+        ParentDoubleBuffered = False
+        TabOrder = 0
+        object LabelCAS: TLabel
+          Left = 11
+          Top = 22
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TCL'
+        end
+        object LabelTRCDR: TLabel
+          Left = 11
+          Top = 44
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TRCDR'
+        end
+        object Label17: TLabel
+          Left = 11
+          Top = 67
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TRCDW'
+        end
+        object Label18: TLabel
+          Left = 11
+          Top = 91
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TRP'
+        end
+        object Label19: TLabel
+          Left = 11
+          Top = 114
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TRAS'
+        end
+        object Label20: TLabel
+          Left = 11
+          Top = 137
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TRC'
+        end
+        object Label21: TLabel
+          Left = 11
+          Top = 159
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TRFC'
+        end
+        object Label22: TLabel
+          Left = 11
+          Top = 182
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'CR'
+        end
+        object Label23: TLabel
+          Left = 11
+          Top = 204
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TDOE'
+        end
+        object Label24: TLabel
+          Left = 11
+          Top = 228
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TRRD'
+        end
+        object Label25: TLabel
+          Left = 11
+          Top = 251
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TWTP'
+        end
+        object Label26: TLabel
+          Left = 11
+          Top = 274
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TWTR'
+        end
+        object Label27: TLabel
+          Left = 11
+          Top = 298
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TREXT'
+        end
+        object Label28: TLabel
+          Left = 11
+          Top = 321
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TRTP'
+        end
+        object Label29: TLabel
+          Left = 11
+          Top = 344
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TRTW'
+        end
+        object Label30: TLabel
+          Left = 11
+          Top = 367
+          Width = 40
+          Height = 16
+          AutoSize = False
+          Caption = 'TREF'
+        end
+        object CAS: TTimingComboBox
+          Left = 61
+          Top = 17
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          Enabled = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          ParentFont = False
+          TabOrder = 0
+          Text = '2.0'
+          Items.Strings = (
+            '2.0'
+            '2.5'
+            '3.0')
+          CustomItems = True
+          Max = 2
+          ItemValue = -1
+        end
+        object TRCDR: TTimingComboBox
+          Left = 61
+          Top = 40
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 1
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          ItemValue = -1
+        end
+        object TRCDW: TTimingComboBox
+          Left = 61
+          Top = 63
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 2
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          ItemValue = -1
+        end
+        object TRP: TTimingComboBox
+          Left = 61
+          Top = 86
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 3
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          ItemValue = -1
+        end
+        object TRAS: TTimingComboBox
+          Left = 61
+          Top = 109
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 4
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15'
+            '16'
+            '17'
+            '18'
+            '19'
+            '20'
+            '21'
+            '22'
+            '23'
+            '24'
+            '25'
+            '26'
+            '27'
+            '28'
+            '29'
+            '30'
+            '31')
+          Max = 31
+          Value = -1
+          ItemValue = -1
+        end
+        object TRC: TTimingComboBox
+          Left = 61
+          Top = 132
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 5
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15'
+            '16'
+            '17'
+            '18'
+            '19'
+            '20'
+            '21'
+            '22'
+            '23'
+            '24'
+            '25'
+            '26'
+            '27'
+            '28'
+            '29'
+            '30'
+            '31')
+          Max = 31
+          ItemValue = -1
+        end
+        object TRFC: TTimingComboBox
+          Left = 61
+          Top = 155
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 6
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15'
+            '16'
+            '17'
+            '18'
+            '19'
+            '20'
+            '21'
+            '22'
+            '23'
+            '24'
+            '25'
+            '26'
+            '27'
+            '28'
+            '29'
+            '30'
+            '31')
+          Max = 31
+          ItemValue = -1
+        end
+        object CR: TTimingComboBox
+          Left = 61
+          Top = 178
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          Enabled = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 7
+          Text = '1T'
+          Items.Strings = (
+            '1T'
+            '2T')
+          CustomItems = True
+          Max = 1
+          ItemValue = -1
+        end
+        object TDOE: TTimingComboBox
+          Left = 61
+          Top = 201
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 8
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7')
+          Max = 7
+          ItemValue = -1
+        end
+        object TRRD: TTimingComboBox
+          Left = 61
+          Top = 224
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 9
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7')
+          Max = 7
+          ItemValue = -1
+        end
+        object TWTP: TTimingComboBox
+          Left = 61
+          Top = 247
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 10
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7')
+          Max = 7
+          ItemValue = -1
+        end
+        object TWTR: TTimingComboBox
+          Left = 61
+          Top = 270
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 11
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7')
+          Max = 7
+          ItemValue = -1
+        end
+        object TREXT: TTimingComboBox
+          Left = 61
+          Top = 294
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 12
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3')
+          Max = 3
+          ItemValue = -1
+        end
+        object TRTP: TTimingComboBox
+          Left = 61
+          Top = 317
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 13
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7')
+          Max = 7
+          ItemValue = -1
+        end
+        object TRTW: TTimingComboBox
+          Left = 61
+          Top = 340
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 14
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7')
+          Max = 7
+          ItemValue = -1
+        end
+        object TREF: TTimingComboBox
+          Left = 61
+          Top = 363
+          Width = 52
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 15
+          Items.Strings = (
+            '16'
+            '32'
+            '64'
+            '128'
+            '388'
+            '516'
+            '648'
+            '776'
+            '780'
+            '908'
+            '1032'
+            '1168'
+            '1296'
+            '1536'
+            '1552'
+            '1560'
+            '1816'
+            '2048'
+            '2064'
+            '2336'
+            '2560'
+            '2592'
+            '3072'
+            '3120'
+            '3632'
+            '3684'
+            '4128'
+            '4196'
+            '4672'
+            '4708')
+          CustomItems = True
+          CustomValue = True
+          Max = 7
+          Value = -1
+          ItemValue = -1
+        end
+      end
+      object GroupBoxAdvanced: TGroupBox
+        Left = 136
+        Top = 5
+        Width = 228
+        Height = 280
+        Margins.Left = 0
+        Margins.Top = 0
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Caption = ' Advanced '
+        Color = clBtnFace
+        Ctl3D = True
+        DoubleBuffered = True
+        ParentBackground = False
+        ParentColor = False
+        ParentCtl3D = False
+        ParentDoubleBuffered = False
+        TabOrder = 1
+        object Label31: TLabel
+          Left = 11
+          Top = 22
+          Width = 116
+          Height = 13
+          AutoSize = False
+          Caption = 'DIMM0 Drive Strengths'
+        end
+        object Label32: TLabel
+          Left = 11
+          Top = 44
+          Width = 116
+          Height = 13
+          AutoSize = False
+          Caption = 'DIMM0 Slew Rate'
+        end
+        object Label33: TLabel
+          Left = 11
+          Top = 67
+          Width = 116
+          Height = 13
+          AutoSize = False
+          Caption = 'DIMM1 Drive Strengths'
+        end
+        object Label34: TLabel
+          Left = 11
+          Top = 90
+          Width = 116
+          Height = 13
+          AutoSize = False
+          Caption = 'DIMM1 Slew Rate'
+        end
+        object Label35: TLabel
+          Left = 11
+          Top = 113
+          Width = 116
+          Height = 13
+          AutoSize = False
+          Caption = 'DIMM2 Drive Strengths'
+        end
+        object Label36: TLabel
+          Left = 11
+          Top = 136
+          Width = 116
+          Height = 13
+          AutoSize = False
+          Caption = 'DIMM2 Slew Rate'
+        end
+        object Label37: TLabel
+          Left = 11
+          Top = 159
+          Width = 116
+          Height = 13
+          AutoSize = False
+          Caption = 'Auto Precharge'
+        end
+        object Label38: TLabel
+          Left = 11
+          Top = 182
+          Width = 116
+          Height = 13
+          AutoSize = False
+          Caption = 'Super Bypass'
+        end
+        object Label39: TLabel
+          Left = 11
+          Top = 205
+          Width = 116
+          Height = 13
+          AutoSize = False
+          Caption = 'Data Scavenged Rate'
+        end
+        object Label40: TLabel
+          Left = 11
+          Top = 228
+          Width = 116
+          Height = 13
+          AutoSize = False
+          Caption = 'Drive Strength Mode'
+        end
+        object Label41: TLabel
+          Left = 11
+          Top = 251
+          Width = 116
+          Height = 13
+          AutoSize = False
+          Caption = 'Burst Mode'
+        end
+        object DIMM0DrvStrB: TTimingComboBox
+          Left = 177
+          Top = 17
+          Width = 40
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 0
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          ItemValue = -1
+        end
+        object AutoPrecharge: TTimingComboBox
+          Left = 133
+          Top = 155
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 1
+          Text = 'Disabled'
+          Items.Strings = (
+            'Disabled'
+            'Enabled')
+          CustomItems = True
+          Max = 15
+          ItemValue = -1
+        end
+        object SuperBypass: TTimingComboBox
+          Left = 133
+          Top = 178
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 2
+          Text = 'Disabled'
+          Items.Strings = (
+            'Disabled'
+            'Enabled')
+          CustomItems = True
+          Max = 15
+          ItemValue = -1
+        end
+        object DataScavengedRate: TTimingComboBox
+          Left = 133
+          Top = 201
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 3
+          Text = 'Fast'
+          Items.Strings = (
+            'Fast'
+            'Normal')
+          CustomItems = True
+          Max = 15
+          ItemValue = -1
+        end
+        object DriveStrengthMode: TTimingComboBox
+          Left = 133
+          Top = 224
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 4
+          Text = 'Normal'
+          Items.Strings = (
+            'Normal'
+            'Weak')
+          CustomItems = True
+          Max = 15
+          ItemValue = -1
+        end
+        object BurstMode: TTimingComboBox
+          Left = 133
+          Top = 247
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 5
+          Text = 'Sequential'
+          Items.Strings = (
+            'Sequential'
+            'Interleave')
+          CustomItems = True
+          Max = 15
+          ItemValue = -1
+        end
+        object DIMM0DrvStrA: TTimingComboBox
+          Left = 133
+          Top = 17
+          Width = 40
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 6
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          ItemValue = -1
+        end
+        object DIMM2DrvStrB: TTimingComboBox
+          Left = 177
+          Top = 109
+          Width = 40
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 7
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          ItemValue = -1
+        end
+        object DIMM0SlewRate: TTimingComboBox
+          Left = 133
+          Top = 40
+          Width = 40
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 8
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          ItemValue = -1
+        end
+        object DIMM1DrvStrA: TTimingComboBox
+          Left = 133
+          Top = 63
+          Width = 40
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 9
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          ItemValue = -1
+        end
+        object DIMM1DrvStrB: TTimingComboBox
+          Left = 177
+          Top = 63
+          Width = 40
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 10
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          ItemValue = -1
+        end
+        object DIMM1SlewRate: TTimingComboBox
+          Left = 133
+          Top = 86
+          Width = 40
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 11
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          ItemValue = -1
+        end
+        object DIMM2DrvStrA: TTimingComboBox
+          Left = 133
+          Top = 109
+          Width = 40
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 12
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          ItemValue = -1
+        end
+        object DIMM2SlewRate: TTimingComboBox
+          Left = 133
+          Top = 132
+          Width = 40
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ItemIndex = 0
+          ParentDoubleBuffered = False
+          TabOrder = 13
+          Text = '0'
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          ItemValue = -1
+        end
+      end
+      object GroupBoxRomsip: TGroupBox
+        Left = 136
+        Top = 287
+        Width = 228
+        Height = 114
+        Caption = 'ROMSIP'
+        TabOrder = 2
+        object Label49: TLabel
+          Left = 75
+          Top = 19
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '65'
+        end
+        object Label50: TLabel
+          Left = 104
+          Top = 19
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '66'
+        end
+        object Label51: TLabel
+          Left = 133
+          Top = 19
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '67'
+        end
+        object Label52: TLabel
+          Left = 162
+          Top = 19
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '68'
+        end
+        object Label53: TLabel
+          Left = 191
+          Top = 19
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '69'
+        end
+        object Label54: TLabel
+          Left = 75
+          Top = 65
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '6A'
+        end
+        object Label55: TLabel
+          Left = 104
+          Top = 65
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '6B'
+        end
+        object Label56: TLabel
+          Left = 133
+          Top = 65
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '6C'
+        end
+        object Label57: TLabel
+          Left = 162
+          Top = 65
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '6D'
+        end
+        object Label58: TLabel
+          Left = 191
+          Top = 65
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '6F'
+        end
+        object Romsip69: TAdvancedEdit
+          Left = 191
+          Top = 35
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 0
+          Max = 255
+        end
+        object Romsip68: TAdvancedEdit
+          Left = 162
+          Top = 35
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 1
+          Max = 255
+        end
+        object Romsip67: TAdvancedEdit
+          Left = 133
+          Top = 35
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 2
+          Max = 255
+        end
+        object Romsip66: TAdvancedEdit
+          Left = 104
+          Top = 35
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 3
+          Max = 255
+        end
+        object Romsip65: TAdvancedEdit
+          Left = 75
+          Top = 35
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 4
+          Max = 255
+        end
+        object Romsip6F: TAdvancedEdit
+          Left = 191
+          Top = 81
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 5
+          Max = 255
+        end
+        object Romsip6D: TAdvancedEdit
+          Left = 162
+          Top = 81
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 6
+          Max = 255
+        end
+        object Romsip6C: TAdvancedEdit
+          Left = 133
+          Top = 81
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 7
+          Max = 255
+        end
+        object Romsip6B: TAdvancedEdit
+          Left = 104
+          Top = 81
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 8
+          Max = 255
+        end
+        object Romsip6A: TAdvancedEdit
+          Left = 75
+          Top = 81
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 9
+          Max = 255
         end
       end
     end
