@@ -29,6 +29,8 @@ __published:	// IDE-managed Components
     TLabel *Label3;
     void __fastcall ButtonLoadProfileClick(TObject *Sender);
     void __fastcall FormShow(TObject *Sender);
+    void __fastcall SectionCheckBoxClick(TObject *Sender);
+    void __fastcall SetApplyButtonState();
 private:	// User declarations
 public:		// User declarations
     __fastcall TProfilePreloadForm(TComponent* Owner);

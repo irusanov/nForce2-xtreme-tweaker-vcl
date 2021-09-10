@@ -11,8 +11,6 @@
  *  https://github.com/torvalds/linux/blob/master/drivers/cpufreq/cpufreq-nforce2.c
  */
 //#define DEBUG_CONSOLE
-#include <vcl.h>
-
 #include "OlsApi.h"
 #include "Utils.h"
 #include "Nforce2Pll.h"
@@ -37,7 +35,7 @@ Nforce2Pll::Nforce2Pll(void) {
 #endif
 }
 
-void Nforce2Pll::init() {
+bool Nforce2Pll::init() {
     // Detect the southbridge, which contains PLL logic
     nforce2_dev = FindPciDeviceById(PCI_VENDOR_ID_NVIDIA,
         PCI_DEVICE_ID_NVIDIA_NFORCE2, 0);
@@ -52,9 +50,11 @@ void Nforce2Pll::init() {
 #endif
 
     if (nforce2_dev == 0xFFFFFFFF) {
-        MessageDlg("Not a NForce2 chipset!", mtError, mbOKCancel, 0);
-        return;
+#ifndef _DEBUG
+        return false;
+#endif
     }
+    return true;
 }
 
 /**

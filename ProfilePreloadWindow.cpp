@@ -1,39 +1,44 @@
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 #include <vcl.h>
 #pragma hdrstop
 
 #include "NForce2XTForm.h"
 #include "ProfilePreloadWindow.h"
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TProfilePreloadForm *ProfilePreloadForm;
-//---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
 __fastcall TProfilePreloadForm::TProfilePreloadForm(TComponent* Owner)
-    : TForm(Owner)
-{
+    : TForm(Owner) {
 }
-//---------------------------------------------------------------------------
-void __fastcall TProfilePreloadForm::ButtonLoadProfileClick(TObject *Sender)
-{
+// ---------------------------------------------------------------------------
+
+void __fastcall TProfilePreloadForm::SetApplyButtonState() {
+    ButtonLoadProfile->Enabled = CheckBoxTimings->Checked ||
+        CheckBoxDSSR->Checked || CheckBoxAdvanced->Checked ||
+        CheckBoxRomsip->Checked;
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TProfilePreloadForm::ButtonLoadProfileClick(TObject *Sender) {
     ProfilesManager::profile_options_t Options = {};
     Options.timings = CheckBoxTimings->Checked;
     Options.dssr = CheckBoxDSSR->Checked;
     Options.advanced = CheckBoxAdvanced->Checked;
     Options.romsip = CheckBoxRomsip->Checked;
 
-    // Replace with ProfilePreloadform and profiles.preload();
-    // Use SectionExists to display checkboxes states
     MainForm->profiles.load(MainForm->profiles.previewMetadata.path, Options);
 
     Close();
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-void __fastcall TProfilePreloadForm::FormShow(TObject *Sender)
-{
-    ProfilesManager::profile_metadata_t data = MainForm->profiles.previewMetadata;
+void __fastcall TProfilePreloadForm::FormShow(TObject *Sender) {
+    ProfilesManager::profile_metadata_t data =
+        MainForm->profiles.previewMetadata;
     CheckBoxTimings->Checked = data.options.timings;
     CheckBoxDSSR->Checked = data.options.dssr;
     CheckBoxAdvanced->Checked = data.options.advanced;
@@ -47,5 +52,9 @@ void __fastcall TProfilePreloadForm::FormShow(TObject *Sender)
     PanelAuthor->Text = data.options.author;
     PanelComment->Text = data.options.comment;
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
+void __fastcall TProfilePreloadForm::SectionCheckBoxClick(TObject *Sender) {
+    SetApplyButtonState();
+}
+// ---------------------------------------------------------------------------

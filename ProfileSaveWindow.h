@@ -28,6 +28,8 @@ __published:	// IDE-managed Components
     TMemo *PanelComment;
     TLabel *Label3;
     void __fastcall ButtonSaveProfileClick(TObject *Sender);
+    void __fastcall SetApplyButtonState();
+    void __fastcall SectionCheckBoxClick(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
     __fastcall TProfileSaveForm(TComponent* Owner);

@@ -169,7 +169,8 @@ static void __fastcall WritePciFrequency(unsigned int value) {
     timing_def_t def;
     unsigned int pciAddress, regValue;
 
-    def = GetDefByName(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs), "PCIFrequency");
+    def = GetDefByName(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs),
+        "PCIFrequency");
     pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
     regValue = ReadPciReg(pciAddress);
 
@@ -185,7 +186,8 @@ void __fastcall TMainForm::RefreshPciFrequency() {
     unsigned int value;
 
     // Get current PCI bus frequency
-    def = GetDefByName(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs), "PCIFrequency");
+    def = GetDefByName(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs),
+        "PCIFrequency");
     pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
     regValue = ReadPciReg(pciAddress);
     value = GetBits(regValue, def.offset, def.bits);
@@ -229,8 +231,10 @@ void __fastcall TMainForm::RefreshCpuSpeed() {
     // CurrFID from MSR_K7_FID_VID_STATUS is also unreliable
     // Calculate multiplier from CPU frequency and FSB (from PLL)
     if (cpu_info.fsbFromPll > 0) {
-        cpu_info.multi = floor(((cpu_info.frequency / cpu_info.fsbFromPll) * 2) + 0.5) / 2;
-    } else {
+        cpu_info.multi =
+            floor(((cpu_info.frequency / cpu_info.fsbFromPll) * 2) + 0.5) / 2;
+    }
+    else {
         cpu_info.multi = fid_codes[cpu_info.fid] / 10.0;
     }
 
@@ -524,7 +528,8 @@ void __fastcall TMainForm::UpdateAgpSlider(unsigned int mul) {
     double agp = pci * 2.0;
 
     PanelCurrentAgpPci->Caption =
-        Format("%.2f / %.2f", ARRAYOFCONST(((long double)agp, (long double)pci)));
+        Format("%.2f / %.2f", ARRAYOFCONST(((long double)agp,
+        (long double)pci)));
 
     bool minReached = TrackBarAgp->Position <= TrackBarAgp->Min;
     bool maxReached = TrackBarAgp->Position >= TrackBarAgp->Max;
@@ -543,42 +548,44 @@ __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
 
     if (GetDllStatus() != 0x0) {
         MessageDlg("Error loading WinRing.dll", mtError, mbOKCancel, 0);
-        DeinitializeOls();
-        Application->Terminate();
+        AppExit();
     }
 
-    pll.init();
+    if (!pll.init()) {
+        MessageDlg("Not a NForce2 chipset!", mtError, mbOKCancel, 0);
+        AppExit();
+        Application->ShowMainForm = false;
+    }
+    else {
+        Application->OnMinimize = OnMinimize;
+        Application->OnRestore = OnRestore;
 
-    Application->OnMinimize = OnMinimize;
-    Application->OnRestore = OnRestore;
+        InitSystemInfo();
+        RefreshTimings();
 
-    InitSystemInfo();
-    RefreshTimings();
+        // Populate static System data
+        EditCpuName->Caption = cpu_info.cpuName.c_str();
+        EditManRev->Caption = cpu_info.manID.minorRev;
 
-    // Populate static System data
-    EditCpuName->Caption = cpu_info.cpuName.c_str();
-    EditManRev->Caption = cpu_info.manID.minorRev;
+        EditFamily->Caption = cpu_info.family;
+        EditModel->Caption = cpu_info.model;
+        EditStepping->Caption = cpu_info.stepping;
 
-    EditFamily->Caption = cpu_info.family;
-    EditModel->Caption = cpu_info.model;
-    EditStepping->Caption = cpu_info.stepping;
+        EditExtFamily->Caption = cpu_info.extFamily;
+        EditExtModel->Caption = cpu_info.extModel;
 
-    EditExtFamily->Caption = cpu_info.extFamily;
-    EditExtModel->Caption = cpu_info.extModel;
+        EditL1Cache->Caption =
+            Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1Cache)));
+        EditL1DataCache->Caption =
+            Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1DataCache)));
+        EditL1InstCache->Caption =
+            Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1InstCache)));
+        EditL2Cache->Caption =
+            Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l2Cache)));
+        // EditRevision->Caption = cpu_info.coreRevision;
+        // EditRevision->Caption = Format("%d.%d", ARRAYOFCONST((cpu_info.manID.minorRev, cpu_info.manID.minorRev)));
 
-    EditL1Cache->Caption =
-        Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1Cache)));
-    EditL1DataCache->Caption =
-        Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1DataCache)));
-    EditL1InstCache->Caption =
-        Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1InstCache)));
-    EditL2Cache->Caption =
-        Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l2Cache)));
-    // EditRevision->Caption = cpu_info.coreRevision;
-    // EditRevision->Caption = Format("%d.%d", ARRAYOFCONST((cpu_info.manID.minorRev, cpu_info.manID.minorRev)));
-
-    // UnicodeString name = GetCpuName().c_str();
-    // MessageDlg(name, mtConfirmation, mbOKCancel, 0);
+    }
 }
 // ---------------------------------------------------------------------------
 
@@ -619,7 +626,7 @@ void __fastcall TMainForm::TabControl1Change(TObject *Sender) {
         TrackBarPll->Position = cpu_info.fsb;
         TrackBarAgp->Position = cpu_info.pciMul;
         UpdatePllSlider(cpu_info.fsb, 0);
-        //UpdateAgpSlider(cpu_info.pciBus);
+        // UpdateAgpSlider(cpu_info.pciBus);
         updateFromButtons = false;
         break;
     default: ;
@@ -641,7 +648,7 @@ void __fastcall TMainForm::ButtonRefreshClick(TObject *Sender) {
         TrackBarPll->Position = cpu_info.fsb;
         TrackBarAgp->Position = cpu_info.pciMul;
         UpdatePllSlider(cpu_info.fsb, 0);
-        //UpdateAgpSlider(cpu_info.pciBus);
+        // UpdateAgpSlider(cpu_info.pciBus);
         updateFromButtons = false;
     }
 }
@@ -675,9 +682,14 @@ void __fastcall TMainForm::ButtonApplyClick(TObject *Sender) {
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TMainForm::Exit1Click(TObject *Sender) {
+void __fastcall TMainForm::AppExit() {
     DeinitializeOls();
     Application->Terminate();
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::Exit1Click(TObject *Sender) {
+    AppExit();
 }
 // ---------------------------------------------------------------------------
 
@@ -780,44 +792,41 @@ void __fastcall TMainForm::ButtonPrevPllClick(TObject *Sender) {
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TMainForm::TrackBarPllChange(TObject *Sender)
-{
+void __fastcall TMainForm::TrackBarPllChange(TObject *Sender) {
     if (!updateFromButtons) {
         int position = static_cast<TTrackBar*>(Sender)->Position;
         pair<double, int> p = pll.GetPrevPll(position);
         UpdatePllSlider(p.first, p.second);
     }
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-void __fastcall TMainForm::ButtonPrevAgpClick(TObject *Sender)
-{
+void __fastcall TMainForm::ButtonPrevAgpClick(TObject *Sender) {
     TrackBarAgp->Position--;
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-void __fastcall TMainForm::ButtonNextAgpClick(TObject *Sender)
-{
+void __fastcall TMainForm::ButtonNextAgpClick(TObject *Sender) {
     TrackBarAgp->Position++;
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-void __fastcall TMainForm::TrackBarAgpChange(TObject *Sender)
-{
+void __fastcall TMainForm::TrackBarAgpChange(TObject *Sender) {
     UpdateAgpSlider(TrackBarAgp->Position);
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-
-void __fastcall TMainForm::AutoValidationBotClick(TObject *Sender)
-{
+void __fastcall TMainForm::AutoValidationBotClick(TObject *Sender) {
     ValidationBotDialog->ShowModal();
 }
-//---------------------------------------------------------------------------void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action){
+
+// ---------------------------------------------------------------------------
+void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action) {
     settings.save();
 }
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::FormCreate(TObject *Sender){
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::FormCreate(TObject *Sender) {
     settings.load();
     profiles.init();
 
@@ -825,16 +834,19 @@ void __fastcall TMainForm::AutoValidationBotClick(TObject *Sender)
         Position = poDefault;
         MainForm->Top = settings.WindowTop;
         MainForm->Left = settings.WindowLeft;
-    } else {
+    }
+    else {
         Position = poDesktopCenter;
     }
 }
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::SettingsMenuItemClick(TObject *Sender){
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::SettingsMenuItemClick(TObject *Sender) {
     SettingsForm->ShowModal();
 }
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::LoadProfileMenuItemClick(TObject *Sender){
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::LoadProfileMenuItemClick(TObject *Sender) {
     OpenTextFileDialog1->InitialDir = profiles.GetDefaultPath();
 
     if (OpenTextFileDialog1->Execute()) {
@@ -844,9 +856,9 @@ void __fastcall TMainForm::AutoValidationBotClick(TObject *Sender)
         }
     }
 }
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::SaveProfileMenuItemClick(TObject *Sender){
+// ---------------------------------------------------------------------------
+
+void __fastcall TMainForm::SaveProfileMenuItemClick(TObject *Sender) {
     ProfileSaveForm->ShowModal();
 }
-//---------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------------

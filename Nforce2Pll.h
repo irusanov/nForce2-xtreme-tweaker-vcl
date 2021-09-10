@@ -21,7 +21,7 @@ public:
     Nforce2Pll(void);
     virtual ~Nforce2Pll(void);
 
-    void init();
+    bool init();
     static std::map<double, int> nforce2_gen_fsb_table();
     static double nforce2_calc_fsb(int pll);
     static int nforce2_calc_pll(double fsb);

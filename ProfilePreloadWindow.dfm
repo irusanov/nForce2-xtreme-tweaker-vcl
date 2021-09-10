@@ -45,6 +45,7 @@ object ProfilePreloadForm: TProfilePreloadForm
     Caption = 'Main Timings'
     Enabled = False
     TabOrder = 0
+    OnClick = SectionCheckBoxClick
   end
   object CheckBoxDSSR: TCheckBox
     Left = 72
@@ -54,6 +55,7 @@ object ProfilePreloadForm: TProfilePreloadForm
     Caption = 'Drive Strength and Slew Rate'
     Enabled = False
     TabOrder = 1
+    OnClick = SectionCheckBoxClick
   end
   object CheckBoxAdvanced: TCheckBox
     Left = 72
@@ -63,6 +65,7 @@ object ProfilePreloadForm: TProfilePreloadForm
     Caption = 'Advanced'
     Enabled = False
     TabOrder = 2
+    OnClick = SectionCheckBoxClick
   end
   object CheckBoxRomsip: TCheckBox
     Left = 72
@@ -72,6 +75,7 @@ object ProfilePreloadForm: TProfilePreloadForm
     Caption = 'ROMSIP'
     Enabled = False
     TabOrder = 3
+    OnClick = SectionCheckBoxClick
   end
   object ButtonLoadProfile: TButton
     Left = 228

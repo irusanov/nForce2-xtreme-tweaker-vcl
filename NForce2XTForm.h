@@ -249,6 +249,7 @@ protected:
     // virtual void __fastcall CreateParams(TCreateParams &Params);
 
 private: // User declarations
+    void __fastcall AppExit();
     void __fastcall OnMinimize(TObject *Sender);
     void __fastcall OnRestore(TObject *Sender);
     void __fastcall UpdatePllSlider(double fsb, int pll);

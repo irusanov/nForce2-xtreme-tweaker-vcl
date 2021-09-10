@@ -45,6 +45,7 @@ object ProfileSaveForm: TProfileSaveForm
     Checked = True
     State = cbChecked
     TabOrder = 0
+    OnClick = SectionCheckBoxClick
   end
   object CheckBoxDSSR: TCheckBox
     Left = 72
@@ -53,6 +54,7 @@ object ProfileSaveForm: TProfileSaveForm
     Height = 17
     Caption = 'Drive Strength and Slew Rate'
     TabOrder = 1
+    OnClick = SectionCheckBoxClick
   end
   object CheckBoxAdvanced: TCheckBox
     Left = 72
@@ -61,6 +63,7 @@ object ProfileSaveForm: TProfileSaveForm
     Height = 17
     Caption = 'Advanced'
     TabOrder = 2
+    OnClick = SectionCheckBoxClick
   end
   object CheckBoxRomsip: TCheckBox
     Left = 72
@@ -69,6 +72,7 @@ object ProfileSaveForm: TProfileSaveForm
     Height = 17
     Caption = 'ROMSIP'
     TabOrder = 3
+    OnClick = SectionCheckBoxClick
   end
   object ButtonSaveProfile: TButton
     Left = 228
