@@ -3435,38 +3435,48 @@ object MainForm: TMainForm
     Left = 48
     Top = 448
     object File1: TMenuItem
-      Caption = 'File'
+      Caption = '&File'
       object LoadProfileMenuItem: TMenuItem
-        Caption = 'Load Profile'
+        Caption = '&Open Profile'
+        ShortCut = 16463
         OnClick = LoadProfileMenuItemClick
       end
       object SaveProfileMenuItem: TMenuItem
-        Caption = 'Save Profile'
+        Caption = '&Save Profile'
+        ShortCut = 16467
         OnClick = SaveProfileMenuItemClick
+      end
+      object Refresh1: TMenuItem
+        Caption = '&Refresh'
+        ShortCut = 116
+        OnClick = ButtonRefreshClick
       end
       object N1: TMenuItem
         Caption = '-'
       end
       object Exit1: TMenuItem
-        Caption = 'Exit'
+        Caption = 'E&xit'
         OnClick = Exit1Click
       end
     end
     object ools1: TMenuItem
-      Caption = 'Tools'
+      Caption = '&Tools'
       object SettingsMenuItem: TMenuItem
-        Caption = 'Options'
+        Caption = 'O&ptions'
+        ShortCut = 16464
         OnClick = SettingsMenuItemClick
       end
       object AutoValidationBot: TMenuItem
-        Caption = 'Auto Validation Bot'
+        Caption = '&Auto Validation Bot'
+        ShortCut = 16450
         OnClick = AutoValidationBotClick
       end
     end
     object Help1: TMenuItem
-      Caption = 'Help'
+      Caption = '&Help'
       object About1: TMenuItem
-        Caption = 'About'
+        Caption = 'Abo&ut'
+        ShortCut = 16469
         OnClick = About1Click
       end
     end

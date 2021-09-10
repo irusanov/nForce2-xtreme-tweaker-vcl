@@ -1,7 +1,7 @@
 object ValidationBotDialog: TValidationBotDialog
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu]
+  ActiveControl = ButtonBotRun
   BorderStyle = bsToolWindow
   Caption = 'Auto Validation Bot'
   ClientHeight = 146
@@ -12,9 +12,10 @@ object ValidationBotDialog: TValidationBotDialog
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
-  OnClose = FormClose
+  OnKeyUp = FormKeyUp
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -103,6 +104,7 @@ object ValidationBotDialog: TValidationBotDialog
     NumbersOnly = True
     TabOrder = 3
     Text = '6'
+    OnChange = BotControlChange
   end
   object EditCpuzPath: TEdit
     Left = 104
@@ -110,6 +112,7 @@ object ValidationBotDialog: TValidationBotDialog
     Width = 178
     Height = 21
     TabOrder = 4
+    OnChange = BotControlChange
   end
   object PanelCurrentFsb: TPanel
     Left = 289
@@ -152,6 +155,7 @@ object ValidationBotDialog: TValidationBotDialog
     Height = 17
     Caption = 'Ultra (no update)'
     TabOrder = 7
+    OnClick = BotControlChange
   end
   object EditFsbStep: TEdit
     Left = 104
@@ -161,17 +165,28 @@ object ValidationBotDialog: TValidationBotDialog
     NumbersOnly = True
     TabOrder = 8
     Text = '0'
+    OnChange = BotControlChange
+  end
+  object ButtonSaveBotSettings: TButton
+    Left = 207
+    Top = 96
+    Width = 75
+    Height = 25
+    Caption = 'Save'
+    Enabled = False
+    TabOrder = 9
+    OnClick = ButtonSaveBotSettingsClick
   end
   object TimerBot: TTimer
     Enabled = False
     Interval = 6000
     OnTimer = TimerBotTimer
-    Left = 128
-    Top = 92
+    Left = 104
+    Top = 116
   end
   object OpenDialogBot: TOpenDialog
     DefaultExt = 'exe'
-    Left = 176
-    Top = 92
+    Left = 136
+    Top = 116
   end
 end

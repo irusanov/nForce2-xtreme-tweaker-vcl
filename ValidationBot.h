@@ -33,11 +33,14 @@ __published:	// IDE-managed Components
     TLabel *Label8;
     TEdit *EditFsbStep;
     TLabel *Label9;
+    TButton *ButtonSaveBotSettings;
     void __fastcall ButtonBotRunClick(TObject *Sender);
     void __fastcall TimerBotTimer(TObject *Sender);
     void __fastcall ButtonBrowseCpuzClick(TObject *Sender);
     void __fastcall FormShow(TObject *Sender);
-    void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+    void __fastcall ButtonSaveBotSettingsClick(TObject *Sender);
+    void __fastcall BotControlChange(TObject *Sender);
+    void __fastcall FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift);
 private:	// User declarations
     HWND __fastcall FindCpuzWindow();
 public:		// User declarations

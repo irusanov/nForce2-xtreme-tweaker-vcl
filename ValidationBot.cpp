@@ -191,7 +191,7 @@ void __fastcall TValidationBotDialog::ButtonBrowseCpuzClick(TObject *Sender)
 
 void __fastcall TValidationBotDialog::FormShow(TObject *Sender)
 {
-        // Load Bot settings
+    // Load Bot settings
     EditCpuzPath->Text = MainForm->settings.CpuzPath;
     EditBotSleep->Text = MainForm->settings.Sleep;
     EditFsbStep->Text = MainForm->settings.Step;
@@ -202,17 +202,35 @@ void __fastcall TValidationBotDialog::FormShow(TObject *Sender)
 
     EditCoreFrequency->Caption =
             Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->cpu_info.frequency)));
+
+    ButtonSaveBotSettings->Enabled = false;
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TValidationBotDialog::FormClose(TObject *Sender, TCloseAction &Action)
-
+void __fastcall TValidationBotDialog::ButtonSaveBotSettingsClick(TObject *Sender)
 {
     // Save Bot settings
     MainForm->settings.CpuzPath = EditCpuzPath->Text;
     TryStrToInt(EditBotSleep->Text, MainForm->settings.Sleep);
     TryStrToInt(EditFsbStep->Text, MainForm->settings.Step);
     MainForm->settings.Ultra = CheckBoxUltra->Checked;
+    ButtonSaveBotSettings->Enabled = false;
+    StatusBarBot->SimpleText = "Bot settings saved.";
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TValidationBotDialog::BotControlChange(TObject *Sender)
+{
+    ButtonSaveBotSettings->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TValidationBotDialog::FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift)
+{
+    // For some unknown reason the dialog doesn't close on ESC, handling it manually
+    if (Key == 27) {
+        Close();
+    }
 }
 //---------------------------------------------------------------------------
 
