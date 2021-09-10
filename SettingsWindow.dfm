@@ -59,7 +59,7 @@ object SettingsForm: TSettingsForm
     Width = 75
     Height = 25
     Cancel = True
-    Caption = 'Cancel'
+    Caption = 'Close'
     ModalResult = 2
     TabOrder = 4
   end

@@ -217,6 +217,7 @@ __published: // IDE-managed Components
     TAdvancedEdit *Romsip6C;
     TAdvancedEdit *Romsip6B;
     TAdvancedEdit *Romsip6A;
+    TMenuItem *N1;
 
     void __fastcall TabControl1Change(TObject *Sender);
     void __fastcall Exit1Click(TObject *Sender);

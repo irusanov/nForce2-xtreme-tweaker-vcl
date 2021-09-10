@@ -3444,6 +3444,9 @@ object MainForm: TMainForm
         Caption = 'Save Profile'
         OnClick = SaveProfileMenuItemClick
       end
+      object N1: TMenuItem
+        Caption = '-'
+      end
       object Exit1: TMenuItem
         Caption = 'Exit'
         OnClick = Exit1Click
