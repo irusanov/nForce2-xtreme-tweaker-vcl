@@ -4280,6 +4280,7 @@ object MainForm: TMainForm
       371FDDFF361FDDFF361FDCFF361FDBFF361FDAFF371FDEFF0000AC410000AC41
       0000AC410000AC410000AC410000AC410000AC410000AC410000AC410000AC41
       0000AC410000AC410000AC410000AC410000AC410000AC41}
+    PopupMenu = TrayPopupMenu
     OnDblClick = TrayIconDblClick
     Left = 8
     Top = 448
@@ -4290,5 +4291,20 @@ object MainForm: TMainForm
     Options = [ofHideReadOnly, ofNoNetworkButton, ofEnableSizing]
     Left = 88
     Top = 448
+  end
+  object TrayPopupMenu: TPopupMenu
+    Left = 128
+    Top = 448
+    object TrayMenuShowApp: TMenuItem
+      Caption = 'Show'
+      OnClick = TrayIconDblClick
+    end
+    object N2: TMenuItem
+      Caption = '-'
+    end
+    object TrayMenuExitApp: TMenuItem
+      Caption = 'Exit'
+      OnClick = Exit1Click
+    end
   end
 end
