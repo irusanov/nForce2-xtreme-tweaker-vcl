@@ -52,10 +52,16 @@ void __fastcall TValidationBotDialog::ButtonBotRunClick(TObject *Sender)
         ButtonBotRun->Caption = "Run";
     } else {
         if (hWndCpuz == NULL) {
+            String path = EditCpuzPath->Text;
+
+            if (path.Length() == 0) {
+                StatusBarBot->SimpleText = "CPU-Z path not selected and no CPU-Z running.";
+                return;
+            }
+
             ButtonBotRun->Enabled = false;
             StatusBarBot->SimpleText = "Launching CPU-Z";
 
-            String path = EditCpuzPath->Text;
             std::wstring path_wstr(path.begin(), path.end());
 
             SHELLEXECUTEINFO ShExecInfo = {0};
@@ -68,7 +74,14 @@ void __fastcall TValidationBotDialog::ButtonBotRunClick(TObject *Sender)
             ShExecInfo.lpDirectory = NULL;
             ShExecInfo.nShow = SW_SHOW;
             ShExecInfo.hInstApp = NULL;
-            ShellExecuteEx(&ShExecInfo);
+
+            if (!ShellExecuteEx(&ShExecInfo)) {
+                StatusBarBot->SimpleText = "CPU-Z not found, please check path to cpu_z.exe";
+                ButtonBotRun->Enabled = true;
+                ButtonBotRun->Caption = "Run";
+
+                return;
+            }
 
             HANDLE hThread;
             DWORD dwRet;
@@ -121,10 +134,11 @@ void __fastcall TValidationBotDialog::TimerBotTimer(TObject *Sender)
     ip.ki.dwFlags = 0; // 0 for key press
 
     // Activate CPU-Z window
-    if (hWndCpuz != NULL) {
-        //ShowWindow(hWndCpuz, SW_SHOW);
-        SetForegroundWindow(hWndCpuz);
-        //SetActiveWindow(hWndCpuz);
+    if (hWndCpuz != NULL && !SetForegroundWindow(hWndCpuz)) {
+        TimerBot->Enabled = false;
+        StatusBarBot->SimpleText = "CPU-Z window lost. Bot stopped.";
+        ButtonBotRun->Caption = "Run";
+        return;
     }
 
     // Send input to validate
