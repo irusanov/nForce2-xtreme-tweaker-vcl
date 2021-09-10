@@ -67,7 +67,7 @@ object ProfileSaveForm: TProfileSaveForm
     Top = 173
     Width = 97
     Height = 17
-    Caption = 'RIOMSIP'
+    Caption = 'ROMSIP'
     TabOrder = 3
   end
   object ButtonSaveProfile: TButton

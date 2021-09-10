@@ -19,21 +19,21 @@ object ProfilePreloadForm: TProfilePreloadForm
   object Label1: TLabel
     Left = 8
     Top = 11
-    Width = 49
+    Width = 33
     Height = 13
     Caption = 'Author'
   end
   object Label2: TLabel
     Left = 8
     Top = 35
-    Width = 58
+    Width = 45
     Height = 13
     Caption = 'Comment'
   end
   object Label3: TLabel
     Left = 8
     Top = 105
-    Width = 58
+    Width = 40
     Height = 13
     Caption = 'Sections'
   end
@@ -69,7 +69,7 @@ object ProfilePreloadForm: TProfilePreloadForm
     Top = 173
     Width = 97
     Height = 17
-    Caption = 'RIOMSIP'
+    Caption = 'ROMSIP'
     Enabled = False
     TabOrder = 3
   end
