@@ -117,21 +117,20 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
-        <VerInfo_Build>297</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.297;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.protonrom.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>304</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.304;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.protonrom.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>0</VerInfo_Release>
         <AppExecutionLevel>requireAdministrator</AppExecutionLevel>
         <Icon_MainIcon>icon.ico</Icon_MainIcon>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
-        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <BT_BuildType>Debug</BT_BuildType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
-        <VerInfo_Build>287</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.287;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.protonrom.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>288</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.288;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.protonrom.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>0</VerInfo_Release>
         <AppExecutionLevel>requireAdministrator</AppExecutionLevel>
@@ -140,10 +139,11 @@
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
     </PropertyGroup>
     <ItemGroup>
-        <CppCompile Include="AboutForm.cpp">
+        <CppCompile Include="AboutWindow.cpp">
+            <VirtualFolder>{2E6BA576-2F64-498B-86DC-9F9118AB3A5E}</VirtualFolder>
             <Form>AboutDialog</Form>
             <FormType>dfm</FormType>
-            <DependentOn>AboutForm.h</DependentOn>
+            <DependentOn>AboutWindow.h</DependentOn>
             <BuildOrder>11</BuildOrder>
         </CppCompile>
         <CppCompile Include="AppSettings.h">
@@ -175,12 +175,14 @@
             <BuildOrder>6</BuildOrder>
         </None>
         <CppCompile Include="ProfilePreloadWindow.cpp">
+            <VirtualFolder>{2E6BA576-2F64-498B-86DC-9F9118AB3A5E}</VirtualFolder>
             <Form>ProfilePreloadForm</Form>
             <FormType>dfm</FormType>
             <DependentOn>ProfilePreloadWindow.h</DependentOn>
             <BuildOrder>17</BuildOrder>
         </CppCompile>
         <CppCompile Include="ProfileSaveWindow.cpp">
+            <VirtualFolder>{2E6BA576-2F64-498B-86DC-9F9118AB3A5E}</VirtualFolder>
             <Form>ProfileSaveForm</Form>
             <FormType>dfm</FormType>
             <DependentOn>ProfileSaveWindow.h</DependentOn>
@@ -193,6 +195,7 @@
             <BuildOrder>7</BuildOrder>
         </None>
         <CppCompile Include="SettingsWindow.cpp">
+            <VirtualFolder>{2E6BA576-2F64-498B-86DC-9F9118AB3A5E}</VirtualFolder>
             <Form>SettingsForm</Form>
             <FormType>dfm</FormType>
             <DependentOn>SettingsWindow.h</DependentOn>
@@ -205,6 +208,7 @@
             <BuildOrder>9</BuildOrder>
         </None>
         <CppCompile Include="ValidationBot.cpp">
+            <VirtualFolder>{2E6BA576-2F64-498B-86DC-9F9118AB3A5E}</VirtualFolder>
             <Form>ValidationBotDialog</Form>
             <FormType>dfm</FormType>
             <DependentOn>ValidationBot.h</DependentOn>
@@ -218,7 +222,7 @@
         <FormResources Include="ProfilePreloadWindow.dfm"/>
         <FormResources Include="SettingsWindow.dfm"/>
         <FormResources Include="ValidationBot.dfm"/>
-        <FormResources Include="AboutForm.dfm"/>
+        <FormResources Include="AboutWindow.dfm"/>
         <FormResources Include="NForce2XTForm.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
@@ -254,6 +258,9 @@
                     <Source Name="MainSource">NForce2Xtreme.cpp</Source>
                 </Source>
                 <Folders/>
+                <VFOLDERS>
+                    <VFOLDER ID="{2E6BA576-2F64-498B-86DC-9F9118AB3A5E}" name="Windows"/>
+                </VFOLDERS>
             </CPlusPlusBuilder.Personality>
             <Deployment Version="3">
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32c260.dll" Class="DependencyModule">

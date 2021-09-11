@@ -24,7 +24,7 @@
 #include "AppSettings.h"
 #include "ProfilesManager.h"
 
-#include "AboutForm.h"
+#include "AboutWindow.h"
 #include "ValidationBot.h"
 #include "SettingsWindow.h"
 #include "ProfileSaveWindow.h"
@@ -223,6 +223,7 @@ __published: // IDE-managed Components
     TMenuItem *TrayMenuShowApp;
     TMenuItem *N2;
     TMenuItem *Refresh1;
+    TPanel *Panel1;
 
     void __fastcall TabControl1Change(TObject *Sender);
     void __fastcall Exit1Click(TObject *Sender);

@@ -3,7 +3,7 @@ object ProfileSaveForm: TProfileSaveForm
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Save Profile'
-  ClientHeight = 235
+  ClientHeight = 237
   ClientWidth = 310
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -101,6 +101,7 @@ object ProfileSaveForm: TProfileSaveForm
     Height = 19
     BevelInner = bvLowered
     BevelOuter = bvNone
+    MaxLength = 36
     TabOrder = 6
     WantReturns = False
     WordWrap = False
@@ -112,6 +113,7 @@ object ProfileSaveForm: TProfileSaveForm
     Height = 66
     BevelInner = bvLowered
     BevelOuter = bvNone
+    MaxLength = 144
     TabOrder = 7
     WantReturns = False
   end

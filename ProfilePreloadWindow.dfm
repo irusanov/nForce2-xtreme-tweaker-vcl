@@ -3,7 +3,7 @@ object ProfilePreloadForm: TProfilePreloadForm
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Load Profile'
-  ClientHeight = 235
+  ClientHeight = 237
   ClientWidth = 310
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET

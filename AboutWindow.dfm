@@ -887,7 +887,7 @@ object AboutDialog: TAboutDialog
     Left = 83
     Top = 31
     Width = 58
-    Height = 19
+    Height = 17
     Caption = 'Version 1.1'
     TabOrder = 1
   end
@@ -895,7 +895,7 @@ object AboutDialog: TAboutDialog
     Left = 83
     Top = 54
     Width = 94
-    Height = 19
+    Height = 17
     Caption = 'Copyright (c) 2021'
     TabOrder = 2
   end

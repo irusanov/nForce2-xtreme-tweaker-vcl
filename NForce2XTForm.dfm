@@ -1,11 +1,12 @@
 object MainForm: TMainForm
   Left = 0
   Top = 0
+  ActiveControl = ButtonApply
   Anchors = []
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'nForce2XT v1.1 beta15'
-  ClientHeight = 474
+  Caption = 'nForce2XT v1.1'
+  ClientHeight = 471
   ClientWidth = 382
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -819,38 +820,19 @@ object MainForm: TMainForm
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  DesignSize = (
-    382
-    474)
   PixelsPerInch = 96
   TextHeight = 13
-  object ButtonApply: TButton
-    Left = 305
-    Top = 446
-    Width = 75
-    Height = 25
-    Caption = 'Apply'
-    TabOrder = 0
-    OnClick = ButtonApplyClick
-  end
-  object ButtonRefresh: TButton
-    Left = 224
-    Top = 446
-    Width = 75
-    Height = 25
-    Caption = 'Refresh'
-    TabOrder = 1
-    OnClick = ButtonRefreshClick
-  end
   object TabControl1: TTabControl
+    AlignWithMargins = True
     Left = 2
-    Top = 6
+    Top = 2
     Width = 378
     Height = 435
     Margins.Left = 2
     Margins.Top = 2
+    Margins.Right = 2
     Margins.Bottom = 2
-    Anchors = []
+    Align = alTop
     DockSite = True
     DoubleBuffered = True
     Font.Charset = DEFAULT_CHARSET
@@ -862,7 +844,7 @@ object MainForm: TMainForm
     OwnerDraw = True
     ParentDoubleBuffered = False
     ParentFont = False
-    TabOrder = 2
+    TabOrder = 0
     Tabs.Strings = (
       'DRAM'
       'Chipset'
@@ -879,6 +861,7 @@ object MainForm: TMainForm
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
+      Align = alClient
       BevelEdges = []
       BevelOuter = bvNone
       Ctl3D = False
@@ -1566,6 +1549,7 @@ object MainForm: TMainForm
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
+      Align = alClient
       BevelEdges = []
       BevelOuter = bvNone
       Ctl3D = True
@@ -2089,6 +2073,7 @@ object MainForm: TMainForm
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
+      Align = alClient
       BevelEdges = []
       BevelOuter = bvNone
       Ctl3D = True
@@ -3431,9 +3416,37 @@ object MainForm: TMainForm
       end
     end
   end
+  object Panel1: TPanel
+    Left = 0
+    Top = 439
+    Width = 382
+    Height = 34
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 1
+    object ButtonRefresh: TButton
+      Left = 224
+      Top = 3
+      Width = 75
+      Height = 25
+      Caption = 'Refresh'
+      TabOrder = 0
+      OnClick = ButtonRefreshClick
+    end
+    object ButtonApply: TButton
+      Left = 304
+      Top = 3
+      Width = 75
+      Height = 25
+      Caption = 'Apply'
+      Default = True
+      TabOrder = 1
+      OnClick = ButtonApplyClick
+    end
+  end
   object MainMenu1: TMainMenu
-    Left = 48
-    Top = 448
+    Left = 80
+    Top = 440
     object File1: TMenuItem
       Caption = '&File'
       object LoadProfileMenuItem: TMenuItem
@@ -4292,19 +4305,19 @@ object MainForm: TMainForm
       0000AC410000AC410000AC410000AC410000AC410000AC41}
     PopupMenu = TrayPopupMenu
     OnDblClick = TrayIconDblClick
-    Left = 8
-    Top = 448
+    Left = 24
+    Top = 440
   end
   object OpenTextFileDialog1: TOpenTextFileDialog
     DefaultExt = 'profile'
     Filter = 'profile files (*.profile)|*.profile|All files (*.*)|*.*"'
     Options = [ofHideReadOnly, ofNoNetworkButton, ofEnableSizing]
-    Left = 88
-    Top = 448
+    Left = 120
+    Top = 440
   end
   object TrayPopupMenu: TPopupMenu
-    Left = 128
-    Top = 448
+    Left = 160
+    Top = 440
     object TrayMenuShowApp: TMenuItem
       Caption = 'Show'
       OnClick = TrayIconDblClick
