@@ -64,8 +64,8 @@
         <SanitizedProjectName>NForce2Xtreme</SanitizedProjectName>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <BCC_BackwardCompatibility>true</BCC_BackwardCompatibility>
-        <IncludePath>$(BDS)\ObjRepos\EN\Cpp\;Components\TAdvancedEdit\;Components\TTimingComboBox\;C:\GIT\nForce2Xtreme\VCL\;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>$(BDS)\ObjRepos\EN\Cpp\;Components\TAdvancedEdit\;Components\TTimingComboBox\;C:\GIT\nForce2Xtreme\VCL\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>Windows\;Libs\;Utils\;$(BDS)\ObjRepos\EN\Cpp\;Components\TAdvancedEdit\;Components\TTimingComboBox\;C:\GIT\nForce2Xtreme\VCL\;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>Windows\;Libs\;Utils\;$(BDS)\ObjRepos\EN\Cpp\;Components\TAdvancedEdit\;Components\TTimingComboBox\;C:\GIT\nForce2Xtreme\VCL\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <VerInfo_Keys>FileVersion=1.0.1.1</VerInfo_Keys>
         <VerInfo_Release>1</VerInfo_Release>
         <VerInfo_Build>1</VerInfo_Build>
@@ -87,6 +87,7 @@
         <Icon_MainIcon>icon.ico</Icon_MainIcon>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <ILINK_LibraryPath>C:\GIT\nForce2-xtreme-tweaker-vcl\Libs\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <PackageImports>adortl;appanalytics;bcbie;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindengine;CloudService;CustomIPTransport;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXInterBaseDriver;DBXMySQLDriver;DBXSqliteDriver;dsnap;dsnapcon;dsnapxml;FireDAC;FireDACADSDriver;FireDACCommon;FireDACCommonDriver;FireDACCommonODBC;FireDACIBDriver;FireDACMSAccDriver;FireDACMySQLDriver;FireDACPgDriver;FireDACSqliteDriver;fmx;fmxase;fmxdae;fmxFireDAC;fmxobj;ibmonitor;ibxbindings;ibxpress;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inet;inetdb;inetdbxpress;RESTBackendComponents;RESTComponents;rtl;soapmidas;soaprtl;soapserver;tethering;vcl;vclactnband;vcldb;vcldsnap;vclFireDAC;vclib;vclie;vclimg;VCLRESTComponents;VclSmp;vcltouch;vclwinx;vclx;xmlrtl;$(PackageImports)</PackageImports>
@@ -117,21 +118,20 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
-        <VerInfo_Build>297</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.297;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.protonrom.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>309</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.309;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.protonrom.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>0</VerInfo_Release>
         <AppExecutionLevel>requireAdministrator</AppExecutionLevel>
         <Icon_MainIcon>icon.ico</Icon_MainIcon>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
-        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <BT_BuildType>Debug</BT_BuildType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
-        <VerInfo_Build>287</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.287;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.protonrom.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>289</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.289;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.protonrom.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>0</VerInfo_Release>
         <AppExecutionLevel>requireAdministrator</AppExecutionLevel>
@@ -140,24 +140,16 @@
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
     </PropertyGroup>
     <ItemGroup>
-        <CppCompile Include="AboutForm.cpp">
-            <Form>AboutDialog</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>AboutForm.h</DependentOn>
-            <BuildOrder>11</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="AppSettings.h">
-            <BuildOrder>13</BuildOrder>
-        </CppCompile>
-        <None Include="Constants.h">
-            <BuildOrder>3</BuildOrder>
+        <DefFile Include="Libs\OlsApi.def">
+            <BuildOrder>20</BuildOrder>
+        </DefFile>
+        <None Include="Libs\OlsApi.h">
+            <BuildOrder>21</BuildOrder>
         </None>
-        <CppCompile Include="Nforce2Pll.cpp">
-            <BuildOrder>4</BuildOrder>
-        </CppCompile>
-        <None Include="Nforce2Pll.h">
-            <BuildOrder>5</BuildOrder>
-        </None>
+        <LibFiles Include="Libs\WinRing0.lib" Condition="'$(Platform)'=='Win32'">
+            <BuildOrder>21</BuildOrder>
+            <IgnorePath>true</IgnorePath>
+        </LibFiles>
         <CppCompile Include="NForce2XTForm.cpp">
             <Form>MainForm</Form>
             <FormType>dfm</FormType>
@@ -171,54 +163,66 @@
             <BuildOrder>1</BuildOrder>
             <PCH>true</PCH>
         </PCHCompile>
-        <None Include="OlsApi.h">
-            <BuildOrder>6</BuildOrder>
+        <None Include="Utils\AppSettings.h">
+            <BuildOrder>23</BuildOrder>
         </None>
-        <CppCompile Include="ProfilePreloadWindow.cpp">
+        <CppCompile Include="Utils\Nforce2Pll.cpp">
+            <BuildOrder>22</BuildOrder>
+        </CppCompile>
+        <None Include="Utils\Nforce2Pll.h">
+            <BuildOrder>23</BuildOrder>
+        </None>
+        <None Include="Utils\ProfilesManager.h">
+            <BuildOrder>24</BuildOrder>
+        </None>
+        <None Include="Utils\QueryPerformance.h">
+            <BuildOrder>25</BuildOrder>
+        </None>
+        <CppCompile Include="Utils\Utils.cpp">
+            <BuildOrder>26</BuildOrder>
+        </CppCompile>
+        <None Include="Utils\Utils.h">
+            <BuildOrder>27</BuildOrder>
+        </None>
+        <CppCompile Include="Windows\AboutWindow.cpp">
+            <Form>AboutDialog</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>Windows\AboutWindow.h</DependentOn>
+            <BuildOrder>13</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="Windows\ProfilePreloadWindow.cpp">
             <Form>ProfilePreloadForm</Form>
             <FormType>dfm</FormType>
-            <DependentOn>ProfilePreloadWindow.h</DependentOn>
-            <BuildOrder>17</BuildOrder>
+            <DependentOn>Windows\ProfilePreloadWindow.h</DependentOn>
+            <BuildOrder>15</BuildOrder>
         </CppCompile>
-        <CppCompile Include="ProfileSaveWindow.cpp">
+        <None Include="Windows\ProfilePreloadWindow.dfm"/>
+        <CppCompile Include="Windows\ProfileSaveWindow.cpp">
             <Form>ProfileSaveForm</Form>
             <FormType>dfm</FormType>
-            <DependentOn>ProfileSaveWindow.h</DependentOn>
-            <BuildOrder>16</BuildOrder>
+            <DependentOn>Windows\ProfileSaveWindow.h</DependentOn>
+            <BuildOrder>17</BuildOrder>
         </CppCompile>
-        <None Include="ProfilesManager.h">
-            <BuildOrder>15</BuildOrder>
-        </None>
-        <None Include="QueryPerformance.h">
-            <BuildOrder>7</BuildOrder>
-        </None>
-        <CppCompile Include="SettingsWindow.cpp">
+        <None Include="Windows\ProfileSaveWindow.dfm"/>
+        <CppCompile Include="Windows\SettingsWindow.cpp">
             <Form>SettingsForm</Form>
             <FormType>dfm</FormType>
-            <DependentOn>SettingsWindow.h</DependentOn>
-            <BuildOrder>14</BuildOrder>
+            <DependentOn>Windows\SettingsWindow.h</DependentOn>
+            <BuildOrder>19</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Utils.cpp">
-            <BuildOrder>8</BuildOrder>
-        </CppCompile>
-        <None Include="Utils.h">
-            <BuildOrder>9</BuildOrder>
-        </None>
-        <CppCompile Include="ValidationBot.cpp">
+        <None Include="Windows\SettingsWindow.dfm"/>
+        <CppCompile Include="Windows\ValidationBot.cpp">
             <Form>ValidationBotDialog</Form>
             <FormType>dfm</FormType>
-            <DependentOn>ValidationBot.h</DependentOn>
-            <BuildOrder>12</BuildOrder>
+            <DependentOn>Windows\ValidationBot.h</DependentOn>
+            <BuildOrder>21</BuildOrder>
         </CppCompile>
-        <LibFiles Include="WinRing0.lib" Condition="'$(Platform)'=='Win32'">
-            <BuildOrder>11</BuildOrder>
-            <IgnorePath>true</IgnorePath>
-        </LibFiles>
-        <FormResources Include="ProfileSaveWindow.dfm"/>
-        <FormResources Include="ProfilePreloadWindow.dfm"/>
-        <FormResources Include="SettingsWindow.dfm"/>
-        <FormResources Include="ValidationBot.dfm"/>
-        <FormResources Include="AboutForm.dfm"/>
+        <None Include="Windows\ValidationBot.dfm"/>
+        <FormResources Include="Windows\ProfilePreloadWindow.dfm"/>
+        <FormResources Include="Windows\AboutWindow.dfm"/>
+        <FormResources Include="Windows\ProfileSaveWindow.dfm"/>
+        <FormResources Include="Windows\ValidationBot.dfm"/>
+        <FormResources Include="Windows\SettingsWindow.dfm"/>
         <FormResources Include="NForce2XTForm.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
@@ -254,10 +258,23 @@
                     <Source Name="MainSource">NForce2Xtreme.cpp</Source>
                 </Source>
                 <Folders/>
+                <VFOLDERS/>
             </CPlusPlusBuilder.Personality>
             <Deployment Version="3">
+                <DeployFile LocalName="Windows\ValidationBot.dfm" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32c260.dll" Class="DependencyModule">
                     <Platform Name="Win32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Windows\ProfileSaveWindow.dfm" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -307,12 +324,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="WinRing0.lib" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="icon.ico" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
@@ -325,6 +336,24 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Windows\ProfilePreloadWindow.dfm" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Windows\SettingsWindow.dfm" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Libs\WinRing0.lib" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin64\cc64260.dll" Class="DependencyModule">
                     <Platform Name="Win64">
                         <Overwrite>true</Overwrite>
@@ -332,6 +361,12 @@
                 </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32c260mt.dll" Class="DependencyModule">
                     <Platform Name="Win32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Libs\OlsApi.def" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

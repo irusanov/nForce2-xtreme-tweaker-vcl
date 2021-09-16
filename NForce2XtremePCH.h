@@ -2,7 +2,7 @@
 #include <tchar.h>
 #include <System.Types.hpp>
 
-#include "OlsApi.h"
+#include "Libs\OlsApi.h"
 #include "Constants.h"
-#include "Utils.h"
-#include "QueryPerformance.h"
+#include "Utils\Utils.h"
+#include "Utils\QueryPerformance.h"

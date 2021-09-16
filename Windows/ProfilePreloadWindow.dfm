@@ -1,9 +1,9 @@
-object ProfileSaveForm: TProfileSaveForm
+object ProfilePreloadForm: TProfilePreloadForm
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'Save Profile'
-  ClientHeight = 235
+  Caption = 'Load Profile'
+  ClientHeight = 237
   ClientWidth = 310
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -13,6 +13,7 @@ object ProfileSaveForm: TProfileSaveForm
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -42,8 +43,7 @@ object ProfileSaveForm: TProfileSaveForm
     Width = 97
     Height = 17
     Caption = 'Main Timings'
-    Checked = True
-    State = cbChecked
+    Enabled = False
     TabOrder = 0
     OnClick = SectionCheckBoxClick
   end
@@ -53,6 +53,7 @@ object ProfileSaveForm: TProfileSaveForm
     Width = 177
     Height = 17
     Caption = 'Drive Strength and Slew Rate'
+    Enabled = False
     TabOrder = 1
     OnClick = SectionCheckBoxClick
   end
@@ -62,6 +63,7 @@ object ProfileSaveForm: TProfileSaveForm
     Width = 97
     Height = 17
     Caption = 'Advanced'
+    Enabled = False
     TabOrder = 2
     OnClick = SectionCheckBoxClick
   end
@@ -71,18 +73,19 @@ object ProfileSaveForm: TProfileSaveForm
     Width = 97
     Height = 17
     Caption = 'ROMSIP'
+    Enabled = False
     TabOrder = 3
     OnClick = SectionCheckBoxClick
   end
-  object ButtonSaveProfile: TButton
+  object ButtonLoadProfile: TButton
     Left = 228
     Top = 206
     Width = 75
     Height = 25
-    Caption = 'Save...'
+    Caption = 'Load'
     Default = True
     TabOrder = 4
-    OnClick = ButtonSaveProfileClick
+    OnClick = ButtonLoadProfileClick
   end
   object ButtonCancel: TButton
     Left = 147
@@ -94,31 +97,33 @@ object ProfileSaveForm: TProfileSaveForm
     ModalResult = 2
     TabOrder = 5
   end
-  object PanelAuthor: TMemo
-    Left = 72
-    Top = 8
-    Width = 230
-    Height = 19
-    BevelInner = bvLowered
-    BevelOuter = bvNone
-    TabOrder = 6
-    WantReturns = False
-    WordWrap = False
-  end
   object PanelComment: TMemo
     Left = 72
     Top = 32
     Width = 230
     Height = 66
-    BevelInner = bvLowered
-    BevelOuter = bvNone
-    TabOrder = 7
+    TabStop = False
+    BevelInner = bvNone
+    BevelKind = bkTile
+    BorderStyle = bsNone
+    Color = clBtnFace
+    ReadOnly = True
+    TabOrder = 6
     WantReturns = False
   end
-  object SaveTextFileDialog1: TSaveTextFileDialog
-    DefaultExt = 'profile'
-    Filter = 'profile files (*.profile)|*.profile'
-    Left = 8
-    Top = 146
+  object PanelAuthor: TMemo
+    Left = 72
+    Top = 8
+    Width = 230
+    Height = 19
+    TabStop = False
+    BevelInner = bvNone
+    BevelKind = bkTile
+    BorderStyle = bsNone
+    Color = clBtnFace
+    ReadOnly = True
+    TabOrder = 7
+    WantReturns = False
+    WordWrap = False
   end
 end

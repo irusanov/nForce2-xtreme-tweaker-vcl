@@ -4,7 +4,7 @@
     </PropertyGroup>
     <ItemGroup>
         <Projects Include="NForce2Xtreme.cbproj">
-            <Dependencies/>
+            <Dependencies>Components\Components.cbproj</Dependencies>
         </Projects>
         <Projects Include="Components\Components.cbproj">
             <Dependencies/>
@@ -17,13 +17,13 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="NForce2Xtreme">
+    <Target Name="NForce2Xtreme" DependsOnTargets="Components">
         <MSBuild Projects="NForce2Xtreme.cbproj"/>
     </Target>
-    <Target Name="NForce2Xtreme:Clean">
+    <Target Name="NForce2Xtreme:Clean" DependsOnTargets="Components:Clean">
         <MSBuild Projects="NForce2Xtreme.cbproj" Targets="Clean"/>
     </Target>
-    <Target Name="NForce2Xtreme:Make">
+    <Target Name="NForce2Xtreme:Make" DependsOnTargets="Components:Make">
         <MSBuild Projects="NForce2Xtreme.cbproj" Targets="Make"/>
     </Target>
     <Target Name="Components">

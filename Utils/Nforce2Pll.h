@@ -1,3 +1,5 @@
+#pragma once
+
 #define PCI_VENDOR_ID_NVIDIA            0x10de
 #define PCI_DEVICE_ID_NVIDIA_NFORCE2    0x01e0
 #define NFORCE2_XTAL                    25

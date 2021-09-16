@@ -1,5 +1,4 @@
-#ifndef ProfilesManagerH
-#define ProfilesManagerH
+#pragma once
 
 #define VERSION_MAJOR 1
 #define VERSION_MINOR 1
@@ -267,4 +266,3 @@ public:
     // Preload profile data
     profile_metadata_t previewMetadata;
 };
-#endif

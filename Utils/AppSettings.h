@@ -1,5 +1,4 @@
-#ifndef AppSettingsH
-#define AppSettingsH
+#pragma once
 
 #include <vcl.h>
 #include <IniFiles.hpp>
@@ -85,4 +84,3 @@ public:
         load();
     }
 };
-#endif

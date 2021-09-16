@@ -16,19 +16,19 @@
 #include <Vcl.ExtCtrls.hpp>
 #include <IniFiles.hpp>
 
-#include "OlsApi.h"
-#include "Nforce2Pll.h"
+#include "Libs\OlsApi.h"
+#include "Utils\Nforce2Pll.h"
 #include "Constants.h"
-#include "Utils.h"
-#include "QueryPerformance.h"
-#include "AppSettings.h"
-#include "ProfilesManager.h"
+#include "Utils\Utils.h"
+#include "Utils\QueryPerformance.h"
+#include "Utils\AppSettings.h"
+#include "Utils\ProfilesManager.h"
 
-#include "AboutForm.h"
-#include "ValidationBot.h"
-#include "SettingsWindow.h"
-#include "ProfileSaveWindow.h"
-#include "ProfilePreloadWindow.h"
+#include "Windows\AboutWindow.h"
+#include "Windows\ValidationBot.h"
+#include "Windows\SettingsWindow.h"
+#include "Windows\ProfileSaveWindow.h"
+#include "Windows\ProfilePreloadWindow.h"
 #include "Components\TAdvancedEdit\TAdvancedEdit.h"
 #include "Components\TTimingComboBox\TTimingComboBox.h"
 #include <Vcl.ExtDlgs.hpp>
@@ -223,6 +223,7 @@ __published: // IDE-managed Components
     TMenuItem *TrayMenuShowApp;
     TMenuItem *N2;
     TMenuItem *Refresh1;
+    TPanel *Panel1;
 
     void __fastcall TabControl1Change(TObject *Sender);
     void __fastcall Exit1Click(TObject *Sender);

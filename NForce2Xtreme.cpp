@@ -4,12 +4,12 @@
 #pragma hdrstop
 #include <tchar.h>
 // ---------------------------------------------------------------------------
-USEFORM("SettingsWindow.cpp", SettingsForm);
-USEFORM("ValidationBot.cpp", ValidationBotDialog);
-USEFORM("AboutForm.cpp", AboutDialog);
+USEFORM("Windows\ProfilePreloadWindow.cpp", ProfilePreloadForm);
+USEFORM("Windows\AboutWindow.cpp", AboutDialog);
+USEFORM("Windows\ProfileSaveWindow.cpp", ProfileSaveForm);
+USEFORM("Windows\ValidationBot.cpp", ValidationBotDialog);
+USEFORM("Windows\SettingsWindow.cpp", SettingsForm);
 USEFORM("NForce2XTForm.cpp", MainForm);
-USEFORM("ProfileSaveWindow.cpp", ProfileSaveForm);
-USEFORM("ProfilePreloadWindow.cpp", ProfilePreloadForm);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {
     try {
@@ -18,10 +18,10 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {
         Application->Title = "nForce2XT";
         Application->CreateForm(__classid(TMainForm), &MainForm);
          Application->CreateForm(__classid(TAboutDialog), &AboutDialog);
-         Application->CreateForm(__classid(TValidationBotDialog), &ValidationBotDialog);
-         Application->CreateForm(__classid(TSettingsForm), &SettingsForm);
-         Application->CreateForm(__classid(TProfileSaveForm), &ProfileSaveForm);
          Application->CreateForm(__classid(TProfilePreloadForm), &ProfilePreloadForm);
+         Application->CreateForm(__classid(TProfileSaveForm), &ProfileSaveForm);
+         Application->CreateForm(__classid(TSettingsForm), &SettingsForm);
+         Application->CreateForm(__classid(TValidationBotDialog), &ValidationBotDialog);
          Application->Run();
     }
     catch (Exception &exception) {

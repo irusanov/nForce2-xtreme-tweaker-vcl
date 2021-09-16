@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 
-#ifndef AboutFormH
-#define AboutFormH
+#ifndef AboutWindowH
+#define AboutWindowH
 //---------------------------------------------------------------------------
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>

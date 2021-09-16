@@ -1,4 +1,5 @@
 #pragma once
+
 using namespace std;
 
 unsigned int SetBits(unsigned int val, int offset, int n,

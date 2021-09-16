@@ -1,3 +1,5 @@
+#pragma once
+
 class QueryPerformance {
 private:
     DWORD eax, edx;
