@@ -3,7 +3,7 @@
 #include <vcl.h>
 #pragma hdrstop
 
-#include "NForce2XTForm.h"
+#include "../NForce2XTForm.h"
 #include "ProfileSaveWindow.h"
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -25,6 +25,7 @@ void __fastcall TProfileSaveForm::SetApplyButtonState() {
 // ---------------------------------------------------------------------------
 void __fastcall TProfileSaveForm::ButtonSaveProfileClick(TObject *Sender) {
     ProfilesManager::profile_options_t Options = {};
+    Options.name = PanelName->Text;
     Options.author = PanelAuthor->Text;
     Options.comment = PanelComment->Text;
     Options.timings = CheckBoxTimings->Checked;

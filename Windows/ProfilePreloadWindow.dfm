@@ -3,7 +3,7 @@ object ProfilePreloadForm: TProfilePreloadForm
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Load Profile'
-  ClientHeight = 237
+  ClientHeight = 260
   ClientWidth = 310
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,28 +18,35 @@ object ProfilePreloadForm: TProfilePreloadForm
   TextHeight = 13
   object Label1: TLabel
     Left = 8
-    Top = 11
+    Top = 35
     Width = 33
     Height = 13
     Caption = 'Author'
   end
   object Label2: TLabel
     Left = 8
-    Top = 35
+    Top = 59
     Width = 45
     Height = 13
     Caption = 'Comment'
   end
   object Label3: TLabel
     Left = 8
-    Top = 105
+    Top = 129
     Width = 40
     Height = 13
     Caption = 'Sections'
   end
+  object Label4: TLabel
+    Left = 8
+    Top = 11
+    Width = 27
+    Height = 13
+    Caption = 'Name'
+  end
   object CheckBoxTimings: TCheckBox
     Left = 72
-    Top = 104
+    Top = 128
     Width = 97
     Height = 17
     Caption = 'Main Timings'
@@ -49,7 +56,7 @@ object ProfilePreloadForm: TProfilePreloadForm
   end
   object CheckBoxDSSR: TCheckBox
     Left = 72
-    Top = 127
+    Top = 151
     Width = 177
     Height = 17
     Caption = 'Drive Strength and Slew Rate'
@@ -59,7 +66,7 @@ object ProfilePreloadForm: TProfilePreloadForm
   end
   object CheckBoxAdvanced: TCheckBox
     Left = 72
-    Top = 150
+    Top = 174
     Width = 97
     Height = 17
     Caption = 'Advanced'
@@ -69,7 +76,7 @@ object ProfilePreloadForm: TProfilePreloadForm
   end
   object CheckBoxRomsip: TCheckBox
     Left = 72
-    Top = 173
+    Top = 197
     Width = 97
     Height = 17
     Caption = 'ROMSIP'
@@ -79,7 +86,7 @@ object ProfilePreloadForm: TProfilePreloadForm
   end
   object ButtonLoadProfile: TButton
     Left = 228
-    Top = 206
+    Top = 230
     Width = 75
     Height = 25
     Caption = 'Load'
@@ -89,7 +96,7 @@ object ProfilePreloadForm: TProfilePreloadForm
   end
   object ButtonCancel: TButton
     Left = 147
-    Top = 206
+    Top = 230
     Width = 75
     Height = 25
     Cancel = True
@@ -99,7 +106,7 @@ object ProfilePreloadForm: TProfilePreloadForm
   end
   object PanelComment: TMemo
     Left = 72
-    Top = 32
+    Top = 56
     Width = 230
     Height = 66
     TabStop = False
@@ -113,7 +120,7 @@ object ProfilePreloadForm: TProfilePreloadForm
   end
   object PanelAuthor: TMemo
     Left = 72
-    Top = 8
+    Top = 32
     Width = 230
     Height = 19
     TabStop = False
@@ -123,6 +130,21 @@ object ProfilePreloadForm: TProfilePreloadForm
     Color = clBtnFace
     ReadOnly = True
     TabOrder = 7
+    WantReturns = False
+    WordWrap = False
+  end
+  object PanelName: TMemo
+    Left = 72
+    Top = 8
+    Width = 230
+    Height = 19
+    TabStop = False
+    BevelInner = bvNone
+    BevelKind = bkTile
+    BorderStyle = bsNone
+    Color = clBtnFace
+    ReadOnly = True
+    TabOrder = 8
     WantReturns = False
     WordWrap = False
   end

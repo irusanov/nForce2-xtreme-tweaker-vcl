@@ -1,7 +1,7 @@
 #pragma once
 
 #define VERSION_MAJOR 1
-#define VERSION_MINOR 1
+#define VERSION_MINOR 2
 
 #include <vcl.h>
 #include <IniFiles.hpp>
@@ -134,24 +134,21 @@ private:
 
 public:
     typedef struct {
+        String name;
         String author;
         String comment;
         bool timings;
         bool dssr;
         bool advanced;
         bool romsip;
-    }
-
-    profile_options_t;
+    } profile_options_t;
 
     typedef struct {
         int versionMajor;
         int versionMinor;
         String path;
         profile_options_t options;
-    }
-
-    profile_metadata_t;
+    } profile_metadata_t;
 
     UnicodeString GetDefaultPath() {
         return DefaultPath;
@@ -166,6 +163,8 @@ public:
             iniFile->ReadInteger("PMVersion", "Major", 0);
         previewMetadata.versionMinor =
             iniFile->ReadInteger("PMVersion", "Minor", 0);
+        previewMetadata.options.name =
+            iniFile->ReadString("Metadata", "Name", "");
         previewMetadata.options.author =
             iniFile->ReadString("Metadata", "Author", "");
         previewMetadata.options.comment =
@@ -184,6 +183,7 @@ public:
     void writeMetadata(TIniFile* ini, profile_options_t Opts) {
         ini->WriteString("PMVersion", "Major", VERSION_MAJOR);
         ini->WriteString("PMVersion", "Minor", VERSION_MINOR);
+        ini->WriteString("Metadata", "Name", Opts.name);
         ini->WriteString("Metadata", "Author", Opts.author);
         ini->WriteString("Metadata", "Comment", Opts.comment);
     }
@@ -221,7 +221,11 @@ public:
                 return false;
             }
 
-            // Save existing author and comment
+            // Save existing name, author and comment
+            if (Opts.name.Length() == 0) {
+                Opts.name = iniFile->ReadString("Metadata", "Name", "");
+            }
+
             if (Opts.author.Length() == 0) {
                 Opts.author = iniFile->ReadString("Metadata", "Author", "");
             }

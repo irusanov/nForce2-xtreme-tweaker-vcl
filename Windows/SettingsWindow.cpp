@@ -3,7 +3,7 @@
 #include <vcl.h>
 #pragma hdrstop
 
-#include "NForce2XTForm.h"
+#include "../NForce2XTForm.h"
 #include "SettingsWindow.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)

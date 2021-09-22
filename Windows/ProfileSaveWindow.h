@@ -27,6 +27,8 @@ __published:	// IDE-managed Components
     TLabel *Label2;
     TMemo *PanelComment;
     TLabel *Label3;
+    TMemo *PanelName;
+    TLabel *LabelProfileName;
     void __fastcall ButtonSaveProfileClick(TObject *Sender);
     void __fastcall SetApplyButtonState();
     void __fastcall SectionCheckBoxClick(TObject *Sender);

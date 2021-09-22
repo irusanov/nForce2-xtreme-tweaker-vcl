@@ -27,6 +27,8 @@ __published:	// IDE-managed Components
     TMemo *PanelComment;
     TMemo *PanelAuthor;
     TLabel *Label3;
+    TLabel *Label4;
+    TMemo *PanelName;
     void __fastcall ButtonLoadProfileClick(TObject *Sender);
     void __fastcall FormShow(TObject *Sender);
     void __fastcall SectionCheckBoxClick(TObject *Sender);

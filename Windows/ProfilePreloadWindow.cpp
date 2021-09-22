@@ -3,7 +3,7 @@
 #include <vcl.h>
 #pragma hdrstop
 
-#include "NForce2XTForm.h"
+#include "../NForce2XTForm.h"
 #include "ProfilePreloadWindow.h"
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -39,6 +39,7 @@ void __fastcall TProfilePreloadForm::ButtonLoadProfileClick(TObject *Sender) {
 void __fastcall TProfilePreloadForm::FormShow(TObject *Sender) {
     ProfilesManager::profile_metadata_t data =
         MainForm->profiles.previewMetadata;
+
     CheckBoxTimings->Checked = data.options.timings;
     CheckBoxDSSR->Checked = data.options.dssr;
     CheckBoxAdvanced->Checked = data.options.advanced;
@@ -49,6 +50,7 @@ void __fastcall TProfilePreloadForm::FormShow(TObject *Sender) {
     CheckBoxAdvanced->Enabled = data.options.advanced;
     CheckBoxRomsip->Enabled = data.options.romsip;
 
+    PanelName->Text = data.options.name;
     PanelAuthor->Text = data.options.author;
     PanelComment->Text = data.options.comment;
 }
