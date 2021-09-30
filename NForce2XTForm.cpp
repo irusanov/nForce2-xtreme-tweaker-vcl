@@ -404,19 +404,24 @@ static void __fastcall ReadRomsipValues(const struct timing_def_t* table,
 static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
     bool doubled) {
     timing_def_t def;
-    unsigned int pciAddress, regValue, value;
+    unsigned int pciAddress, regValue, value, bits;
     TTimingComboBox* combo;
     UnicodeString name;
 
     for (int i = 0; i < size; i++) {
         name = table[i].name;
+
+        if (name == "CAS" || name == "CR" || name == "HALTDisconnect" || name == "STPGNTDisconnect") {
+            return;
+        }
+
         combo = static_cast<TTimingComboBox*>
             (Application->FindComponent("MainForm")->FindComponent(name));
 
         if (combo != NULL && combo != 0 && combo->Changed) {
             def = GetDefByName(table, size, name);
-            pciAddress = MakePciAddress(def.bus, def.device, def.function,
-                def.reg);
+            bits = def.bits;
+            pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
             regValue = ReadPciReg(pciAddress);
 
             if (combo->CustomValue) {
@@ -428,13 +433,13 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
 
             if (doubled) {
                 value = (value << 4) | value;
+                bits *= 2;
             }
 
-            if (name != "CAS" && name != "CR" && name != "HALTDisconnect" &&
+            regValue = SetBits(regValue, def.offset, bits, value);
                 name != "STPGNTDisconnect") {
                 regValue = SetBits(regValue, def.offset, def.bits, value);
-                WritePciReg(pciAddress, regValue);
-            }
+            WritePciReg(pciAddress, regValue);
         }
     }
 }
