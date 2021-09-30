@@ -107,7 +107,7 @@ It is possible to run on an unsupported system, but you need to compile it as ``
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+<!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
 
 
 
@@ -141,13 +141,13 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+<!-- Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com -->
 
 Project Link: [https://github.com/irusanov/nForce2-xtreme-tweaker-vcl](https://github.com/irusanov/nForce2-xtreme-tweaker-vcl)
 
 
 
-<!-- ACKNOWLEDGEMENTS -->
+<!-- ACKNOWLEDGEMENTS
 ## Acknowledgements
 * [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
 * [Img Shields](https://shields.io)
@@ -160,7 +160,7 @@ Project Link: [https://github.com/irusanov/nForce2-xtreme-tweaker-vcl](https://g
 * [Sticky Kit](http://leafo.net/sticky-kit)
 * [JVectorMap](http://jvectormap.com)
 * [Font Awesome](https://fontawesome.com)
-
+ -->
 
 
 
