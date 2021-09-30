@@ -61,7 +61,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![nForce2XT Screen Shot][product-screenshot]](https://example.com)
+[![nForce2XT Screen Shot][product-screenshot]](https://github.com/irusanov/nForce2-xtreme-tweaker-vcl)
 
 The project aims to provide an extensive control of all known and newly discovered parameters of nForce2-based motherboards for AMD's socket A (462) CPUs.
 
@@ -177,4 +177,4 @@ Project Link: [https://github.com/irusanov/nForce2-xtreme-tweaker-vcl](https://g
 [issues-url]: https://github.com/irusanov/nForce2-xtreme-tweaker-vcl/issues
 [license-shield]: https://img.shields.io/github/license/irusanov/nForce2-xtreme-tweaker-vcl.svg?style=for-the-badge
 [license-url]: https://github.com/irusanov/nForce2-xtreme-tweaker-vcl/blob/master/LICENSE.txt
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: screenshot.png
