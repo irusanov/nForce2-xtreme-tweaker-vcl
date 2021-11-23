@@ -118,8 +118,8 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
-        <VerInfo_Build>309</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.309;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.protonrom.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>316</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.316;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.protonrom.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>0</VerInfo_Release>
         <AppExecutionLevel>requireAdministrator</AppExecutionLevel>
@@ -140,6 +140,9 @@
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
     </PropertyGroup>
     <ItemGroup>
+        <None Include="Constants.h">
+            <BuildOrder>19</BuildOrder>
+        </None>
         <DefFile Include="Libs\OlsApi.def">
             <BuildOrder>20</BuildOrder>
         </DefFile>
@@ -165,6 +168,9 @@
         </PCHCompile>
         <None Include="Utils\AppSettings.h">
             <BuildOrder>23</BuildOrder>
+        </None>
+        <None Include="Utils\CPUDetection.h">
+            <BuildOrder>22</BuildOrder>
         </None>
         <CppCompile Include="Utils\Nforce2Pll.cpp">
             <BuildOrder>22</BuildOrder>
@@ -196,33 +202,29 @@
             <DependentOn>Windows\ProfilePreloadWindow.h</DependentOn>
             <BuildOrder>15</BuildOrder>
         </CppCompile>
-        <None Include="Windows\ProfilePreloadWindow.dfm"/>
         <CppCompile Include="Windows\ProfileSaveWindow.cpp">
             <Form>ProfileSaveForm</Form>
             <FormType>dfm</FormType>
             <DependentOn>Windows\ProfileSaveWindow.h</DependentOn>
             <BuildOrder>17</BuildOrder>
         </CppCompile>
-        <None Include="Windows\ProfileSaveWindow.dfm"/>
         <CppCompile Include="Windows\SettingsWindow.cpp">
             <Form>SettingsForm</Form>
             <FormType>dfm</FormType>
             <DependentOn>Windows\SettingsWindow.h</DependentOn>
             <BuildOrder>19</BuildOrder>
         </CppCompile>
-        <None Include="Windows\SettingsWindow.dfm"/>
         <CppCompile Include="Windows\ValidationBot.cpp">
             <Form>ValidationBotDialog</Form>
             <FormType>dfm</FormType>
             <DependentOn>Windows\ValidationBot.h</DependentOn>
             <BuildOrder>21</BuildOrder>
         </CppCompile>
-        <None Include="Windows\ValidationBot.dfm"/>
-        <FormResources Include="Windows\ProfilePreloadWindow.dfm"/>
-        <FormResources Include="Windows\AboutWindow.dfm"/>
-        <FormResources Include="Windows\ProfileSaveWindow.dfm"/>
         <FormResources Include="Windows\ValidationBot.dfm"/>
         <FormResources Include="Windows\SettingsWindow.dfm"/>
+        <FormResources Include="Windows\ProfileSaveWindow.dfm"/>
+        <FormResources Include="Windows\ProfilePreloadWindow.dfm"/>
+        <FormResources Include="Windows\AboutWindow.dfm"/>
         <FormResources Include="NForce2XTForm.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
@@ -261,20 +263,8 @@
                 <VFOLDERS/>
             </CPlusPlusBuilder.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="Windows\ValidationBot.dfm" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32c260.dll" Class="DependencyModule">
                     <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Windows\ProfileSaveWindow.dfm" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -331,18 +321,6 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="WinRing0.lib" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Windows\ProfilePreloadWindow.dfm" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Windows\SettingsWindow.dfm" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>

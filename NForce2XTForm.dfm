@@ -5,7 +5,7 @@ object MainForm: TMainForm
   Anchors = []
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'nForce2XT v1.1 beta16'
+  Caption = 'nForce2XT v1.1 beta17'
   ClientHeight = 471
   ClientWidth = 382
   Color = clBtnFace
@@ -3194,7 +3194,7 @@ object MainForm: TMainForm
         Caption = 'ROMSIP'
         TabOrder = 2
         object Label49: TLabel
-          Left = 75
+          Left = 141
           Top = 19
           Width = 26
           Height = 13
@@ -3203,7 +3203,7 @@ object MainForm: TMainForm
           Caption = '65'
         end
         object Label50: TLabel
-          Left = 104
+          Left = 168
           Top = 19
           Width = 26
           Height = 13
@@ -3212,7 +3212,7 @@ object MainForm: TMainForm
           Caption = '66'
         end
         object Label51: TLabel
-          Left = 133
+          Left = 195
           Top = 19
           Width = 26
           Height = 13
@@ -3221,8 +3221,8 @@ object MainForm: TMainForm
           Caption = '67'
         end
         object Label52: TLabel
-          Left = 162
-          Top = 19
+          Left = 6
+          Top = 65
           Width = 26
           Height = 13
           Alignment = taCenter
@@ -3230,8 +3230,8 @@ object MainForm: TMainForm
           Caption = '68'
         end
         object Label53: TLabel
-          Left = 191
-          Top = 19
+          Left = 33
+          Top = 65
           Width = 26
           Height = 13
           Alignment = taCenter
@@ -3239,7 +3239,7 @@ object MainForm: TMainForm
           Caption = '69'
         end
         object Label54: TLabel
-          Left = 75
+          Left = 60
           Top = 65
           Width = 26
           Height = 13
@@ -3248,7 +3248,7 @@ object MainForm: TMainForm
           Caption = '6A'
         end
         object Label55: TLabel
-          Left = 104
+          Left = 87
           Top = 65
           Width = 26
           Height = 13
@@ -3257,7 +3257,7 @@ object MainForm: TMainForm
           Caption = '6B'
         end
         object Label56: TLabel
-          Left = 133
+          Left = 114
           Top = 65
           Width = 26
           Height = 13
@@ -3266,7 +3266,7 @@ object MainForm: TMainForm
           Caption = '6C'
         end
         object Label57: TLabel
-          Left = 162
+          Left = 141
           Top = 65
           Width = 26
           Height = 13
@@ -3275,7 +3275,7 @@ object MainForm: TMainForm
           Caption = '6D'
         end
         object Label58: TLabel
-          Left = 191
+          Left = 168
           Top = 65
           Width = 26
           Height = 13
@@ -3283,9 +3283,54 @@ object MainForm: TMainForm
           AutoSize = False
           Caption = '6F'
         end
+        object Label42: TLabel
+          Left = 6
+          Top = 19
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '48'
+        end
+        object Label71: TLabel
+          Left = 33
+          Top = 19
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '4C'
+        end
+        object Label72: TLabel
+          Left = 60
+          Top = 19
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '4D'
+        end
+        object Label73: TLabel
+          Left = 87
+          Top = 19
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '50'
+        end
+        object Label74: TLabel
+          Left = 195
+          Top = 65
+          Width = 26
+          Height = 13
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '74'
+        end
         object Romsip69: TAdvancedEdit
-          Left = 191
-          Top = 35
+          Left = 33
+          Top = 81
           Width = 26
           Height = 22
           Alignment = taCenter
@@ -3297,8 +3342,8 @@ object MainForm: TMainForm
           Max = 255
         end
         object Romsip68: TAdvancedEdit
-          Left = 162
-          Top = 35
+          Left = 6
+          Top = 81
           Width = 26
           Height = 22
           Alignment = taCenter
@@ -3310,7 +3355,7 @@ object MainForm: TMainForm
           Max = 255
         end
         object Romsip67: TAdvancedEdit
-          Left = 133
+          Left = 195
           Top = 35
           Width = 26
           Height = 22
@@ -3323,7 +3368,7 @@ object MainForm: TMainForm
           Max = 255
         end
         object Romsip66: TAdvancedEdit
-          Left = 104
+          Left = 168
           Top = 35
           Width = 26
           Height = 22
@@ -3336,7 +3381,7 @@ object MainForm: TMainForm
           Max = 255
         end
         object Romsip65: TAdvancedEdit
-          Left = 75
+          Left = 141
           Top = 35
           Width = 26
           Height = 22
@@ -3349,7 +3394,7 @@ object MainForm: TMainForm
           Max = 255
         end
         object Romsip6F: TAdvancedEdit
-          Left = 191
+          Left = 168
           Top = 81
           Width = 26
           Height = 22
@@ -3362,7 +3407,7 @@ object MainForm: TMainForm
           Max = 255
         end
         object Romsip6D: TAdvancedEdit
-          Left = 162
+          Left = 141
           Top = 81
           Width = 26
           Height = 22
@@ -3375,7 +3420,7 @@ object MainForm: TMainForm
           Max = 255
         end
         object Romsip6C: TAdvancedEdit
-          Left = 133
+          Left = 114
           Top = 81
           Width = 26
           Height = 22
@@ -3388,7 +3433,7 @@ object MainForm: TMainForm
           Max = 255
         end
         object Romsip6B: TAdvancedEdit
-          Left = 104
+          Left = 87
           Top = 81
           Width = 26
           Height = 22
@@ -3401,7 +3446,7 @@ object MainForm: TMainForm
           Max = 255
         end
         object Romsip6A: TAdvancedEdit
-          Left = 75
+          Left = 60
           Top = 81
           Width = 26
           Height = 22
@@ -3411,6 +3456,71 @@ object MainForm: TMainForm
           HideSelection = False
           MaxLength = 2
           TabOrder = 9
+          Max = 255
+        end
+        object Romsip48: TAdvancedEdit
+          Left = 6
+          Top = 35
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 10
+          Max = 255
+        end
+        object Romsip4C: TAdvancedEdit
+          Left = 33
+          Top = 35
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 11
+          Max = 255
+        end
+        object Romsip4D: TAdvancedEdit
+          Left = 60
+          Top = 35
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 12
+          Max = 255
+        end
+        object Romsip50: TAdvancedEdit
+          Left = 87
+          Top = 35
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 13
+          Max = 255
+        end
+        object Romsip74: TAdvancedEdit
+          Left = 195
+          Top = 81
+          Width = 26
+          Height = 22
+          Alignment = taCenter
+          AutoSize = False
+          CharCase = ecUpperCase
+          HideSelection = False
+          MaxLength = 2
+          TabOrder = 14
           Max = 255
         end
       end

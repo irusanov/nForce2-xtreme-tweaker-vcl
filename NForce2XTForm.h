@@ -23,6 +23,7 @@
 #include "Utils\QueryPerformance.h"
 #include "Utils\AppSettings.h"
 #include "Utils\ProfilesManager.h"
+#include "Utils\CPUDetection.h"
 
 #include "Windows\AboutWindow.h"
 #include "Windows\ValidationBot.h"
@@ -224,6 +225,16 @@ __published: // IDE-managed Components
     TMenuItem *N2;
     TMenuItem *Refresh1;
     TPanel *Panel1;
+    TLabel *Label42;
+    TAdvancedEdit *Romsip48;
+    TAdvancedEdit *Romsip4C;
+    TLabel *Label71;
+    TAdvancedEdit *Romsip4D;
+    TLabel *Label72;
+    TAdvancedEdit *Romsip50;
+    TLabel *Label73;
+    TAdvancedEdit *Romsip74;
+    TLabel *Label74;
 
     void __fastcall TabControl1Change(TObject *Sender);
     void __fastcall Exit1Click(TObject *Sender);

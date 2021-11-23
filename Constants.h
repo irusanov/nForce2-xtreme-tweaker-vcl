@@ -1,4 +1,5 @@
 /* K7 MSRs */
+#define BIT_ULL(nr)                   (((long long) 1) << nr)
 #define MSR_K7_EVNTSEL0               0xc0010000
 #define MSR_K7_PERFCTR0               0xc0010004
 #define MSR_K7_EVNTSEL1               0xc0010001

@@ -118,18 +118,23 @@ const struct timing_def_t s2kTimings[] = {
 };
 
 const struct timing_def_t romsipDefs[] = {
-    // name,                      b,  d,  f, reg, offset, bits
-    { "Romsip65",                 0,  0,  3, 0x64,  8,  8 },
-    { "Romsip66",                 0,  0,  3, 0x64, 16,  8 },
-    { "Romsip67",                 0,  0,  3, 0x64, 24,  8 },
-    { "Romsip68",                 0,  0,  3, 0x68,  0,  8 },
-    { "Romsip69",                 0,  0,  3, 0x68,  8,  8 },
-    { "Romsip6A",                 0,  0,  3, 0x68, 16,  8 },
-    { "Romsip6B",                 0,  0,  3, 0x68, 24,  8 },
-    { "Romsip6C",                 0,  0,  3, 0x6C,  0,  8 },
-    { "Romsip6D",                 0,  0,  3, 0x6C,  8,  8 },
-    //{ "Romsip6E",               0,  0,  3, 0x6C, 16,  8 },
-    { "Romsip6F",                 0,  0,  3, 0x6C, 24,  8 },
+    // name,                    b,  d,  f, reg, offset, bits
+    { "Romsip48",               0,  0,  3, 0x48,  0,  8 },
+    { "Romsip4C",               0,  0,  3, 0x4C,  0,  8 },
+    { "Romsip4D",               0,  0,  3, 0x4C,  8,  8 },
+    { "Romsip50",               0,  0,  3, 0x50,  0,  8 },
+    { "Romsip65",               0,  0,  3, 0x64,  8,  8 },
+    { "Romsip66",               0,  0,  3, 0x64, 16,  8 },
+    { "Romsip67",               0,  0,  3, 0x64, 24,  8 },
+    { "Romsip68",               0,  0,  3, 0x68,  0,  8 },
+    { "Romsip69",               0,  0,  3, 0x68,  8,  8 },
+    { "Romsip6A",               0,  0,  3, 0x68, 16,  8 },
+    { "Romsip6B",               0,  0,  3, 0x68, 24,  8 },
+    { "Romsip6C",               0,  0,  3, 0x6C,  0,  8 },
+    { "Romsip6D",               0,  0,  3, 0x6C,  8,  8 },
+    //{ "Romsip6E",             0,  0,  3, 0x6C, 16,  8 },
+    { "Romsip6F",               0,  0,  3, 0x6C, 24,  8 },
+    { "Romsip74",               0,  0,  3, 0x74,  0,  8 },
 };
 
 const int NUMBER_OF_TABS = 3;
@@ -313,6 +318,8 @@ bool __fastcall TMainForm::InitSystemInfo() {
     }
 
     cpu_info.cpuName = GetCpuName();
+//    decode_amd_model_string(cpu_info.cpuName);
+    decode_amd_model_string("Athlon XP-M");
 
     RefreshCpuSpeed();
 
@@ -437,8 +444,6 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
             }
 
             regValue = SetBits(regValue, def.offset, bits, value);
-                name != "STPGNTDisconnect") {
-                regValue = SetBits(regValue, def.offset, def.bits, value);
             WritePciReg(pciAddress, regValue);
         }
     }
