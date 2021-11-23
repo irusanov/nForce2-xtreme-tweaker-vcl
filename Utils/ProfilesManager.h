@@ -21,9 +21,10 @@ const String dssr[9] = {
     "DIMM1DrvStrB", "DIMM1SlewRate", "DIMM2DrvStrA", "DIMM2DrvStrB",
     "DIMM2SlewRate"};
 
-const String romsip[10] = {
-    "Romsip65", "Romsip66", "Romsip67", "Romsip68", "Romsip69", "Romsip6A",
-    "Romsip6B", "Romsip6C", "Romsip6D", "Romsip6F"};
+const String romsip[15] = {
+    "Romsip48", "Romsip4C", "Romsip4D", "Romsip50", "Romsip65", "Romsip66",
+    "Romsip67", "Romsip68", "Romsip69", "Romsip6A", "Romsip6B", "Romsip6C",
+    "Romsip6D", "Romsip6F", "Romsip74"};
 
 class ProfilesManager {
 private:
