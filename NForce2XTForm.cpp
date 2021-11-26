@@ -419,7 +419,7 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
         name = table[i].name;
 
         if (name == "CAS" || name == "CR" || name == "HALTDisconnect" || name == "STPGNTDisconnect") {
-            return;
+            continue;
         }
 
         combo = static_cast<TTimingComboBox*>
