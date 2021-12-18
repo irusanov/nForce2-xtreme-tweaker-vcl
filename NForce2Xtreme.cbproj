@@ -118,8 +118,8 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
-        <VerInfo_Build>319</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.319;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.protonrom.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>321</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.321;InternalName=;LegalCopyright=Ivan Rusanov (c) 2021;LegalTrademarks=;OriginalFilename=;ProgramID=com.protonrom.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.0.0;Comments=</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>0</VerInfo_Release>
         <AppExecutionLevel>requireAdministrator</AppExecutionLevel>
@@ -150,7 +150,7 @@
             <BuildOrder>21</BuildOrder>
         </None>
         <LibFiles Include="Libs\WinRing0.lib" Condition="'$(Platform)'=='Win32'">
-            <BuildOrder>21</BuildOrder>
+            <BuildOrder>20</BuildOrder>
             <IgnorePath>true</IgnorePath>
         </LibFiles>
         <CppCompile Include="NForce2XTForm.cpp">
@@ -169,6 +169,10 @@
         <None Include="Utils\AppSettings.h">
             <BuildOrder>23</BuildOrder>
         </None>
+        <CppCompile Include="Utils\AppVerInfo.cpp">
+            <DependentOn>Utils\AppVerInfo.h</DependentOn>
+            <BuildOrder>20</BuildOrder>
+        </CppCompile>
         <None Include="Utils\CPUDetection.h">
             <BuildOrder>22</BuildOrder>
         </None>

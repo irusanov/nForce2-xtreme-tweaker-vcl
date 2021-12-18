@@ -869,12 +869,12 @@ object AboutDialog: TAboutDialog
       E91B032A520F27FD144891924D9CCEF0F70F11D0244F97813E0A000000004945
       4E44AE426082}
   end
-  object StaticText1: TStaticText
+  object StaticTextAppName: TStaticText
     Left = 83
     Top = 8
     Width = 63
     Height = 17
-    Caption = 'nForce2XT'
+    Caption = '{appName}'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -883,15 +883,15 @@ object AboutDialog: TAboutDialog
     ParentFont = False
     TabOrder = 0
   end
-  object StaticText2: TStaticText
+  object StaticTextAppVersion: TStaticText
     Left = 83
     Top = 31
     Width = 58
     Height = 17
-    Caption = 'Version 1.1'
+    Caption = '{version}'
     TabOrder = 1
   end
-  object StaticText3: TStaticText
+  object StaticTextCopyright: TStaticText
     Left = 83
     Top = 54
     Width = 94
@@ -899,12 +899,12 @@ object AboutDialog: TAboutDialog
     Caption = 'Copyright (c) 2021'
     TabOrder = 2
   end
-  object StaticText4: TStaticText
+  object StaticTextDeveloperName: TStaticText
     Left = 83
     Top = 77
     Width = 71
     Height = 17
-    Caption = 'Ivan Rusanov'
+    Caption = '{developerName}'
     TabOrder = 3
   end
   object Button1: TButton

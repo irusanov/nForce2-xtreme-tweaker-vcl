@@ -2,8 +2,6 @@
 
 using namespace std;
 
-#define LBIT(x) (((long) 1) << x)
-
 struct match_entry_t {
 	int family, model, stepping, ext_family, ext_model;
 	int l1_data_cache, l1_inst_cache, l2cache;
@@ -14,17 +12,17 @@ struct match_entry_t {
 };
 
 enum _cpu_bits_t {
-	_M_          = BIT_ULL( 0 ),
+    _M_          = BIT_ULL( 0 ),
     _MP_         = BIT_ULL( 1 ),
     _XP_         = BIT_ULL( 2 ),
     _LV_         = BIT_ULL( 3 ),
     _NX_         = BIT_ULL( 4 ),
     _SFF_        = BIT_ULL( 5 ),
     _4_          = BIT_ULL( 6 ),
-	MOBILE_      = BIT_ULL( 7 ),
+    MOBILE_      = BIT_ULL( 7 ),
     ATHLON_      = BIT_ULL( 8 ),
-	DURON_       = BIT_ULL( 9 ),
-	SEMPRON_     = BIT_ULL( 10 ),
+    DURON_       = BIT_ULL( 9 ),
+    SEMPRON_     = BIT_ULL( 10 ),
     GEODE_       = BIT_ULL( 11 ),
 };
 

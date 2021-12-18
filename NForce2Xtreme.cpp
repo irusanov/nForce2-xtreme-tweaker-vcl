@@ -4,11 +4,11 @@
 #pragma hdrstop
 #include <tchar.h>
 // ---------------------------------------------------------------------------
-USEFORM("Windows\ProfilePreloadWindow.cpp", ProfilePreloadForm);
-USEFORM("Windows\AboutWindow.cpp", AboutDialog);
-USEFORM("Windows\ProfileSaveWindow.cpp", ProfileSaveForm);
 USEFORM("Windows\ValidationBot.cpp", ValidationBotDialog);
 USEFORM("Windows\SettingsWindow.cpp", SettingsForm);
+USEFORM("Windows\ProfileSaveWindow.cpp", ProfileSaveForm);
+USEFORM("Windows\ProfilePreloadWindow.cpp", ProfilePreloadForm);
+USEFORM("Windows\AboutWindow.cpp", AboutDialog);
 USEFORM("NForce2XTForm.cpp", MainForm);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {

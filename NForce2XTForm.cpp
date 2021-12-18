@@ -232,7 +232,7 @@ void __fastcall TMainForm::RefreshCpuSpeed() {
 
     cpu_info.fid = GetFID();
 
-    // FID from chipset is 1 byte and covers up to 12.5x
+    // FID from chipset is 4 bits and covers up to 12.5x
     // CurrFID from MSR_K7_FID_VID_STATUS is also unreliable
     // Calculate multiplier from CPU frequency and FSB (from PLL)
     if (cpu_info.fsbFromPll > 0) {
@@ -563,8 +563,8 @@ __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
 
     if (!pll.init()) {
         MessageDlg("Not a NForce2 chipset!", mtError, mbOKCancel, 0);
-        AppExit();
         Application->ShowMainForm = false;
+        AppExit();
     }
     else {
         Application->OnMinimize = OnMinimize;
