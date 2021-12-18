@@ -106,7 +106,7 @@ const struct timing_def_t chipsetTimingDefs[] = {
 
 const struct timing_def_t s2kTimings[] = {
     // S2K Control 1 Register
-    { "SYSDCIN_Delay",          0,  0,  0, 0xE4,  0,  3 },
+    { "SYSDCIN_Delay",          0,  0,  0, 0xE4,  0,  4 },
     { "SYSDCOUT_Delay",         0,  0,  0, 0xE4,  4,  2 },
     { "RDTOWR_Delay",           0,  0,  0, 0xE4,  7,  2 },
     { "WRTORD_Delay",           0,  0,  0, 0xE4, 10,  1 },
