@@ -17,12 +17,12 @@
 #define BITS_PER_BYTE                 8
 
 #define GENMASK(h, l) \
-	(((~UL(0)) - (UL(1) << (l)) + 1) & \
-	 (~UL(0) >> (BITS_PER_LONG - 1 - (h))))
+    (((~UL(0)) - (UL(1) << (l)) + 1) & \
+    (~UL(0) >> (BITS_PER_LONG - 1 - (h))))
 
 #define GENMASK_ULL(h, l) \
-	(((~ULL(0)) - (ULL(1) << (l)) + 1) & \
-	 (~ULL(0) >> (BITS_PER_LONG_LONG - 1 - (h))))
+    (((~ULL(0)) - (ULL(1) << (l)) + 1) & \
+    (~ULL(0) >> (BITS_PER_LONG_LONG - 1 - (h))))
 
 /* K7 MSRs */
 #define MSR_K7_EVNTSEL0               0xc0010000
@@ -50,3 +50,9 @@
 #define PCI_ADDR_PORT                 0xCF8
 #define PCI_DATA_PORT                 0xCFC
 #define COUNT_OF(array) (sizeof(array) / sizeof(array[0]))
+
+/* NForce2 */
+// Set bits 21, 20 and [12:9] to 0
+#define NF2_DRAM_CFG1_ACCESS_MASK     0xffcfe1ff
+// Set bits 20 and [12:3] to 0, additionally bit 21 needs to be set to 1
+#define NF2_DRAM_CFG2_ACCESS_MASK     0xffefe007

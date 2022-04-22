@@ -428,8 +428,6 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
         if (combo != NULL && combo != 0 && combo->Changed) {
             def = GetDefByName(table, size, name);
             bits = def.bits;
-            pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
-            regValue = ReadPciReg(pciAddress);
 
             if (combo->CustomValue) {
                 value = (unsigned int) combo->ItemValue;
@@ -443,6 +441,30 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
                 bits *= 2;
             }
 
+            // Write values for DIMM_0, DIMM_B1 and DIMM_A0
+            if (name == "BurstMode") {
+                for (int j = 0; j < 3; j++) {
+                    pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg + j * 8);
+                    regValue = ReadPciReg(pciAddress) & NF2_DRAM_CFG1_ACCESS_MASK;
+                    regValue = SetBits(regValue, def.offset, bits, value);
+                    WritePciReg(pciAddress, regValue);
+                }
+                continue;
+            }
+
+            // Write values for DIMM_0, DIMM_B1 and DIMM_A0
+            if (name == "DriveStrengthMode") {
+                for (int j = 0; j < 3; j++) {
+                    pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg + j * 8);
+                    regValue = (ReadPciReg(pciAddress) & NF2_DRAM_CFG2_ACCESS_MASK) | LBIT(21);
+                    regValue = SetBits(regValue, def.offset, bits, value);
+                    WritePciReg(pciAddress, regValue);
+                }
+                continue;
+            }
+
+            pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
+            regValue = ReadPciReg(pciAddress);
             regValue = SetBits(regValue, def.offset, bits, value);
             WritePciReg(pciAddress, regValue);
         }
