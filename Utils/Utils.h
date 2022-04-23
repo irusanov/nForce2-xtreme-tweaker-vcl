@@ -2,8 +2,7 @@
 
 using namespace std;
 
-unsigned int SetBits(unsigned int val, int offset, int n,
-    unsigned int newValue);
+unsigned int SetBits(unsigned int val, int offset, int n, unsigned int newValue);
 
 unsigned int GetBits(unsigned int val, int offset, int n);
 

@@ -40,7 +40,7 @@ public:
         Step = Settings->ReadInteger("Bot", "Step", 0);
         Ultra = Settings->ReadBool("Bot", "Ultra", false);
 
-        //Settings->Free();
+        // Settings->Free();
 
         delete Settings;
 
@@ -60,10 +60,8 @@ public:
 
         if (Application->MainForm != NULL) {
             if (Application->MainForm->WindowState == wsNormal) {
-                Settings->WriteInteger("Options", "WindowTop",
-                        SaveWindowPosition ? Application->MainForm->Top : 0);
-                Settings->WriteInteger("Options", "WindowLeft",
-                        SaveWindowPosition ? Application->MainForm->Left : 0);
+                Settings->WriteInteger("Options", "WindowTop", SaveWindowPosition ? Application->MainForm->Top : 0);
+                Settings->WriteInteger("Options", "WindowLeft", SaveWindowPosition ? Application->MainForm->Left : 0);
             }
         }
         else {

@@ -1,26 +1,23 @@
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 #include <vcl.h>
 #pragma hdrstop
 
 #include "NForce2XTForm.h"
 #include "ValidationBot.h"
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TValidationBotDialog *ValidationBotDialog;
 HWND hWndCpuz;
 
-//---------------------------------------------------------------------------
-__fastcall TValidationBotDialog::TValidationBotDialog(TComponent* Owner)
-    : TForm(Owner)
-{
+// ---------------------------------------------------------------------------
+__fastcall TValidationBotDialog::TValidationBotDialog(TComponent* Owner) : TForm(Owner) {
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 HWND __fastcall TValidationBotDialog::FindCpuzWindow() {
-    for (HWND hwnd = GetTopWindow(NULL); hwnd != NULL; hwnd = GetNextWindow(hwnd, GW_HWNDNEXT))
-    {
+    for (HWND hwnd = GetTopWindow(NULL); hwnd != NULL; hwnd = GetNextWindow(hwnd, GW_HWNDNEXT)) {
         if (!IsWindowVisible(hwnd))
             continue;
 
@@ -28,8 +25,8 @@ HWND __fastcall TValidationBotDialog::FindCpuzWindow() {
         if (length == 0)
             continue;
 
-        char* title = new char[length+1];
-        GetWindowTextA(hwnd, title, length+1);
+        char* title = new char[length + 1];
+        GetWindowTextA(hwnd, title, length + 1);
 
         if (strncmp(title, "CPU-Z", 5) == 0) {
             return hwnd;
@@ -39,8 +36,7 @@ HWND __fastcall TValidationBotDialog::FindCpuzWindow() {
     return NULL;
 }
 
-void __fastcall TValidationBotDialog::ButtonBotRunClick(TObject *Sender)
-{
+void __fastcall TValidationBotDialog::ButtonBotRunClick(TObject *Sender) {
     int interval = 6;
     TryStrToInt(EditBotSleep->Text, interval);
 
@@ -50,7 +46,8 @@ void __fastcall TValidationBotDialog::ButtonBotRunClick(TObject *Sender)
         TimerBot->Enabled = false;
         StatusBarBot->SimpleText = "Bot stopped.";
         ButtonBotRun->Caption = "Run";
-    } else {
+    }
+    else {
         if (hWndCpuz == NULL) {
             String path = EditCpuzPath->Text;
 
@@ -85,29 +82,28 @@ void __fastcall TValidationBotDialog::ButtonBotRunClick(TObject *Sender)
 
             HANDLE hThread;
             DWORD dwRet;
-            do
-            {
+            do {
                 dwRet = ::WaitForSingleObject(&hThread, INFINITE);
 
-                if (dwRet != WAIT_OBJECT_0)
-                {
+                if (dwRet != WAIT_OBJECT_0) {
                     MSG msg;
-                    while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-                    {
+                    while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
                         TranslateMessage(&msg);
                         DispatchMessage(&msg);
                     }
                 }
-            } while ((dwRet != WAIT_OBJECT_0) && (dwRet != WAIT_FAILED));
+            }
+            while ((dwRet != WAIT_OBJECT_0) && (dwRet != WAIT_FAILED));
 
             CloseHandle(ShExecInfo.hProcess);
 
             do {
                 hWndCpuz = FindCpuzWindow();
-            } while(hWndCpuz == NULL);
+            }
+            while (hWndCpuz == NULL);
         }
 
-        //SendMessage(hWndCpuz, WM_CLOSE, 0, 0);
+        // SendMessage(hWndCpuz, WM_CLOSE, 0, 0);
 
         ButtonBotRun->Enabled = true;
         ButtonBotRun->Caption = "Stop";
@@ -117,9 +113,9 @@ void __fastcall TValidationBotDialog::ButtonBotRunClick(TObject *Sender)
         StatusBarBot->SimpleText = "Running";
     }
 }
-//---------------------------------------------------------------------------
-void __fastcall TValidationBotDialog::TimerBotTimer(TObject *Sender)
-{
+
+// ---------------------------------------------------------------------------
+void __fastcall TValidationBotDialog::TimerBotTimer(TObject *Sender) {
     // ...
     INPUT ip;
     // ...
@@ -150,7 +146,7 @@ void __fastcall TValidationBotDialog::TimerBotTimer(TObject *Sender)
     MainForm->targetFsb += step;
 
     if (CheckBoxUltra->Checked) {
-        pair<double, int> nextPll = MainForm->pll.GetNextPll(MainForm->targetFsb);
+        pair<double, int>nextPll = MainForm->pll.GetNextPll(MainForm->targetFsb);
         double fsb = nextPll.first;
         int pll = nextPll.second;
 
@@ -158,7 +154,8 @@ void __fastcall TValidationBotDialog::TimerBotTimer(TObject *Sender)
             MainForm->targetFsb = fsb;
             MainForm->targetPll = pll;
         }
-    } else {
+    }
+    else {
         MainForm->ButtonNextPllClick(this);
     }
 
@@ -168,47 +165,41 @@ void __fastcall TValidationBotDialog::TimerBotTimer(TObject *Sender)
 
     if (CheckBoxUltra->Checked) {
         EditCoreFrequency->Caption = "N/A";
-    } else {
+    }
+    else {
         MainForm->RefreshCpuSpeed();
 
-        EditCoreFrequency->Caption =
-                Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->cpu_info.frequency)));
+        EditCoreFrequency->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->cpu_info.frequency)));
     }
 
-    PanelCurrentFsb->Caption =
-            Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->targetFsb)));
+    PanelCurrentFsb->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->targetFsb)));
 }
-//---------------------------------------------------------------------------
-void __fastcall TValidationBotDialog::ButtonBrowseCpuzClick(TObject *Sender)
-{
+
+// ---------------------------------------------------------------------------
+void __fastcall TValidationBotDialog::ButtonBrowseCpuzClick(TObject *Sender) {
     if (OpenDialogBot->Execute()) {
         EditCpuzPath->Text = OpenDialogBot->FileName;
     }
 
     OpenDialogBot->Free();
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-void __fastcall TValidationBotDialog::FormShow(TObject *Sender)
-{
+void __fastcall TValidationBotDialog::FormShow(TObject *Sender) {
     // Load Bot settings
     EditCpuzPath->Text = MainForm->settings.CpuzPath;
     EditBotSleep->Text = MainForm->settings.Sleep;
     EditFsbStep->Text = MainForm->settings.Step;
     CheckBoxUltra->Checked = MainForm->settings.Ultra;
 
-    PanelCurrentFsb->Caption =
-        Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->cpu_info.fsb)));
-
-    EditCoreFrequency->Caption =
-            Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->cpu_info.frequency)));
+    PanelCurrentFsb->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->cpu_info.fsb)));
+    EditCoreFrequency->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->cpu_info.frequency)));
 
     ButtonSaveBotSettings->Enabled = false;
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-void __fastcall TValidationBotDialog::ButtonSaveBotSettingsClick(TObject *Sender)
-{
+void __fastcall TValidationBotDialog::ButtonSaveBotSettingsClick(TObject *Sender) {
     // Save Bot settings
     MainForm->settings.CpuzPath = EditCpuzPath->Text;
     TryStrToInt(EditBotSleep->Text, MainForm->settings.Sleep);
@@ -217,20 +208,17 @@ void __fastcall TValidationBotDialog::ButtonSaveBotSettingsClick(TObject *Sender
     ButtonSaveBotSettings->Enabled = false;
     StatusBarBot->SimpleText = "Bot settings saved.";
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-void __fastcall TValidationBotDialog::BotControlChange(TObject *Sender)
-{
+void __fastcall TValidationBotDialog::BotControlChange(TObject *Sender) {
     ButtonSaveBotSettings->Enabled = true;
 }
-//---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-void __fastcall TValidationBotDialog::FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift)
-{
+void __fastcall TValidationBotDialog::FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift) {
     // For some unknown reason the dialog doesn't close on ESC, handling it manually
     if (Key == 27) {
         Close();
     }
 }
-//---------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------------

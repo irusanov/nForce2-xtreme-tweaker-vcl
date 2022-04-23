@@ -24,13 +24,13 @@ public:
     virtual ~Nforce2Pll(void);
 
     bool init();
-    static std::map<double, int> nforce2_gen_fsb_table();
+    static std::map<double, int>nforce2_gen_fsb_table();
     static double nforce2_calc_fsb(int pll);
     static int nforce2_calc_pll(double fsb);
     static void nforce2_write_pll(int pll);
     static double nforce2_fsb_read(int bootfsb);
     static int nforce2_set_fsb(double fsb);
     static int nforce2_set_fsb_pll(double tfsb, int tpll);
-    static std::pair<double, int> GetPrevPll(double fsb);
-    static std::pair<double, int> GetNextPll(double fsb);
+    static std::pair<double, int>GetPrevPll(double fsb);
+    static std::pair<double, int>GetNextPll(double fsb);
 };

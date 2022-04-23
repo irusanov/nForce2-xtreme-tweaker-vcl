@@ -9,8 +9,8 @@
 class TAppVerInfo
 {
 public:
-    __fastcall TAppVerInfo(const wchar_t* pModPath);
-    __fastcall virtual ~TAppVerInfo(void);
+    TAppVerInfo(const wchar_t* pModPath);
+    virtual ~TAppVerInfo(void);
 
     __property System::String LanguagesCodePage                         = {read = GetCodePage};
     __property System::String Comments[System::String LanId]            = {read = GetComments};

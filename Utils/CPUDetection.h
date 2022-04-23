@@ -3,12 +3,12 @@
 using namespace std;
 
 struct match_entry_t {
-	int family, model, stepping, ext_family, ext_model;
-	int l1_data_cache, l1_inst_cache, l2cache;
-	unsigned int model_bits;
-	char rev[2];
+    int family, model, stepping, ext_family, ext_model;
+    int l1_data_cache, l1_inst_cache, l2cache;
+    unsigned int model_bits;
+    char rev[2];
     char core[32];
-	char name[32];
+    char name[32];
 };
 
 enum _cpu_bits_t {
@@ -55,8 +55,8 @@ static bool decode_amd_model_string(string name) {
 
     for (i = 0; i < COUNT_OF(bit_matchtable); i++) {
         if (to_lower(name).find(to_lower(bit_matchtable[i].search)) != std::string::npos)
-			bits |= bit_matchtable[i].bit;
-	}
+            bits |= bit_matchtable[i].bit;
+    }
 
     return true;
 }

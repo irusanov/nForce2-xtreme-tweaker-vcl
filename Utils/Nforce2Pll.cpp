@@ -10,7 +10,7 @@
  *  Partial port of the nforce2 linux driver
  *  https://github.com/torvalds/linux/blob/master/drivers/cpufreq/cpufreq-nforce2.c
  */
-//#define DEBUG_CONSOLE
+// #define DEBUG_CONSOLE
 #include "Libs\OlsApi.h"
 #include "Utils.h"
 #include "Nforce2Pll.h"
@@ -37,13 +37,12 @@ Nforce2Pll::Nforce2Pll(void) {
 
 bool Nforce2Pll::init() {
     // Detect the southbridge, which contains PLL logic
-    nforce2_dev = FindPciDeviceById(PCI_VENDOR_ID_NVIDIA,
-        PCI_DEVICE_ID_NVIDIA_NFORCE2, 0);
+    nforce2_dev = FindPciDeviceById(PCI_VENDOR_ID_NVIDIA, PCI_DEVICE_ID_NVIDIA_NFORCE2, 0);
 
     possibleFsb = nforce2_gen_fsb_table();
 
 #ifdef DEBUG_CONSOLE
-    for (const auto &[k, v] : possibleFsb) {
+    for (const auto&[k, v] : possibleFsb) {
         text = Format("%.2f: 0x%x", ARRAYOFCONST(((long double)k, v))) + "\n";
         WriteConsole(handle, text.c_str(), text.Length(), 0, 0);
     }
@@ -157,7 +156,7 @@ int Nforce2Pll::nforce2_set_fsb_pll(double tfsb, int tpll) {
     unsigned int temp = 0;
     double fsb, diff;
     int pll = -1;
-    pair<double, int> p;
+    pair<double, int>p;
 
     /* First write? Then set actual value */
     ReadPciConfigByteEx(nforce2_dev, NFORCE2_PLLENABLE, (BYTE *)&temp);
@@ -182,7 +181,8 @@ int Nforce2Pll::nforce2_set_fsb_pll(double tfsb, int tpll) {
     while (pll != tpll) {
         if (diff > 0) {
             p = GetNextPll(fsb);
-        } else {
+        }
+        else {
             p = GetPrevPll(fsb);
         }
 
@@ -263,7 +263,7 @@ int Nforce2Pll::nforce2_set_fsb(double fsb) {
     return 0;
 }
 
-map<double, int> Nforce2Pll::nforce2_gen_fsb_table() {
+map<double, int>Nforce2Pll::nforce2_gen_fsb_table() {
     int xmul, xdiv;
     map<double, int>fsbMap;
     map<double, int>::iterator it;
@@ -286,14 +286,13 @@ map<double, int> Nforce2Pll::nforce2_gen_fsb_table() {
     return fsbMap;
 }
 
-pair<double, int> Nforce2Pll::GetPrevPll(double fsb) {
+pair<double, int>Nforce2Pll::GetPrevPll(double fsb) {
     map<double, int>::reverse_iterator it;
 
     for (it = possibleFsb.rbegin(); it != possibleFsb.rend(); ++it) {
         if (fsb - it->first >= 0.05) {
 #ifdef DEBUG_CONSOLE
-            text = Format("Prev PLL: %.2f",
-                ARRAYOFCONST(((long double)it->first))) + "\n";
+            text = Format("Prev PLL: %.2f", ARRAYOFCONST(((long double)it->first))) + "\n";
             WriteConsole(handle, text.c_str(), text.Length(), 0, 0);
 #endif
             return {
@@ -307,14 +306,13 @@ pair<double, int> Nforce2Pll::GetPrevPll(double fsb) {
     };
 }
 
-pair<double, int> Nforce2Pll::GetNextPll(double fsb) {
+pair<double, int>Nforce2Pll::GetNextPll(double fsb) {
     map<double, int>::iterator it;
 
     for (it = possibleFsb.begin(); it != possibleFsb.end(); it++) {
         if (it->first - fsb >= 0.05) {
 #ifdef DEBUG_CONSOLE
-            text = Format("Next PLL: %.2f",
-                ARRAYOFCONST(((long double)it->first))) + "\n";
+            text = Format("Next PLL: %.2f", ARRAYOFCONST(((long double)it->first))) + "\n";
             WriteConsole(handle, text.c_str(), text.Length(), 0, 0);
 #endif
             return {

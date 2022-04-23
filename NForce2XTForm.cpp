@@ -141,8 +141,7 @@ const int NUMBER_OF_TABS = 3;
 bool updateFromButtons = false;
 
 // Get timing definition by component name
-static timing_def_t __fastcall GetDefByName(const struct timing_def_t* table,
-    int size, UnicodeString name) {
+static timing_def_t __fastcall GetDefByName(const struct timing_def_t* table, int size, UnicodeString name) {
     for (int i = 0; i < size; i++) {
         if (table[i].name == name) {
             return table[i];
@@ -169,13 +168,13 @@ static unsigned int __fastcall GetFID() {
 
     return value;
 }
+// ---------------------------------------------------------------------------
 
 static void __fastcall WritePciFrequency(unsigned int value) {
     timing_def_t def;
     unsigned int pciAddress, regValue;
 
-    def = GetDefByName(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs),
-        "PCIFrequency");
+    def = GetDefByName(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs), "PCIFrequency");
     pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
     regValue = ReadPciReg(pciAddress);
 
@@ -191,8 +190,7 @@ void __fastcall TMainForm::RefreshPciFrequency() {
     unsigned int value;
 
     // Get current PCI bus frequency
-    def = GetDefByName(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs),
-        "PCIFrequency");
+    def = GetDefByName(chipsetTimingDefs, COUNT_OF(chipsetTimingDefs), "PCIFrequency");
     pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
     regValue = ReadPciReg(pciAddress);
     value = GetBits(regValue, def.offset, def.bits);
@@ -236,8 +234,7 @@ void __fastcall TMainForm::RefreshCpuSpeed() {
     // CurrFID from MSR_K7_FID_VID_STATUS is also unreliable
     // Calculate multiplier from CPU frequency and FSB (from PLL)
     if (cpu_info.fsbFromPll > 0) {
-        cpu_info.multi =
-            floor(((cpu_info.frequency / cpu_info.fsbFromPll) * 2) + 0.5) / 2;
+        cpu_info.multi = floor(((cpu_info.frequency / cpu_info.fsbFromPll) * 2) + 0.5) / 2;
     }
     else {
         cpu_info.multi = fid_codes[cpu_info.fid] / 10.0;
@@ -318,8 +315,8 @@ bool __fastcall TMainForm::InitSystemInfo() {
     }
 
     cpu_info.cpuName = GetCpuName();
-//    decode_amd_model_string(cpu_info.cpuName);
-    decode_amd_model_string("Athlon XP-M");
+    decode_amd_model_string(cpu_info.cpuName);
+    // decode_amd_model_string("Athlon XP-M");
 
     RefreshCpuSpeed();
 
@@ -358,12 +355,10 @@ static void __fastcall ReadTimings(const struct timing_def_t* table, int size) {
     for (int i = 0; i < size; i++) {
         name = table[i].name;
         def = GetDefByName(table, size, name);
-        combo = static_cast<TTimingComboBox*>
-            (Application->FindComponent("MainForm")->FindComponent(name));
+        combo = static_cast<TTimingComboBox*>(Application->FindComponent("MainForm")->FindComponent(name));
 
         if (combo != NULL && combo != 0 && sizeof(def) > 0) {
-            pciAddress = MakePciAddress(def.bus, def.device, def.function,
-                def.reg);
+            pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
             regValue = ReadPciReg(pciAddress);
             value = GetBits(regValue, def.offset, def.bits);
 
@@ -383,8 +378,7 @@ static void __fastcall ReadTimings(const struct timing_def_t* table, int size) {
 }
 // ---------------------------------------------------------------------------
 
-static void __fastcall ReadRomsipValues(const struct timing_def_t* table,
-    int size) {
+static void __fastcall ReadRomsipValues(const struct timing_def_t* table, int size) {
     timing_def_t def;
     unsigned int pciAddress, regValue, value;
     TAdvancedEdit* box;
@@ -393,12 +387,10 @@ static void __fastcall ReadRomsipValues(const struct timing_def_t* table,
     for (int i = 0; i < size; i++) {
         name = table[i].name;
         def = GetDefByName(table, size, name);
-        box = static_cast<TAdvancedEdit*>
-            (Application->FindComponent("MainForm")->FindComponent(name));
+        box = static_cast<TAdvancedEdit*>(Application->FindComponent("MainForm")->FindComponent(name));
 
         if (box != NULL && box != 0 && sizeof(def) > 0) {
-            pciAddress = MakePciAddress(def.bus, def.device, def.function,
-                def.reg);
+            pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
             regValue = ReadPciReg(pciAddress);
             value = GetBits(regValue, def.offset, def.bits);
 
@@ -505,9 +497,7 @@ static void __fastcall WriteBusDisconnect() {
     unsigned int regValue, value;
     TTimingComboBox* combo;
 
-    combo = static_cast<TTimingComboBox*>
-        (Application->FindComponent("MainForm")->FindComponent
-        ("STPGNTDisconnect"));
+    combo = static_cast<TTimingComboBox*>(Application->FindComponent("MainForm")->FindComponent("STPGNTDisconnect"));
 
     if (combo != NULL && combo != 0 && combo->Changed) {
         regValue = ReadPciReg(pciAddress);
@@ -518,9 +508,7 @@ static void __fastcall WriteBusDisconnect() {
         WritePciReg(pciAddress, regValue);
     }
 
-    combo = static_cast<TTimingComboBox*>
-        (Application->FindComponent("MainForm")->FindComponent
-        ("HALTDisconnect"));
+    combo = static_cast<TTimingComboBox*>(Application->FindComponent("MainForm")->FindComponent("HALTDisconnect"));
 
     if (combo != NULL && combo != 0 && combo->Changed) {
         regValue = ReadPciReg(pciAddress);
@@ -530,9 +518,9 @@ static void __fastcall WriteBusDisconnect() {
         WritePciReg(pciAddress, regValue);
     }
 }
+// ---------------------------------------------------------------------------
 
-static void __fastcall WriteRomsipValues(const struct timing_def_t* table,
-    int size) {
+static void __fastcall WriteRomsipValues(const struct timing_def_t* table, int size) {
     timing_def_t def;
     unsigned int pciAddress, regValue, value;
     TAdvancedEdit* box;
@@ -540,13 +528,11 @@ static void __fastcall WriteRomsipValues(const struct timing_def_t* table,
 
     for (int i = 0; i < size; i++) {
         name = table[i].name;
-        box = static_cast<TAdvancedEdit*>
-            (Application->FindComponent("MainForm")->FindComponent(name));
+        box = static_cast<TAdvancedEdit*>(Application->FindComponent("MainForm")->FindComponent(name));
 
         if (box != NULL && box != 0 && box->Changed) {
             def = GetDefByName(table, size, name);
-            pciAddress = MakePciAddress(def.bus, def.device, def.function,
-                def.reg);
+            pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
             regValue = ReadPciReg(pciAddress);
 
             value = StrToInt("0x" + box->Text);
@@ -556,6 +542,7 @@ static void __fastcall WriteRomsipValues(const struct timing_def_t* table,
         }
     }
 }
+// ---------------------------------------------------------------------------
 
 static void __fastcall RefreshTimings() {
     ReadTimings(timingDefs, COUNT_OF(timingDefs));
@@ -570,8 +557,7 @@ void __fastcall TMainForm::UpdatePllSlider(double fsb, int pll) {
     targetFsb = fsb;
     targetPll = pll;
 
-    PanelCurrentFsb->Caption =
-        Format("%.2f MHz", ARRAYOFCONST(((long double)targetFsb)));
+    PanelCurrentFsb->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)targetFsb)));
 
     bool minReached = TrackBarPll->Position <= TrackBarPll->Min;
     bool maxReached = TrackBarPll->Position >= TrackBarPll->Max;
@@ -585,9 +571,7 @@ void __fastcall TMainForm::UpdateAgpSlider(unsigned int mul) {
     double pci = (mul / 15.0) * 6.25;
     double agp = pci * 2.0;
 
-    PanelCurrentAgpPci->Caption =
-        Format("%.2f / %.2f", ARRAYOFCONST(((long double)agp,
-        (long double)pci)));
+    PanelCurrentAgpPci->Caption = Format("%.2f / %.2f", ARRAYOFCONST(((long double)agp, (long double)pci)));
 
     bool minReached = TrackBarAgp->Position <= TrackBarAgp->Min;
     bool maxReached = TrackBarAgp->Position >= TrackBarAgp->Max;
@@ -632,14 +616,10 @@ __fastcall TMainForm::TMainForm(TComponent* Owner) : TForm(Owner) {
         EditExtFamily->Caption = cpu_info.extFamily;
         EditExtModel->Caption = cpu_info.extModel;
 
-        EditL1Cache->Caption =
-            Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1Cache)));
-        EditL1DataCache->Caption =
-            Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1DataCache)));
-        EditL1InstCache->Caption =
-            Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1InstCache)));
-        EditL2Cache->Caption =
-            Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l2Cache)));
+        EditL1Cache->Caption = Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1Cache)));
+        EditL1DataCache->Caption = Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1DataCache)));
+        EditL1InstCache->Caption = Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l1InstCache)));
+        EditL2Cache->Caption = Format("%.0d KBytes", ARRAYOFCONST((cpu_info.l2Cache)));
         // EditRevision->Caption = cpu_info.coreRevision;
         // EditRevision->Caption = Format("%d.%d", ARRAYOFCONST((cpu_info.manID.minorRev, cpu_info.manID.minorRev)));
 
@@ -657,25 +637,17 @@ void __fastcall TMainForm::TabControl1Change(TObject *Sender) {
         Panel->Visible = (i == index);
     }
 
-    int test;
-
     switch (index) {
     case 2:
         RefreshCpuSpeed();
 
-        EditCoreMulti->Caption =
-            Format("x %.1f", ARRAYOFCONST(((long double)cpu_info.multi)));
-        EditCoreFrequency->Caption =
-            Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.frequency)));
-        EditFsbClock->Caption =
-            Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.fsb)));
+        EditCoreMulti->Caption = Format("x %.1f", ARRAYOFCONST(((long double)cpu_info.multi)));
+        EditCoreFrequency->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.frequency)));
+        EditFsbClock->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.fsb)));
 
         if (cpu_info.dram > 0) {
-            EditDramFrequency->Caption =
-                Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.dram)));
-            EditFsbDramRatio->Caption =
-                Format("%d:%d", ARRAYOFCONST((cpu_info.fsbDiv,
-                cpu_info.dramDiv)));
+            EditDramFrequency->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)cpu_info.dram)));
+            EditFsbDramRatio->Caption = Format("%d:%d", ARRAYOFCONST((cpu_info.fsbDiv, cpu_info.dramDiv)));
         }
         break;
     case 1:
@@ -718,6 +690,8 @@ void __fastcall TMainForm::ButtonApplyClick(TObject *Sender) {
         WriteTimings(timingDefs, COUNT_OF(timingDefs), false);
         WriteTimings(doubledTimingDefs, COUNT_OF(doubledTimingDefs), true);
         WriteRomsipValues(romsipDefs, COUNT_OF(romsipDefs));
+        WriteBurstMode(timingDefs, COUNT_OF(timingDefs));
+        WriteDriveStrengthMode(timingDefs, COUNT_OF(timingDefs));
         RefreshTimings();
         break;
     case 1:
@@ -756,8 +730,8 @@ void __fastcall TMainForm::About1Click(TObject *Sender) {
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TMainForm::TabControl1DrawTab(TCustomTabControl *Control,
-    int TabIndex, const TRect &Rect, bool Active) {
+void __fastcall TMainForm::TabControl1DrawTab(TCustomTabControl *Control, int TabIndex, const TRect &Rect, bool Active)
+{
     int left = Active ? 9 : 5;
     int top = Active ? 3 : 2;
 
@@ -823,7 +797,7 @@ void __fastcall TMainForm::FormDestroy(TObject *Sender) {
 // ---------------------------------------------------------------------------
 
 void __fastcall TMainForm::ButtonNextPllClick(TObject *Sender) {
-    pair<double, int> nextPll = pll.GetNextPll(targetFsb);
+    pair<double, int>nextPll = pll.GetNextPll(targetFsb);
     double fsb = nextPll.first;
     int pll = nextPll.second;
 
@@ -837,7 +811,7 @@ void __fastcall TMainForm::ButtonNextPllClick(TObject *Sender) {
 // ---------------------------------------------------------------------------
 
 void __fastcall TMainForm::ButtonPrevPllClick(TObject *Sender) {
-    pair<double, int> prevPll = pll.GetPrevPll(targetFsb);
+    pair<double, int>prevPll = pll.GetPrevPll(targetFsb);
     double fsb = prevPll.first;
     int pll = prevPll.second;
 
@@ -853,7 +827,7 @@ void __fastcall TMainForm::ButtonPrevPllClick(TObject *Sender) {
 void __fastcall TMainForm::TrackBarPllChange(TObject *Sender) {
     if (!updateFromButtons) {
         int position = static_cast<TTrackBar*>(Sender)->Position;
-        pair<double, int> p = pll.GetPrevPll(position);
+        pair<double, int>p = pll.GetPrevPll(position);
         UpdatePllSlider(p.first, p.second);
     }
 }

@@ -9,27 +9,21 @@
 #include "Components\TTimingComboBox\TTimingComboBox.h"
 
 const String timings[14] = {
-    "TRCDR", "TRCDW", "TRP", "TRAS", "TRC", "TRFC", "TDOE", "TRRD", "TWTP",
-    "TWTR", "TREXT", "TRTP", "TRTW", "TREF"};
+    "TRCDR", "TRCDW", "TRP", "TRAS", "TRC", "TRFC", "TDOE", "TRRD", "TWTP", "TWTR", "TREXT", "TRTP", "TRTW", "TREF"};
 
-const String advanced[5] = {
-    "AutoPrecharge", "SuperBypass", "DataScavengedRate", "DriveStrengthMode",
-    "BurstMode"};
+const String advanced[5] = {"AutoPrecharge", "SuperBypass", "DataScavengedRate", "DriveStrengthMode", "BurstMode"};
 
 const String dssr[9] = {
-    "DIMM0DrvStrA", "DIMM0DrvStrB", "DIMM0SlewRate", "DIMM1DrvStrA",
-    "DIMM1DrvStrB", "DIMM1SlewRate", "DIMM2DrvStrA", "DIMM2DrvStrB",
-    "DIMM2SlewRate"};
+    "DIMM0DrvStrA", "DIMM0DrvStrB", "DIMM0SlewRate", "DIMM1DrvStrA", "DIMM1DrvStrB", "DIMM1SlewRate", "DIMM2DrvStrA",
+    "DIMM2DrvStrB", "DIMM2SlewRate"};
 
 const String romsip[15] = {
-    "Romsip48", "Romsip4C", "Romsip4D", "Romsip50", "Romsip65", "Romsip66",
-    "Romsip67", "Romsip68", "Romsip69", "Romsip6A", "Romsip6B", "Romsip6C",
-    "Romsip6D", "Romsip6F", "Romsip74"};
+    "Romsip48", "Romsip4C", "Romsip4D", "Romsip50", "Romsip65", "Romsip66", "Romsip67", "Romsip68", "Romsip69",
+    "Romsip6A", "Romsip6B", "Romsip6C", "Romsip6D", "Romsip6F", "Romsip74"};
 
 class ProfilesManager {
 private:
-    UnicodeString DefaultPath = ExtractFilePath(Application->ExeName) +
-        "profiles\\";
+    UnicodeString DefaultPath = ExtractFilePath(Application->ExeName) + "profiles\\";
 
     void CreateDirIfNotPresent(UnicodeString DirPath) {
         if (!DirectoryExists(DirPath, false)) {
@@ -37,15 +31,12 @@ private:
         }
     }
 
-    void SaveTimings(TIniFile* ini, String section, const String *names,
-        int size) {
+    void SaveTimings(TIniFile* ini, String section, const String *names, int size) {
         int i, value;
         TTimingComboBox* combo;
 
         for (i = 0; i < size; i++) {
-            combo = static_cast<TTimingComboBox*>
-                (Application->FindComponent("MainForm")->FindComponent
-                (names[i]));
+            combo = static_cast<TTimingComboBox*>(Application->FindComponent("MainForm")->FindComponent(names[i]));
 
             if (combo != NULL) {
                 if (combo->CustomValue) {
@@ -60,8 +51,7 @@ private:
         }
     }
 
-    void LoadTimings(TIniFile* ini, String section, const String *names,
-        int size) {
+    void LoadTimings(TIniFile* ini, String section, const String *names, int size) {
         int i, value, currentValue;
         TTimingComboBox* combo;
 
@@ -71,9 +61,7 @@ private:
             if (value == -1)
                 continue;
 
-            combo = static_cast<TTimingComboBox*>
-                (Application->FindComponent("MainForm")->FindComponent
-                (names[i]));
+            combo = static_cast<TTimingComboBox*>(Application->FindComponent("MainForm")->FindComponent(names[i]));
 
             if (combo != NULL) {
                 if (combo->CustomValue)
@@ -93,39 +81,31 @@ private:
         }
     }
 
-    void SaveRomsipValues(TIniFile* ini, String section, const String *names,
-        int size) {
+    void SaveRomsipValues(TIniFile* ini, String section, const String *names, int size) {
         int i;
         TAdvancedEdit* box;
 
         for (i = 0; i < size; i++) {
-            box = static_cast<TAdvancedEdit*>
-                (Application->FindComponent("MainForm")->FindComponent
-                (names[i]));
+            box = static_cast<TAdvancedEdit*>(Application->FindComponent("MainForm")->FindComponent(names[i]));
 
             if (box != NULL) {
-                ini->WriteString(section, StringReplace(names[i], "Romsip", "",
-                    TReplaceFlags()), box->Text);
+                ini->WriteString(section, StringReplace(names[i], "Romsip", "", TReplaceFlags()), box->Text);
             }
         }
     }
 
-    void LoadRomsipValues(TIniFile* ini, String section, const String *names,
-        int size) {
+    void LoadRomsipValues(TIniFile* ini, String section, const String *names, int size) {
         int i;
         String value;
         TAdvancedEdit* box; ;
 
         for (i = 0; i < size; i++) {
-            value = ini->ReadString(section, StringReplace(names[i], "Romsip",
-                "", TReplaceFlags()), "");
+            value = ini->ReadString(section, StringReplace(names[i], "Romsip", "", TReplaceFlags()), "");
 
             if (value == "")
                 continue;
 
-            box = static_cast<TAdvancedEdit*>
-                (Application->FindComponent("MainForm")->FindComponent
-                (names[i]));
+            box = static_cast<TAdvancedEdit*>(Application->FindComponent("MainForm")->FindComponent(names[i]));
 
             if (box != NULL) {
                 box->Text = value;
@@ -160,16 +140,11 @@ public:
 
         previewMetadata.path = FilePath;
 
-        previewMetadata.versionMajor =
-            iniFile->ReadInteger("PMVersion", "Major", 0);
-        previewMetadata.versionMinor =
-            iniFile->ReadInteger("PMVersion", "Minor", 0);
-        previewMetadata.options.name =
-            iniFile->ReadString("Metadata", "Name", "");
-        previewMetadata.options.author =
-            iniFile->ReadString("Metadata", "Author", "");
-        previewMetadata.options.comment =
-            iniFile->ReadString("Metadata", "Comment", "");
+        previewMetadata.versionMajor = iniFile->ReadInteger("PMVersion", "Major", 0);
+        previewMetadata.versionMinor = iniFile->ReadInteger("PMVersion", "Minor", 0);
+        previewMetadata.options.name = iniFile->ReadString("Metadata", "Name", "");
+        previewMetadata.options.author = iniFile->ReadString("Metadata", "Author", "");
+        previewMetadata.options.comment = iniFile->ReadString("Metadata", "Comment", "");
 
         previewMetadata.options.timings = iniFile->SectionExists("Timings");
         previewMetadata.options.dssr = iniFile->SectionExists("DSSR");
