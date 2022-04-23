@@ -81,3 +81,13 @@ void trim(std::string &s) {
     ltrim(s);
     rtrim(s);
 }
+
+bool __fastcall Contains(const UnicodeString* array, int arraySize, UnicodeString value) {
+    for (int i = 0; i < arraySize; i++) {
+         if (array[i] == value) {
+            return true;
+         }
+    }
+
+    return false;
+}

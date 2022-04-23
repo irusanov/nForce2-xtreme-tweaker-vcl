@@ -26,3 +26,5 @@ void rtrim(std::string &s);
 
 // trim from both ends (in place)
 void trim(std::string &s);
+
+bool __fastcall Contains(const UnicodeString* array, int arraySize, UnicodeString value);

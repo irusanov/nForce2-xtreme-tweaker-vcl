@@ -407,9 +407,13 @@ static void __fastcall ReadRomsipValues(const struct timing_def_t* table,
         }
     }
 }
+// ---------------------------------------------------------------------------
 
-static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
-    bool doubled) {
+const UnicodeString timingsToSkip[6] = {
+    "CAS", "CR", "HALTDisconnect", "STPGNTDisconnect", "BurstMode", "DriveStrengthMode"
+};
+
+static void __fastcall WriteTimings(const struct timing_def_t* table, int size, bool doubled) {
     timing_def_t def;
     unsigned int pciAddress, regValue, value, bits;
     TTimingComboBox* combo;
@@ -418,12 +422,12 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
     for (int i = 0; i < size; i++) {
         name = table[i].name;
 
-        if (name == "CAS" || name == "CR" || name == "HALTDisconnect" || name == "STPGNTDisconnect") {
+        // Skip if timing requires a custom write
+        if (Contains(timingsToSkip, COUNT_OF(timingsToSkip), name)) {
             continue;
         }
 
-        combo = static_cast<TTimingComboBox*>
-            (Application->FindComponent("MainForm")->FindComponent(name));
+        combo = static_cast<TTimingComboBox*>(Application->FindComponent("MainForm")->FindComponent(name));
 
         if (combo != NULL && combo != 0 && combo->Changed) {
             def = GetDefByName(table, size, name);
@@ -441,31 +445,53 @@ static void __fastcall WriteTimings(const struct timing_def_t* table, int size,
                 bits *= 2;
             }
 
-            // Write values for DIMM_0, DIMM_B1 and DIMM_A0
-            if (name == "BurstMode") {
-                for (int j = 0; j < 3; j++) {
-                    pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg + j * 8);
-                    regValue = ReadPciReg(pciAddress) & NF2_DRAM_CFG1_ACCESS_MASK;
-                    regValue = SetBits(regValue, def.offset, bits, value);
-                    WritePciReg(pciAddress, regValue);
-                }
-                continue;
-            }
-
-            // Write values for DIMM_0, DIMM_B1 and DIMM_A0
-            if (name == "DriveStrengthMode") {
-                for (int j = 0; j < 3; j++) {
-                    pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg + j * 8);
-                    regValue = (ReadPciReg(pciAddress) & NF2_DRAM_CFG2_ACCESS_MASK) | LBIT(21);
-                    regValue = SetBits(regValue, def.offset, bits, value);
-                    WritePciReg(pciAddress, regValue);
-                }
-                continue;
-            }
-
             pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg);
             regValue = ReadPciReg(pciAddress);
             regValue = SetBits(regValue, def.offset, bits, value);
+            WritePciReg(pciAddress, regValue);
+        }
+    }
+}
+// ---------------------------------------------------------------------------
+
+static void __fastcall WriteBurstMode(const struct timing_def_t* table, int size) {
+    UnicodeString name = "BurstMode";
+    timing_def_t def;
+    unsigned int pciAddress, regValue, value;
+    TTimingComboBox* combo = static_cast<TTimingComboBox*>
+        (Application->FindComponent("MainForm")->FindComponent(name));
+
+    if (combo != NULL && combo != 0 && combo->Changed) {
+        def = GetDefByName(table, size, name);
+        value = (unsigned int) combo->Value;
+
+        // Write values for DIMM_0, DIMM_B1 and DIMM_A0
+        for (int i = 0; i < 3; i++) {
+            pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg + i * 8);
+            regValue = ReadPciReg(pciAddress) & NF2_DRAM_CFG1_ACCESS_MASK;
+            regValue = SetBits(regValue, def.offset, def.bits, value);
+            WritePciReg(pciAddress, regValue);
+        }
+    }
+}
+// ---------------------------------------------------------------------------
+
+static void __fastcall WriteDriveStrengthMode(const struct timing_def_t* table, int size) {
+    UnicodeString name = "DriveStrengthMode";
+    timing_def_t def;
+    unsigned int pciAddress, regValue, value;
+    TTimingComboBox* combo = static_cast<TTimingComboBox*>
+        (Application->FindComponent("MainForm")->FindComponent(name));
+
+    if (combo != NULL && combo != 0 && combo->Changed) {
+        def = GetDefByName(table, size, name);
+        value = (unsigned int) combo->Value;
+
+        // Write values for DIMM_0, DIMM_B1 and DIMM_A0
+        for (int i = 0; i < 3; i++) {
+            pciAddress = MakePciAddress(def.bus, def.device, def.function, def.reg + i * 8);
+            regValue = (ReadPciReg(pciAddress) & NF2_DRAM_CFG2_ACCESS_MASK) | LBIT(21);
+            regValue = SetBits(regValue, def.offset, def.bits, value);
             WritePciReg(pciAddress, regValue);
         }
     }
