@@ -12,6 +12,7 @@
 #define NFORCE2_PLL(mul, div) (0x100000 | (mul << 8) | div)
 
 #include <map>
+// #define DEBUG_CONSOLE
 /* Delay in ms between FSB changes */
 // #define NFORCE2_DELAY 10
 

@@ -10,10 +10,12 @@
  *  Partial port of the nforce2 linux driver
  *  https://github.com/torvalds/linux/blob/master/drivers/cpufreq/cpufreq-nforce2.c
  */
-// #define DEBUG_CONSOLE
 #include "Libs\OlsApi.h"
 #include "Utils.h"
 #include "Nforce2Pll.h"
+#ifdef DEBUG_CONSOLE
+#include <System.SysUtils.hpp>
+#endif
 
 using namespace std;
 
