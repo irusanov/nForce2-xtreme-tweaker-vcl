@@ -5,7 +5,7 @@ object MainForm: TMainForm
   Anchors = []
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'nForce2XT v1.1 beta18'
+  Caption = 'nForce2XT v1.1 beta19'
   ClientHeight = 471
   ClientWidth = 382
   Color = clBtnFace
@@ -2362,8 +2362,10 @@ object MainForm: TMainForm
           Height = 22
           Style = csOwnerDrawFixed
           DoubleBuffered = False
+          ItemIndex = 0
           ParentDoubleBuffered = False
           TabOrder = 4
+          Text = '0'
           Items.Strings = (
             '0'
             '1'
@@ -2398,7 +2400,6 @@ object MainForm: TMainForm
             '30'
             '31')
           Max = 31
-          Value = -1
           ItemValue = -1
         end
         object TRC: TTimingComboBox
