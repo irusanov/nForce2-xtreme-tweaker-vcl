@@ -1,10 +1,10 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{2DDB2F4E-82FE-45D5-B2A8-934C6F5DBAEB}</ProjectGuid>
+        <ProjectGuid>{689C760B-22E8-4442-A84D-61102C1739A0}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
         <Projects Include="NForce2Xtreme.cbproj">
-            <Dependencies>Components\Components.cbproj</Dependencies>
+            <Dependencies/>
         </Projects>
         <Projects Include="Components\Components.cbproj">
             <Dependencies/>
@@ -17,13 +17,13 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="NForce2Xtreme" DependsOnTargets="Components">
+    <Target Name="NForce2Xtreme">
         <MSBuild Projects="NForce2Xtreme.cbproj"/>
     </Target>
-    <Target Name="NForce2Xtreme:Clean" DependsOnTargets="Components:Clean">
+    <Target Name="NForce2Xtreme:Clean">
         <MSBuild Projects="NForce2Xtreme.cbproj" Targets="Clean"/>
     </Target>
-    <Target Name="NForce2Xtreme:Make" DependsOnTargets="Components:Make">
+    <Target Name="NForce2Xtreme:Make">
         <MSBuild Projects="NForce2Xtreme.cbproj" Targets="Make"/>
     </Target>
     <Target Name="Components">
