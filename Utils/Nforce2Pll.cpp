@@ -65,7 +65,7 @@ bool Nforce2Pll::init() {
  *   Calculates FSB from PLL value
  */
 double Nforce2Pll::nforce2_calc_fsb(int pll) {
-    double mul, div;
+	int mul, div;
 
     mul = (pll >> 8) & 0xff;
     div = pll & 0xff;
@@ -242,7 +242,7 @@ int Nforce2Pll::nforce2_set_fsb(double fsb) {
     if (!diff)
         return 0;
 
-    while ((tfsb != fsb) && (tfsb <= 350) && (tfsb >= 50)) {
+	while ((tfsb != fsb) && (tfsb <= NFORCE2_MAX_FSB) && (tfsb >= NFORCE2_MIN_FSB)) {
         if (diff < 0)
             tfsb++;
         else
@@ -270,12 +270,12 @@ map<double, int>Nforce2Pll::nforce2_gen_fsb_table() {
     map<double, int>fsbMap;
     map<double, int>::iterator it;
 
-    for (xdiv = 2; xdiv <= 0x80; xdiv++) {
-        for (xmul = 0xf0; xmul <= 0xfe; xmul++) {
+	for (xdiv = 1; xdiv <= 0x80; xdiv++) {
+		for (xmul = 1; xmul <= 0xfe; xmul++) {
             int pll = NFORCE2_PLL(xmul, xdiv);
             double fsb = nforce2_calc_fsb(pll) * 1.00225;
 
-            if (fsb >= 30.0 && fsb <= 350.0) {
+			if (fsb >= NFORCE2_MIN_FSB && fsb <= NFORCE2_MAX_FSB) {
                 it = fsbMap.find(fsb);
 
                 if (it == fsbMap.end()) {

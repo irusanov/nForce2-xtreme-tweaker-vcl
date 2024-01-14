@@ -7,7 +7,9 @@
 #define NFORCE2_PLLENABLE               0xa8
 #define NFORCE2_PLLREG                  0xa4
 #define NFORCE2_PLLADR                  0xa0
-#define NFORCE2_MIN_FSB                 50
+// Arbitrary values, not sure what are the limits
+#define NFORCE2_MIN_FSB                 1 // 50
+#define NFORCE2_MAX_FSB                 350
 #define NFORCE2_SAFE_DISTANCE           50
 #define NFORCE2_PLL(mul, div) (0x100000 | (mul << 8) | div)
 

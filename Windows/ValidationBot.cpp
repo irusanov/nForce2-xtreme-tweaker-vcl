@@ -103,14 +103,18 @@ void __fastcall TValidationBotDialog::ButtonBotRunClick(TObject *Sender) {
             while (hWndCpuz == NULL);
         }
 
-        // SendMessage(hWndCpuz, WM_CLOSE, 0, 0);
+		// SendMessage(hWndCpuz, WM_CLOSE, 0, 0);
+
+		if (CheckBoxUltra->Checked) {
+            EditCoreFrequency->Caption = "N/A";
+		}
 
         ButtonBotRun->Enabled = true;
         ButtonBotRun->Caption = "Stop";
 
         TimerBot->Interval = interval * 1000;
         TimerBot->Enabled = true;
-        StatusBarBot->SimpleText = "Running";
+		StatusBarBot->SimpleText = "Running";
     }
 }
 
@@ -143,10 +147,16 @@ void __fastcall TValidationBotDialog::TimerBotTimer(TObject *Sender) {
     int step = 0;
     TryStrToInt(EditFsbStep->Text, step);
 
-    MainForm->targetFsb += step;
+	if (CheckBoxReverse->Checked) {
+		MainForm->targetFsb -= step;
+	} else {
+		MainForm->targetFsb += step;
+    }
 
     if (CheckBoxUltra->Checked) {
-        pair<double, int>nextPll = MainForm->pll.GetNextPll(MainForm->targetFsb);
+		pair<double, int>nextPll = CheckBoxReverse->Checked
+			? MainForm->pll.GetPrevPll(MainForm->targetFsb)
+			: MainForm->pll.GetNextPll(MainForm->targetFsb);
         double fsb = nextPll.first;
         int pll = nextPll.second;
 
@@ -155,20 +165,20 @@ void __fastcall TValidationBotDialog::TimerBotTimer(TObject *Sender) {
             MainForm->targetPll = pll;
         }
     }
-    else {
-        MainForm->ButtonNextPllClick(this);
+	else {
+		if (CheckBoxReverse->Checked) {
+			MainForm->ButtonPrevPllClick(this);
+		} else {
+			MainForm->ButtonNextPllClick(this);
+        }
     }
 
     if (MainForm->targetPll != 0) {
         MainForm->pll.nforce2_set_fsb_pll(MainForm->targetFsb, MainForm->targetPll);
     }
 
-    if (CheckBoxUltra->Checked) {
-        EditCoreFrequency->Caption = "N/A";
-    }
-    else {
+	if (!CheckBoxUltra->Checked) {
         MainForm->RefreshCpuSpeed();
-
         EditCoreFrequency->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->cpu_info.frequency)));
     }
 
@@ -190,7 +200,8 @@ void __fastcall TValidationBotDialog::FormShow(TObject *Sender) {
     EditCpuzPath->Text = MainForm->settings.CpuzPath;
     EditBotSleep->Text = MainForm->settings.Sleep;
     EditFsbStep->Text = MainForm->settings.Step;
-    CheckBoxUltra->Checked = MainForm->settings.Ultra;
+	CheckBoxUltra->Checked = MainForm->settings.Ultra;
+    CheckBoxReverse->Checked = MainForm->settings.Reverse;
 
     PanelCurrentFsb->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->cpu_info.fsb)));
     EditCoreFrequency->Caption = Format("%.2f MHz", ARRAYOFCONST(((long double)MainForm->cpu_info.frequency)));
@@ -204,7 +215,8 @@ void __fastcall TValidationBotDialog::ButtonSaveBotSettingsClick(TObject *Sender
     MainForm->settings.CpuzPath = EditCpuzPath->Text;
     TryStrToInt(EditBotSleep->Text, MainForm->settings.Sleep);
     TryStrToInt(EditFsbStep->Text, MainForm->settings.Step);
-    MainForm->settings.Ultra = CheckBoxUltra->Checked;
+	MainForm->settings.Ultra = CheckBoxUltra->Checked;
+    MainForm->settings.Reverse = CheckBoxReverse->Checked;
     ButtonSaveBotSettings->Enabled = false;
     StatusBarBot->SimpleText = "Bot settings saved.";
 }

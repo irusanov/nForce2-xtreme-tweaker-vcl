@@ -5,9 +5,9 @@ object MainForm: TMainForm
   Anchors = []
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'nForce2XT v1.1 beta19'
-  ClientHeight = 471
-  ClientWidth = 382
+  Caption = 'nForce2XT v1.1 beta20'
+  ClientHeight = 470
+  ClientWidth = 378
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -815,18 +815,16 @@ object MainForm: TMainForm
     0000AC410000AC410000AC410000AC410000AC410000AC410000AC410000AC41
     0000AC410000AC410000AC410000AC410000AC410000AC41}
   Menu = MainMenu1
-  OldCreateOrder = False
   Position = poDefault
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
   TextHeight = 13
   object TabControl1: TTabControl
     AlignWithMargins = True
     Left = 2
     Top = 2
-    Width = 378
+    Width = 374
     Height = 435
     Margins.Left = 2
     Margins.Top = 2
@@ -852,10 +850,11 @@ object MainForm: TMainForm
     TabIndex = 0
     OnChange = TabControl1Change
     OnDrawTab = TabControl1DrawTab
+    ExplicitLeft = 7
     object PanelInfo: TPanel
       Left = 4
       Top = 24
-      Width = 370
+      Width = 366
       Height = 407
       Margins.Left = 0
       Margins.Top = 0
@@ -871,11 +870,12 @@ object MainForm: TMainForm
       ParentDoubleBuffered = False
       TabOrder = 1
       Visible = False
+      ExplicitWidth = 362
       DesignSize = (
-        370
+        366
         407)
       object GroupBox1: TGroupBox
-        Left = 5
+        Left = 3
         Top = 5
         Width = 359
         Height = 108
@@ -890,6 +890,7 @@ object MainForm: TMainForm
         ParentColor = False
         ParentCtl3D = False
         TabOrder = 0
+        ExplicitLeft = 1
         object Label1: TLabel
           Left = 45
           Top = 19
@@ -1376,706 +1377,10 @@ object MainForm: TMainForm
         end
       end
     end
-    object PanelChipset: TPanel
-      Left = 4
-      Top = 24
-      Width = 370
-      Height = 407
-      Margins.Left = 0
-      Margins.Top = 0
-      Margins.Right = 0
-      Margins.Bottom = 0
-      Align = alClient
-      BevelEdges = []
-      BevelOuter = bvNone
-      Ctl3D = False
-      DoubleBuffered = True
-      ParentBackground = False
-      ParentCtl3D = False
-      ParentDoubleBuffered = False
-      TabOrder = 0
-      Visible = False
-      object GroupBox4: TGroupBox
-        Left = 5
-        Top = 5
-        Width = 200
-        Height = 210
-        Caption = ' General '
-        Color = clBtnFace
-        Ctl3D = True
-        ParentBackground = False
-        ParentColor = False
-        ParentCtl3D = False
-        TabOrder = 0
-        object Label44: TLabel
-          Left = 11
-          Top = 88
-          Width = 73
-          Height = 13
-          Caption = 'AGP Fast Write'
-        end
-        object Label45: TLabel
-          Left = 11
-          Top = 112
-          Width = 42
-          Height = 13
-          Caption = 'AGP SBA'
-        end
-        object Label46: TLabel
-          Left = 11
-          Top = 135
-          Width = 81
-          Height = 13
-          Caption = 'AGP Ctrl Latency'
-        end
-        object Label47: TLabel
-          Left = 11
-          Top = 158
-          Width = 81
-          Height = 13
-          Caption = 'AGP Bus Latency'
-        end
-        object Label48: TLabel
-          Left = 11
-          Top = 181
-          Width = 87
-          Height = 13
-          Caption = 'PCI Latency Timer'
-        end
-        object Label43: TLabel
-          Left = 11
-          Top = 20
-          Width = 75
-          Height = 13
-          Caption = 'CPU Disconnect'
-        end
-        object Label69: TLabel
-          Left = 11
-          Top = 42
-          Width = 54
-          Height = 13
-          Caption = 'HALT State'
-        end
-        object Label70: TLabel
-          Left = 11
-          Top = 66
-          Width = 67
-          Height = 13
-          Caption = 'STPGNT State'
-        end
-        object AGPBusLatency: TTimingComboBox
-          Left = 107
-          Top = 154
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 0
-          Items.Strings = (
-            '16'
-            '32'
-            '64'
-            '96'
-            '128'
-            '160'
-            '192'
-            '224'
-            '255')
-          CustomItems = True
-          CustomValue = True
-          Max = 255
-          Value = -1
-          ItemValue = -1
-        end
-        object AGPControllerLatency: TTimingComboBox
-          Left = 107
-          Top = 131
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 1
-          Items.Strings = (
-            '16'
-            '32'
-            '64'
-            '96'
-            '128'
-            '160'
-            '192'
-            '224'
-            '255')
-          CustomItems = True
-          CustomValue = True
-          Max = 255
-          Value = -1
-          ItemValue = -1
-        end
-        object AGPSBA: TTimingComboBox
-          Left = 107
-          Top = 108
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 2
-          Items.Strings = (
-            'Disabled'
-            'Enabled')
-          CustomItems = True
-          Max = 1
-          Value = -1
-          ItemValue = -1
-        end
-        object CPUDisconnect: TTimingComboBox
-          Left = 107
-          Top = 16
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 3
-          Items.Strings = (
-            'Disabled'
-            'Enabled')
-          CustomItems = True
-          Max = 1
-          Value = -1
-          ItemValue = -1
-        end
-        object PCILatency: TTimingComboBox
-          Left = 107
-          Top = 177
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 4
-          Items.Strings = (
-            '16'
-            '32'
-            '64'
-            '96'
-            '128'
-            '160'
-            '192'
-            '224'
-            '255')
-          CustomItems = True
-          CustomValue = True
-          Max = 255
-          Value = -1
-          ItemValue = -1
-        end
-        object AGPFastWrite: TTimingComboBox
-          Left = 107
-          Top = 85
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 5
-          Items.Strings = (
-            'Disabled'
-            'Enabled')
-          CustomItems = True
-          Max = 1
-          Value = -1
-          ItemValue = -1
-        end
-        object HALTDisconnect: TTimingComboBox
-          Left = 107
-          Top = 39
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 6
-          Items.Strings = (
-            'Disabled'
-            'Enabled')
-          CustomItems = True
-          Max = 1
-          Value = -1
-          ItemValue = -1
-        end
-        object STPGNTDisconnect: TTimingComboBox
-          Left = 107
-          Top = 62
-          Width = 84
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 7
-          Items.Strings = (
-            'Enabled'
-            'Disabled')
-          CustomItems = True
-          Max = 1
-          Value = -1
-          ItemValue = -1
-        end
-      end
-      object GroupBox5: TGroupBox
-        Left = 5
-        Top = 216
-        Width = 359
-        Height = 57
-        Caption = ' FSB '
-        Color = clBtnFace
-        Ctl3D = True
-        ParentBackground = False
-        ParentColor = False
-        ParentCtl3D = False
-        TabOrder = 1
-        object TrackBarPll: TTrackBar
-          Left = 3
-          Top = 20
-          Width = 214
-          Height = 25
-          Max = 350
-          Min = 50
-          PageSize = 1
-          Position = 50
-          TabOrder = 0
-          TickStyle = tsNone
-          OnChange = TrackBarPllChange
-        end
-        object PanelCurrentFsb: TPanel
-          Left = 264
-          Top = 22
-          Width = 84
-          Height = 18
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 1
-        end
-        object ButtonNextPll: TButton
-          Left = 235
-          Top = 22
-          Width = 20
-          Height = 18
-          Caption = '4'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Webdings'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 2
-          OnClick = ButtonNextPllClick
-        end
-        object ButtonPrevPll: TButton
-          Left = 214
-          Top = 22
-          Width = 20
-          Height = 18
-          Caption = '3'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Webdings'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 3
-          OnClick = ButtonPrevPllClick
-        end
-      end
-      object GroupBox7: TGroupBox
-        Left = 211
-        Top = 5
-        Width = 153
-        Height = 210
-        Caption = 'S2K'
-        Ctl3D = True
-        ParentCtl3D = False
-        TabOrder = 2
-        object Label61: TLabel
-          Left = 7
-          Top = 21
-          Width = 52
-          Height = 13
-          Caption = 'WRCOUNT'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-        end
-        object Label62: TLabel
-          Left = 7
-          Top = 43
-          Width = 49
-          Height = 13
-          Caption = 'RDCOUNT'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-        end
-        object Label63: TLabel
-          Left = 7
-          Top = 66
-          Width = 48
-          Height = 13
-          Caption = 'PRCOUNT'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-        end
-        object Label64: TLabel
-          Left = 7
-          Top = 88
-          Width = 74
-          Height = 13
-          Caption = 'WRDATA Delay'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-        end
-        object Label65: TLabel
-          Left = 7
-          Top = 112
-          Width = 75
-          Height = 13
-          Caption = 'WRTORD Delay'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-        end
-        object Label66: TLabel
-          Left = 7
-          Top = 135
-          Width = 75
-          Height = 13
-          Caption = 'RDTOWR Delay'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-        end
-        object Label67: TLabel
-          Left = 7
-          Top = 158
-          Width = 83
-          Height = 13
-          Caption = 'SYSDCOUT Delay'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-        end
-        object Label68: TLabel
-          Left = 7
-          Top = 181
-          Width = 73
-          Height = 13
-          Caption = 'SYSDCIN Delay'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-        end
-        object XCAARB_WRCOUNT: TTimingComboBox
-          Left = 96
-          Top = 16
-          Width = 49
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 0
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7')
-          Max = 7
-          Value = -1
-          ItemValue = -1
-        end
-        object XCAARB_RDCOUNT: TTimingComboBox
-          Left = 96
-          Top = 39
-          Width = 49
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 1
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7')
-          Max = 7
-          Value = -1
-          ItemValue = -1
-        end
-        object XCAARB_PRCOUNT: TTimingComboBox
-          Left = 96
-          Top = 62
-          Width = 49
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          ParentDoubleBuffered = False
-          TabOrder = 2
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7')
-          Max = 7
-          Value = -1
-          ItemValue = -1
-        end
-        object WRDATA_Delay: TTimingComboBox
-          Left = 96
-          Top = 85
-          Width = 49
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          Enabled = False
-          ParentDoubleBuffered = False
-          ParentShowHint = False
-          ShowHint = False
-          TabOrder = 3
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7')
-          Max = 7
-          Value = -1
-          ItemValue = -1
-        end
-        object WRTORD_Delay: TTimingComboBox
-          Left = 96
-          Top = 108
-          Width = 49
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          Enabled = False
-          ParentDoubleBuffered = False
-          ParentShowHint = False
-          ShowHint = False
-          TabOrder = 4
-          Items.Strings = (
-            '1'
-            '2')
-          CustomItems = True
-          Max = 1
-          Value = -1
-          ItemValue = -1
-        end
-        object RDTOWR_Delay: TTimingComboBox
-          Left = 96
-          Top = 131
-          Width = 49
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          Enabled = False
-          ParentDoubleBuffered = False
-          ParentShowHint = False
-          ShowHint = False
-          TabOrder = 5
-          Items.Strings = (
-            '1'
-            '2'
-            '3'
-            '4')
-          CustomItems = True
-          Max = 3
-          Value = -1
-          ItemValue = -1
-        end
-        object SYSDCOUT_Delay: TTimingComboBox
-          Left = 96
-          Top = 154
-          Width = 49
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          Enabled = False
-          ParentDoubleBuffered = False
-          ParentShowHint = False
-          ShowHint = False
-          TabOrder = 6
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3')
-          Max = 3
-          Value = -1
-          ItemValue = -1
-        end
-        object SYSDCIN_Delay: TTimingComboBox
-          Left = 96
-          Top = 177
-          Width = 49
-          Height = 22
-          Style = csOwnerDrawFixed
-          DoubleBuffered = False
-          Enabled = False
-          ParentDoubleBuffered = False
-          ParentShowHint = False
-          ShowHint = False
-          TabOrder = 7
-          Items.Strings = (
-            '0'
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9'
-            '10'
-            '11'
-            '12'
-            '13'
-            '14'
-            '15')
-          Max = 15
-          Value = -1
-          ItemValue = -1
-        end
-      end
-      object GroupBox6: TGroupBox
-        Left = 5
-        Top = 275
-        Width = 359
-        Height = 57
-        Caption = ' AGP / PCI '
-        Color = clBtnFace
-        Ctl3D = True
-        ParentBackground = False
-        ParentColor = False
-        ParentCtl3D = False
-        TabOrder = 3
-        object TrackBarAgp: TTrackBar
-          Left = 3
-          Top = 20
-          Width = 214
-          Height = 25
-          Max = 200
-          Min = 36
-          PageSize = 1
-          Position = 36
-          TabOrder = 0
-          TickStyle = tsNone
-          OnChange = TrackBarAgpChange
-        end
-        object PanelCurrentAgpPci: TPanel
-          Left = 264
-          Top = 22
-          Width = 84
-          Height = 18
-          BevelOuter = bvLowered
-          Ctl3D = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentColor = True
-          ParentCtl3D = False
-          ParentFont = False
-          TabOrder = 1
-        end
-        object ButtonNextAgp: TButton
-          Left = 235
-          Top = 22
-          Width = 20
-          Height = 18
-          Caption = '4'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Webdings'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 2
-          OnClick = ButtonNextAgpClick
-        end
-        object ButtonPrevAgp: TButton
-          Left = 214
-          Top = 22
-          Width = 20
-          Height = 18
-          Caption = '3'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Webdings'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 3
-          OnClick = ButtonPrevAgpClick
-        end
-      end
-    end
     object PanelDram: TPanel
       Left = 4
       Top = 24
-      Width = 370
+      Width = 366
       Height = 407
       Margins.Left = 0
       Margins.Top = 0
@@ -2090,6 +1395,7 @@ object MainForm: TMainForm
       ParentCtl3D = False
       ParentDoubleBuffered = False
       TabOrder = 2
+      ExplicitWidth = 362
       object GroupBoxTimings: TGroupBox
         Left = 5
         Top = 5
@@ -3534,17 +2840,715 @@ object MainForm: TMainForm
         end
       end
     end
+    object PanelChipset: TPanel
+      Left = 4
+      Top = 24
+      Width = 366
+      Height = 407
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alClient
+      BevelEdges = []
+      BevelOuter = bvNone
+      Ctl3D = False
+      DoubleBuffered = True
+      ParentBackground = False
+      ParentCtl3D = False
+      ParentDoubleBuffered = False
+      TabOrder = 0
+      Visible = False
+      ExplicitWidth = 362
+      object GroupBox4: TGroupBox
+        Left = 5
+        Top = 5
+        Width = 200
+        Height = 210
+        Caption = ' General '
+        Color = clBtnFace
+        Ctl3D = True
+        ParentBackground = False
+        ParentColor = False
+        ParentCtl3D = False
+        TabOrder = 0
+        object Label44: TLabel
+          Left = 11
+          Top = 88
+          Width = 73
+          Height = 13
+          Caption = 'AGP Fast Write'
+        end
+        object Label45: TLabel
+          Left = 11
+          Top = 112
+          Width = 42
+          Height = 13
+          Caption = 'AGP SBA'
+        end
+        object Label46: TLabel
+          Left = 11
+          Top = 135
+          Width = 81
+          Height = 13
+          Caption = 'AGP Ctrl Latency'
+        end
+        object Label47: TLabel
+          Left = 11
+          Top = 158
+          Width = 81
+          Height = 13
+          Caption = 'AGP Bus Latency'
+        end
+        object Label48: TLabel
+          Left = 11
+          Top = 181
+          Width = 87
+          Height = 13
+          Caption = 'PCI Latency Timer'
+        end
+        object Label43: TLabel
+          Left = 11
+          Top = 20
+          Width = 75
+          Height = 13
+          Caption = 'CPU Disconnect'
+        end
+        object Label69: TLabel
+          Left = 11
+          Top = 42
+          Width = 54
+          Height = 13
+          Caption = 'HALT State'
+        end
+        object Label70: TLabel
+          Left = 11
+          Top = 66
+          Width = 67
+          Height = 13
+          Caption = 'STPGNT State'
+        end
+        object AGPBusLatency: TTimingComboBox
+          Left = 107
+          Top = 154
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 0
+          Items.Strings = (
+            '16'
+            '32'
+            '64'
+            '96'
+            '128'
+            '160'
+            '192'
+            '224'
+            '255')
+          CustomItems = True
+          CustomValue = True
+          Max = 255
+          Value = -1
+          ItemValue = -1
+        end
+        object AGPControllerLatency: TTimingComboBox
+          Left = 107
+          Top = 131
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 1
+          Items.Strings = (
+            '16'
+            '32'
+            '64'
+            '96'
+            '128'
+            '160'
+            '192'
+            '224'
+            '255')
+          CustomItems = True
+          CustomValue = True
+          Max = 255
+          Value = -1
+          ItemValue = -1
+        end
+        object AGPSBA: TTimingComboBox
+          Left = 107
+          Top = 108
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 2
+          Items.Strings = (
+            'Disabled'
+            'Enabled')
+          CustomItems = True
+          Max = 1
+          Value = -1
+          ItemValue = -1
+        end
+        object CPUDisconnect: TTimingComboBox
+          Left = 107
+          Top = 16
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 3
+          Items.Strings = (
+            'Disabled'
+            'Enabled')
+          CustomItems = True
+          Max = 1
+          Value = -1
+          ItemValue = -1
+        end
+        object PCILatency: TTimingComboBox
+          Left = 107
+          Top = 177
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 4
+          Items.Strings = (
+            '16'
+            '32'
+            '64'
+            '96'
+            '128'
+            '160'
+            '192'
+            '224'
+            '255')
+          CustomItems = True
+          CustomValue = True
+          Max = 255
+          Value = -1
+          ItemValue = -1
+        end
+        object AGPFastWrite: TTimingComboBox
+          Left = 107
+          Top = 85
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 5
+          Items.Strings = (
+            'Disabled'
+            'Enabled')
+          CustomItems = True
+          Max = 1
+          Value = -1
+          ItemValue = -1
+        end
+        object HALTDisconnect: TTimingComboBox
+          Left = 107
+          Top = 39
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 6
+          Items.Strings = (
+            'Disabled'
+            'Enabled')
+          CustomItems = True
+          Max = 1
+          Value = -1
+          ItemValue = -1
+        end
+        object STPGNTDisconnect: TTimingComboBox
+          Left = 107
+          Top = 62
+          Width = 84
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 7
+          Items.Strings = (
+            'Enabled'
+            'Disabled')
+          CustomItems = True
+          Max = 1
+          Value = -1
+          ItemValue = -1
+        end
+      end
+      object GroupBox5: TGroupBox
+        Left = 5
+        Top = 216
+        Width = 359
+        Height = 57
+        Caption = ' FSB '
+        Color = clBtnFace
+        Ctl3D = True
+        ParentBackground = False
+        ParentColor = False
+        ParentCtl3D = False
+        TabOrder = 1
+        object TrackBarPll: TTrackBar
+          Left = 3
+          Top = 20
+          Width = 214
+          Height = 25
+          Max = 350
+          Min = 1
+          PageSize = 1
+          Position = 50
+          TabOrder = 0
+          TickStyle = tsNone
+          OnChange = TrackBarPllChange
+        end
+        object PanelCurrentFsb: TPanel
+          Left = 264
+          Top = 22
+          Width = 84
+          Height = 18
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 1
+        end
+        object ButtonNextPll: TButton
+          Left = 235
+          Top = 22
+          Width = 20
+          Height = 18
+          Caption = '4'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Webdings'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 2
+          OnClick = ButtonNextPllClick
+        end
+        object ButtonPrevPll: TButton
+          Left = 214
+          Top = 22
+          Width = 20
+          Height = 18
+          Caption = '3'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Webdings'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 3
+          OnClick = ButtonPrevPllClick
+        end
+      end
+      object GroupBox7: TGroupBox
+        Left = 211
+        Top = 5
+        Width = 153
+        Height = 210
+        Caption = 'S2K'
+        Ctl3D = True
+        ParentCtl3D = False
+        TabOrder = 2
+        object Label61: TLabel
+          Left = 7
+          Top = 21
+          Width = 52
+          Height = 13
+          Caption = 'WRCOUNT'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label62: TLabel
+          Left = 7
+          Top = 43
+          Width = 49
+          Height = 13
+          Caption = 'RDCOUNT'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label63: TLabel
+          Left = 7
+          Top = 66
+          Width = 48
+          Height = 13
+          Caption = 'PRCOUNT'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label64: TLabel
+          Left = 7
+          Top = 88
+          Width = 74
+          Height = 13
+          Caption = 'WRDATA Delay'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label65: TLabel
+          Left = 7
+          Top = 112
+          Width = 75
+          Height = 13
+          Caption = 'WRTORD Delay'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label66: TLabel
+          Left = 7
+          Top = 135
+          Width = 75
+          Height = 13
+          Caption = 'RDTOWR Delay'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label67: TLabel
+          Left = 7
+          Top = 158
+          Width = 83
+          Height = 13
+          Caption = 'SYSDCOUT Delay'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label68: TLabel
+          Left = 7
+          Top = 181
+          Width = 73
+          Height = 13
+          Caption = 'SYSDCIN Delay'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object XCAARB_WRCOUNT: TTimingComboBox
+          Left = 96
+          Top = 16
+          Width = 49
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 0
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7')
+          Max = 7
+          Value = -1
+          ItemValue = -1
+        end
+        object XCAARB_RDCOUNT: TTimingComboBox
+          Left = 96
+          Top = 39
+          Width = 49
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 1
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7')
+          Max = 7
+          Value = -1
+          ItemValue = -1
+        end
+        object XCAARB_PRCOUNT: TTimingComboBox
+          Left = 96
+          Top = 62
+          Width = 49
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          ParentDoubleBuffered = False
+          TabOrder = 2
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7')
+          Max = 7
+          Value = -1
+          ItemValue = -1
+        end
+        object WRDATA_Delay: TTimingComboBox
+          Left = 96
+          Top = 85
+          Width = 49
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          Enabled = False
+          ParentDoubleBuffered = False
+          ParentShowHint = False
+          ShowHint = False
+          TabOrder = 3
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7')
+          Max = 7
+          Value = -1
+          ItemValue = -1
+        end
+        object WRTORD_Delay: TTimingComboBox
+          Left = 96
+          Top = 108
+          Width = 49
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          Enabled = False
+          ParentDoubleBuffered = False
+          ParentShowHint = False
+          ShowHint = False
+          TabOrder = 4
+          Items.Strings = (
+            '1'
+            '2')
+          CustomItems = True
+          Max = 1
+          Value = -1
+          ItemValue = -1
+        end
+        object RDTOWR_Delay: TTimingComboBox
+          Left = 96
+          Top = 131
+          Width = 49
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          Enabled = False
+          ParentDoubleBuffered = False
+          ParentShowHint = False
+          ShowHint = False
+          TabOrder = 5
+          Items.Strings = (
+            '1'
+            '2'
+            '3'
+            '4')
+          CustomItems = True
+          Max = 3
+          Value = -1
+          ItemValue = -1
+        end
+        object SYSDCOUT_Delay: TTimingComboBox
+          Left = 96
+          Top = 154
+          Width = 49
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          Enabled = False
+          ParentDoubleBuffered = False
+          ParentShowHint = False
+          ShowHint = False
+          TabOrder = 6
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3')
+          Max = 3
+          Value = -1
+          ItemValue = -1
+        end
+        object SYSDCIN_Delay: TTimingComboBox
+          Left = 96
+          Top = 177
+          Width = 49
+          Height = 22
+          Style = csOwnerDrawFixed
+          DoubleBuffered = False
+          Enabled = False
+          ParentDoubleBuffered = False
+          ParentShowHint = False
+          ShowHint = False
+          TabOrder = 7
+          Items.Strings = (
+            '0'
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10'
+            '11'
+            '12'
+            '13'
+            '14'
+            '15')
+          Max = 15
+          Value = -1
+          ItemValue = -1
+        end
+      end
+      object GroupBox6: TGroupBox
+        Left = 5
+        Top = 275
+        Width = 359
+        Height = 57
+        Caption = ' AGP / PCI '
+        Color = clBtnFace
+        Ctl3D = True
+        ParentBackground = False
+        ParentColor = False
+        ParentCtl3D = False
+        TabOrder = 3
+        object TrackBarAgp: TTrackBar
+          Left = 3
+          Top = 20
+          Width = 214
+          Height = 25
+          Max = 200
+          Min = 36
+          PageSize = 1
+          Position = 36
+          TabOrder = 0
+          TickStyle = tsNone
+          OnChange = TrackBarAgpChange
+        end
+        object PanelCurrentAgpPci: TPanel
+          Left = 264
+          Top = 22
+          Width = 84
+          Height = 18
+          BevelOuter = bvLowered
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 1
+        end
+        object ButtonNextAgp: TButton
+          Left = 235
+          Top = 22
+          Width = 20
+          Height = 18
+          Caption = '4'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Webdings'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 2
+          OnClick = ButtonNextAgpClick
+        end
+        object ButtonPrevAgp: TButton
+          Left = 214
+          Top = 22
+          Width = 20
+          Height = 18
+          Caption = '3'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Webdings'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 3
+          OnClick = ButtonPrevAgpClick
+        end
+      end
+    end
   end
   object Panel1: TPanel
     Left = 0
     Top = 439
-    Width = 382
+    Width = 378
     Height = 34
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitWidth = 374
     object ButtonRefresh: TButton
-      Left = 224
+      Left = 216
       Top = 3
       Width = 75
       Height = 25
@@ -3553,7 +3557,7 @@ object MainForm: TMainForm
       OnClick = ButtonRefreshClick
     end
     object ButtonApply: TButton
-      Left = 304
+      Left = 297
       Top = 3
       Width = 75
       Height = 25

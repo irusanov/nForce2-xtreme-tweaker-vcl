@@ -21,7 +21,8 @@ public:
     AnsiString CpuzPath;
     int Sleep;
     int Step;
-    bool Ultra;
+	bool Ultra;
+    bool Reverse;
 
     // Load settings.ini
     void load() {
@@ -33,12 +34,13 @@ public:
         SaveWindowPosition = Settings->ReadBool("Options", "SaveWindowPosition", false);
 
         WindowTop = Settings->ReadInteger("Options", "WindowTop", 0);
-        WindowLeft = Settings->ReadInteger("Options", "WindowLeft", 0);
+		WindowLeft = Settings->ReadInteger("Options", "WindowLeft", 0);
 
         CpuzPath = Settings->ReadString("Bot", "CpuzPath", "");
         Sleep = Settings->ReadInteger("Bot", "Sleep", 6);
         Step = Settings->ReadInteger("Bot", "Step", 0);
-        Ultra = Settings->ReadBool("Bot", "Ultra", false);
+		Ultra = Settings->ReadBool("Bot", "Ultra", false);
+		Reverse = Settings->ReadBool("Bot", "Reverse", false);
 
         // Settings->Free();
 
@@ -72,7 +74,8 @@ public:
         Settings->WriteString("Bot", "CpuzPath", CpuzPath);
         Settings->WriteInteger("Bot", "Sleep", Sleep);
         Settings->WriteInteger("Bot", "Step", Step);
-        Settings->WriteBool("Bot", "Ultra", Ultra);
+		Settings->WriteBool("Bot", "Ultra", Ultra);
+		Settings->WriteBool("Bot", "Reverse", Reverse);
 
         delete Settings;
     }

@@ -34,6 +34,7 @@ __published:	// IDE-managed Components
     TEdit *EditFsbStep;
     TLabel *Label9;
     TButton *ButtonSaveBotSettings;
+	TCheckBox *CheckBoxReverse;
     void __fastcall ButtonBotRunClick(TObject *Sender);
     void __fastcall TimerBotTimer(TObject *Sender);
     void __fastcall ButtonBrowseCpuzClick(TObject *Sender);

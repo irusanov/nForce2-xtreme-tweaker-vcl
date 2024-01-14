@@ -5,8 +5,8 @@ object AboutDialog: TAboutDialog
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'About'
-  ClientHeight = 138
-  ClientWidth = 248
+  ClientHeight = 137
+  ClientWidth = 244
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -813,9 +813,7 @@ object AboutDialog: TAboutDialog
     371FDDFF361FDDFF361FDCFF361FDBFF361FDAFF371FDEFF0000AC410000AC41
     0000AC410000AC410000AC410000AC410000AC410000AC410000AC410000AC41
     0000AC410000AC410000AC410000AC410000AC410000AC41}
-  OldCreateOrder = False
   Position = poOwnerFormCenter
-  PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
     Left = 8
@@ -872,7 +870,7 @@ object AboutDialog: TAboutDialog
   object StaticTextAppName: TStaticText
     Left = 83
     Top = 8
-    Width = 63
+    Width = 71
     Height = 17
     Caption = '{appName}'
     Font.Charset = DEFAULT_CHARSET
@@ -886,7 +884,7 @@ object AboutDialog: TAboutDialog
   object StaticTextAppVersion: TStaticText
     Left = 83
     Top = 31
-    Width = 58
+    Width = 49
     Height = 17
     Caption = '{version}'
     TabOrder = 1
@@ -896,13 +894,13 @@ object AboutDialog: TAboutDialog
     Top = 54
     Width = 94
     Height = 17
-    Caption = 'Copyright (c) 2021'
+    Caption = 'Copyright (c) 2024'
     TabOrder = 2
   end
   object StaticTextDeveloperName: TStaticText
     Left = 83
     Top = 77
-    Width = 71
+    Width = 89
     Height = 17
     Caption = '{developerName}'
     TabOrder = 3

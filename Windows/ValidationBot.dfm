@@ -4,8 +4,8 @@ object ValidationBotDialog: TValidationBotDialog
   ActiveControl = ButtonBotRun
   BorderStyle = bsToolWindow
   Caption = 'Auto Validation Bot'
-  ClientHeight = 146
-  ClientWidth = 373
+  ClientHeight = 163
+  ClientWidth = 365
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,11 +13,9 @@ object ValidationBotDialog: TValidationBotDialog
   Font.Name = 'Tahoma'
   Font.Style = []
   KeyPreview = True
-  OldCreateOrder = False
   Position = poMainFormCenter
   OnKeyUp = FormKeyUp
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
     Left = 11
@@ -72,15 +70,16 @@ object ValidationBotDialog: TValidationBotDialog
   end
   object StatusBarBot: TStatusBar
     Left = 0
-    Top = 127
-    Width = 373
+    Top = 144
+    Width = 365
     Height = 19
     Panels = <>
     SimplePanel = True
+    ExplicitTop = 115
   end
   object ButtonBotRun: TButton
     Left = 288
-    Top = 96
+    Top = 121
     Width = 75
     Height = 25
     Caption = 'Run'
@@ -150,7 +149,7 @@ object ValidationBotDialog: TValidationBotDialog
   end
   object CheckBoxUltra: TCheckBox
     Left = 11
-    Top = 100
+    Top = 125
     Width = 110
     Height = 17
     Caption = 'Ultra (no update)'
@@ -169,7 +168,7 @@ object ValidationBotDialog: TValidationBotDialog
   end
   object ButtonSaveBotSettings: TButton
     Left = 207
-    Top = 96
+    Top = 121
     Width = 75
     Height = 25
     Caption = 'Save'
@@ -177,16 +176,25 @@ object ValidationBotDialog: TValidationBotDialog
     TabOrder = 9
     OnClick = ButtonSaveBotSettingsClick
   end
+  object CheckBoxReverse: TCheckBox
+    Left = 11
+    Top = 99
+    Width = 110
+    Height = 17
+    Caption = 'Reverse direction'
+    TabOrder = 10
+    OnClick = BotControlChange
+  end
   object TimerBot: TTimer
     Enabled = False
     Interval = 6000
     OnTimer = TimerBotTimer
-    Left = 104
-    Top = 116
+    Left = 136
+    Top = 148
   end
   object OpenDialogBot: TOpenDialog
     DefaultExt = 'exe'
-    Left = 136
-    Top = 116
+    Left = 168
+    Top = 148
   end
 end
