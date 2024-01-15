@@ -3481,9 +3481,8 @@ object MainForm: TMainForm
           Width = 214
           Height = 25
           Max = 200
-          Min = 36
           PageSize = 1
-          Position = 36
+          Position = 33
           TabOrder = 0
           TickStyle = tsNone
           OnChange = TrackBarAgpChange
